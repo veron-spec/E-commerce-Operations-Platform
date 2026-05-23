@@ -1,0 +1,352 @@
+{% extends "base.html" %}
+{% block title %}复盘分析 - 电商运营平台{% endblock %}
+{% block page_title %}复盘分析{% endblock %}
+{% block breadcrumb %}
+<li class="breadcrumb-item"><a href="/">首页</a></li>
+<li class="breadcrumb-item active">复盘分析</li>
+{% endblock %}
+
+{% block content %}
+<body data-page="retrospectives">
+<div class="stats-grid">
+    <div class="stat-card color-primary">
+        <div class="stat-header">
+            <div>
+                <div class="stat-label">总复盘次数</div>
+                <div class="stat-value" id="rtTotal">--</div>
+            </div>
+            <div class="stat-icon"><i class="bi bi-clock-history"></i></div>
+        </div>
+    </div>
+    <div class="stat-card color-info">
+        <div class="stat-header">
+            <div>
+                <div class="stat-label">周度</div>
+                <div class="stat-value" id="rtWeekly">--</div>
+            </div>
+            <div class="stat-icon"><i class="bi bi-calendar-week"></i></div>
+        </div>
+    </div>
+    <div class="stat-card color-success">
+        <div class="stat-header">
+            <div>
+                <div class="stat-label">月度</div>
+                <div class="stat-value" id="rtMonthly">--</div>
+            </div>
+            <div class="stat-icon"><i class="bi bi-calendar-month"></i></div>
+        </div>
+    </div>
+    <div class="stat-card color-warning">
+        <div class="stat-header">
+            <div>
+                <div class="stat-label">最近复盘</div>
+                <div class="stat-value" id="rtLatest" style="font-size:14px;">--</div>
+            </div>
+            <div class="stat-icon"><i class="bi bi-clock"></i></div>
+        </div>
+    </div>
+</div>
+
+<div class="filter-bar">
+    <div class="flex items-center gap-2">
+        <label class="form-label mb-0 text-sm">周期</label>
+        <select class="form-custom" id="rtPeriodFilter" onchange="rtPage=1;refreshRetrospectives()">
+            <option value="">全部</option>
+            <option value="weekly">周度</option>
+            <option value="monthly">月度</option>
+            <option value="quarterly">季度</option>
+        </select>
+    </div>
+    <div class="flex items-center gap-2">
+        <label class="form-label mb-0 text-sm">状态</label>
+        <select class="form-custom" id="rtStatusFilter" onchange="rtPage=1;refreshRetrospectives()">
+            <option value="">全部</option>
+            <option value="draft">草稿</option>
+            <option value="published">已发布</option>
+            <option value="archived">已归档</option>
+        </select>
+    </div>
+    <div class="ms-auto"></div>
+    <button class="btn-custom btn-custom-outline" onclick="showGenerateModal()">
+        <i class="bi bi-plus-circle"></i>生成复盘
+    </button>
+</div>
+
+<div class="card-custom">
+    <div class="card-header">
+        <span class="card-title"><i class="bi bi-clock-history text-primary"></i>复盘列表</span>
+        <span class="text-sm text-muted" id="rtPageInfo">加载中...</span>
+    </div>
+    <div class="card-body p-0">
+        <div class="table-container">
+            <table class="table-custom">
+                <thead>
+                    <tr>
+                        <th>周期</th>
+                        <th>类型</th>
+                        <th>销售额</th>
+                        <th>订单数</th>
+                        <th>客单价</th>
+                        <th>退款率</th>
+                        <th>环比变化</th>
+                        <th style="width:80px">状态</th>
+                        <th style="width:120px">操作</th>
+                    </tr>
+                </thead>
+                <tbody id="rtTableBody">
+                    <tr><td colspan="9"><div class="empty-state"><div class="empty-icon"><i class="bi bi-clock-history"></i></div><div class="empty-title">暂无复盘记录</div><div class="empty-desc">点击"生成复盘"开始分析</div></div></td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="card-footer">
+        <div class="pagination-custom">
+            <span class="page-info" id="rtPageInfoBottom">共 0 条</span>
+            <div class="page-btns">
+                <button class="btn-custom btn-custom-outline btn-custom-sm" id="rtPagePrev" onclick="rtChangePage(-1)" disabled>
+                    <i class="bi bi-chevron-left"></i> 上一页
+                </button>
+                <button class="btn-custom btn-custom-outline btn-custom-sm" id="rtPageNext" onclick="rtChangePage(1)">
+                    下一页 <i class="bi bi-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Detail Panel -->
+<div class="card-custom mt-4" id="rtDetailPanel" style="display:none;">
+    <div class="card-header">
+        <span class="card-title"><i class="bi bi-file-text text-primary"></i>复盘详情</span>
+        <button class="btn-custom btn-custom-outline btn-custom-sm" onclick="closeDetail()">
+            <i class="bi bi-x-lg"></i>关闭
+        </button>
+    </div>
+    <div class="card-body" id="rtDetailContent"></div>
+</div>
+
+<!-- Generate Modal -->
+<div class="modal fade" id="generateRetroModal" tabindex="-1">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content" style="border:none;border-radius:var(--radius-lg);">
+            <div class="modal-header" style="border:none;padding:24px 24px 0;">
+                <h5 class="fw-bold"><i class="bi bi-plus-circle me-2 text-primary"></i>生成复盘</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body" style="padding:20px 24px;">
+                <div class="form-group">
+                    <label class="form-label">复盘周期</label>
+                    <select class="form-custom" id="rtNewPeriodType">
+                        <option value="weekly">周度复盘</option>
+                        <option value="monthly">月度复盘</option>
+                        <option value="quarterly">季度复盘</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer" style="border:none;padding:0 24px 20px;">
+                <button type="button" class="btn-custom btn-custom-outline" data-bs-dismiss="modal">取消</button>
+                <button type="button" class="btn-custom btn-custom-primary" onclick="generateRetro()">生成</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+let rtPage = 1;
+const rtPageSize = 20;
+
+const RT_TYPE_MAP = {
+    weekly: { label: '周度', color: 'tag-info' },
+    monthly: { label: '月度', color: 'tag-success' },
+    quarterly: { label: '季度', color: 'tag-purple' },
+};
+
+const RT_STATUS_MAP = {
+    draft: { label: '草稿', color: 'tag-warning' },
+    published: { label: '已发布', color: 'tag-success' },
+    archived: { label: '已归档', color: 'tag-neutral' },
+};
+
+function formatMoney(v) { return '¥' + Number(v || 0).toLocaleString('zh-CN', { minimumFractionDigits: 2 }); }
+function formatNum(v) { return Number(v || 0).toLocaleString('zh-CN'); }
+
+function formatPeriod(start, end) {
+    if (!start) return '--';
+    const s = start.substring(0, 10);
+    const e = end ? end.substring(0, 10) : '';
+    return s + ' ~ ' + e;
+}
+
+async function refreshRetrospectives() {
+    try {
+        const pt = document.getElementById('rtPeriodFilter')?.value || '';
+        const st = document.getElementById('rtStatusFilter')?.value || '';
+        let url = `/api/v1/retrospectives?page=${rtPage}&page_size=${rtPageSize}`;
+        if (pt) url += `&period_type=${pt}`;
+        if (st) url += `&status=${st}`;
+
+        const res = await fetch(url);
+        const data = await res.json();
+        const items = data.items || [];
+
+        const tbody = document.getElementById('rtTableBody');
+        if (!items.length) {
+            tbody.innerHTML = '<tr><td colspan="9"><div class="empty-state"><div class="empty-icon"><i class="bi bi-clock-history"></i></div><div class="empty-title">暂无复盘记录</div><div class="empty-desc">点击"生成复盘"开始分析</div></div></td></tr>';
+        } else {
+            tbody.innerHTML = items.map(r => {
+                const t = RT_TYPE_MAP[r.period_type] || { label: r.period_type, color: 'tag-neutral' };
+                const s = RT_STATUS_MAP[r.status] || { label: r.status, color: 'tag-neutral' };
+                const ds = r.data_summary || {};
+                const cmp = r.comparisons || {};
+                const changeText = cmp.revenue_change_pct !== undefined ? (cmp.revenue_change_pct >= 0 ? '+' : '') + cmp.revenue_change_pct + '%' : '--';
+                const changeClass = cmp.revenue_change_pct >= 0 ? 'text-success' : 'text-danger';
+                return `<tr style="cursor:pointer;" onclick="loadDetail(${r.id})">
+                    <td class="text-sm">${formatPeriod(r.period_start, r.period_end)}</td>
+                    <td><span class="tag ${t.color}">${t.label}</span></td>
+                    <td class="fw-medium">${formatMoney(ds.total_revenue)}</td>
+                    <td>${formatNum(ds.total_orders)}</td>
+                    <td class="text-muted">${formatMoney(ds.avg_order_value)}</td>
+                    <td class="text-muted">${ds.refund_rate || 0}%</td>
+                    <td class="fw-medium ${changeClass}">${changeText}</td>
+                    <td><span class="tag ${s.color}">${s.label}</span></td>
+                    <td>
+                        <div class="cell-actions">
+                            ${r.status === 'draft' ? `<button class="btn-custom btn-custom-success btn-custom-sm" onclick="event.stopPropagation();publishRetro(${r.id})">发布</button>` : ''}
+                            <button class="btn-custom btn-custom-outline btn-custom-sm" onclick="event.stopPropagation();loadDetail(${r.id})"><i class="bi bi-eye"></i></button>
+                        </div>
+                    </td>
+                </tr>`;
+            }).join('');
+        }
+
+        for (const id of ['rtPageInfo', 'rtPageInfoBottom']) {
+            const el = document.getElementById(id);
+            if (el) el.textContent = `共 ${data.total} 条，第 ${data.page}/${data.total_pages} 页`;
+        }
+        document.getElementById('rtPagePrev').disabled = data.page <= 1;
+        document.getElementById('rtPageNext').disabled = data.page >= data.total_pages;
+    } catch (e) {
+        console.error('复盘加载失败:', e);
+        showToast('复盘数据加载失败', 'error');
+    }
+}
+
+function showGenerateModal() {
+    bootstrap.Modal.getOrCreateInstance(document.getElementById('generateRetroModal')).show();
+}
+
+async function generateRetro() {
+    const periodType = document.getElementById('rtNewPeriodType').value;
+    try {
+        showToast('正在生成复盘分析...', 'info');
+        const res = await fetch(`/api/v1/retrospectives/generate?store_id=1&period_type=${periodType}`, { method: 'POST' });
+        const data = await res.json();
+        if (data.error) { showToast(data.error, 'warning'); } else {
+            showToast('复盘生成成功', 'success');
+            bootstrap.Modal.getInstance(document.getElementById('generateRetroModal')).hide();
+            refreshRetrospectives();
+            loadRtStats();
+        }
+    } catch (e) {
+        showToast('生成失败: ' + e.message, 'error');
+    }
+}
+
+async function publishRetro(id) {
+    try {
+        const res = await fetch(`/api/v1/retrospectives/${id}/publish`, { method: 'POST' });
+        if (!res.ok) throw new Error(await res.text());
+        showToast('复盘已发布', 'success');
+        refreshRetrospectives();
+        loadRtStats();
+    } catch (e) {
+        showToast('发布失败: ' + e.message, 'error');
+    }
+}
+
+async function loadDetail(id) {
+    try {
+        const res = await fetch(`/api/v1/retrospectives/${id}`);
+        const r = await res.json();
+        const panel = document.getElementById('rtDetailPanel');
+        const content = document.getElementById('rtDetailContent');
+        panel.style.display = 'block';
+
+        const ds = r.data_summary || {};
+        const cmp = r.comparisons || {};
+        const insights = r.insights || [];
+        const actions = r.action_items || [];
+
+        content.innerHTML = `
+            <div class="grid-4 mb-4">
+                <div class="stat-card" style="padding:12px;">
+                    <div class="stat-label">销售额</div>
+                    <div class="fw-bold" style="font-size:20px;">${formatMoney(ds.total_revenue)}</div>
+                </div>
+                <div class="stat-card" style="padding:12px;">
+                    <div class="stat-label">订单数</div>
+                    <div class="fw-bold" style="font-size:20px;">${formatNum(ds.total_orders)}</div>
+                </div>
+                <div class="stat-card" style="padding:12px;">
+                    <div class="stat-label">客单价</div>
+                    <div class="fw-bold" style="font-size:20px;">${formatMoney(ds.avg_order_value)}</div>
+                </div>
+                <div class="stat-card" style="padding:12px;">
+                    <div class="stat-label">退款率</div>
+                    <div class="fw-bold" style="font-size:20px;">${ds.refund_rate || 0}%</div>
+                </div>
+            </div>
+            ${cmp.revenue_change_pct !== undefined ? `
+            <div class="mb-3">
+                <strong>环比对比</strong>
+                <div class="flex gap-3 mt-2">
+                    <span>销售额变化：<span class="fw-bold ${cmp.revenue_change_pct >= 0 ? 'text-success' : 'text-danger'}">${cmp.revenue_change_pct >= 0 ? '+' : ''}${cmp.revenue_change_pct}%</span></span>
+                    <span>订单变化：<span class="fw-bold ${cmp.order_change_pct >= 0 ? 'text-success' : 'text-danger'}">${cmp.order_change_pct >= 0 ? '+' : ''}${cmp.order_change_pct}%</span></span>
+                </div>
+            </div>
+            ` : ''}
+            <div class="mb-3">
+                <strong>洞察分析</strong>
+                <ul class="mt-2" style="padding-left:20px;">
+                    ${insights.map(i => `<li class="text-sm mb-1">${i}</li>`).join('') || '<li class="text-sm text-muted">暂无洞察</li>'}
+                </ul>
+            </div>
+            <div class="mb-3">
+                <strong>行动项</strong>
+                ${actions.length ? `<ul class="mt-2" style="padding-left:20px;">${actions.map(a => `<li class="text-sm mb-1">${a}</li>`).join('')}</ul>` : '<div class="text-sm text-muted mt-2">暂无行动项</div>'}
+            </div>
+            <div class="text-xs text-muted">
+                状态：${r.status === 'draft' ? '草稿' : r.status === 'published' ? '已发布' : '已归档'}
+                ${r.published_at ? ' | 发布于: ' + new Date(r.published_at).toLocaleString('zh-CN') : ''}
+            </div>
+            ${r.status === 'draft' ? `<button class="btn-custom btn-custom-success mt-3" onclick="publishRetro(${r.id})"><i class="bi bi-check-circle"></i>发布复盘</button>` : ''}
+        `;
+    } catch (e) {
+        showToast('加载详情失败', 'error');
+    }
+}
+
+function closeDetail() {
+    document.getElementById('rtDetailPanel').style.display = 'none';
+}
+
+function rtChangePage(delta) {
+    rtPage = Math.max(1, rtPage + delta);
+    refreshRetrospectives();
+}
+
+async function loadRtStats() {
+    try {
+        const res = await fetch('/api/v1/retrospectives/stats');
+        const data = await res.json();
+        document.getElementById('rtTotal').textContent = data.total;
+        document.getElementById('rtWeekly').textContent = data.by_type?.weekly || 0;
+        document.getElementById('rtMonthly').textContent = data.by_type?.monthly || 0;
+        const latest = data.latest;
+        document.getElementById('rtLatest').textContent = latest ? latest.period_type + '复盘' : '--';
+    } catch (e) { console.error(e); }
+}
+
+document.addEventListener('DOMContentLoaded', loadRtStats);
+</script>
+{% endblock %}

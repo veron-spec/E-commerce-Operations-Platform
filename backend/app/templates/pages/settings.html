@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+{% block title %}系统设置 - 电商运营平台{% endblock %}
+{% block page_title %}系统设置{% endblock %}
+{% block breadcrumb %}
+<li class="breadcrumb-item"><a href="/">首页</a></li>
+<li class="breadcrumb-item active">系统设置</li>
+{% endblock %}
+
+{% block content %}
+<body data-page="settings">
+<div class="grid-2">
+    <!-- Basic Settings -->
+    <div class="card-custom">
+        <div class="card-header">
+            <span class="card-title"><i class="bi bi-gear text-primary"></i>基本设置</span>
+        </div>
+        <div class="card-body">
+            <div class="form-group">
+                <label class="form-label">系统名称</label>
+                <input type="text" class="form-custom" value="电商运营自动化平台" readonly>
+                <div class="form-hint">当前版本 v1.0.0</div>
+            </div>
+            <div class="form-group">
+                <label class="form-label">数据同步间隔</label>
+                <select class="form-custom" style="max-width:200px">
+                    <option value="15">15 分钟</option>
+                    <option value="30" selected>30 分钟</option>
+                    <option value="60">60 分钟</option>
+                </select>
+                <div class="form-hint">自动从各平台拉取最新数据的间隔时间</div>
+            </div>
+            <div class="form-group">
+                <label class="form-label">报表缓存时长</label>
+                <select class="form-custom" style="max-width:200px">
+                    <option value="1">1 小时</option>
+                    <option value="3">3 小时</option>
+                    <option value="6" selected>6 小时</option>
+                    <option value="12">12 小时</option>
+                </select>
+                <div class="form-hint">减少重复计算，提升看板加载速度</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Data Management -->
+    <div class="card-custom">
+        <div class="card-header">
+            <span class="card-title"><i class="bi bi-database text-success"></i>数据管理</span>
+        </div>
+        <div class="card-body">
+            <div class="mb-4">
+                <label class="form-label">数据导出</label>
+                <div class="flex gap-3">
+                    <button class="btn-custom btn-custom-outline" onclick="showToast('CSV 导出功能开发中', 'info')">
+                        <i class="bi bi-download"></i>导出 CSV 报表
+                    </button>
+                    <button class="btn-custom btn-custom-outline" onclick="showToast('Excel 导出功能开发中', 'info')">
+                        <i class="bi bi-file-earmark-excel"></i>导出 Excel
+                    </button>
+                </div>
+            </div>
+            <div class="mb-4">
+                <label class="form-label">同步历史</label>
+                <div class="text-sm text-muted mb-2">查看最近的数据同步记录</div>
+                <button class="btn-custom btn-custom-outline" onclick="showToast('同步历史功能开发中', 'info')">
+                    <i class="bi bi-clock-history"></i>查看同步日志
+                </button>
+            </div>
+            <div>
+                <label class="form-label">危险操作</label>
+                <div>
+                    <button class="btn-custom btn-custom-outline" style="color:var(--danger);border-color:var(--danger);" onclick="showToast('确定要清除所有数据吗？该操作不可恢复', 'warning')">
+                        <i class="bi bi-trash"></i>清除演示数据
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- About -->
+    <div class="card-custom" style="grid-column: 1 / -1;">
+        <div class="card-header">
+            <span class="card-title"><i class="bi bi-info-circle text-muted"></i>关于</span>
+        </div>
+        <div class="card-body">
+            <div class="grid-3">
+                <div>
+                    <div class="stat-label">应用名称</div>
+                    <div class="fw-medium">电商运营自动化平台</div>
+                </div>
+                <div>
+                    <div class="stat-label">版本</div>
+                    <div class="fw-medium">v1.0.0</div>
+                </div>
+                <div>
+                    <div class="stat-label">技术栈</div>
+                    <div class="fw-medium">FastAPI + PostgreSQL + Redis + Celery</div>
+                </div>
+                <div>
+                    <div class="stat-label">适配平台</div>
+                    <div class="fw-medium">淘宝 / Shopify / WooCommerce（开发中）</div>
+                </div>
+                <div>
+                    <div class="stat-label">Python</div>
+                    <div class="fw-medium">3.12+</div>
+                </div>
+                <div>
+                    <div class="stat-label">协议</div>
+                    <div class="fw-medium">MIT</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
