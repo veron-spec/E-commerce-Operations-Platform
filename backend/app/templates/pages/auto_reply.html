@@ -1,0 +1,286 @@
+{% extends "base.html" %}
+{% block title %}{{ _("自动化客服") }} - {{ _("电商运营平台") }}{% endblock %}
+{% block page_title %}{{ _("自动化客服") }}{% endblock %}
+{% block breadcrumb %}
+<li class="breadcrumb-item"><a href="/">{{ _("首页") }}</a></li>
+<li class="breadcrumb-item active">{{ _("自动化客服") }}</li>
+{% endblock %}
+
+{% block content %}
+<body data-page="auto-reply">
+<div class="stats-grid">
+    <div class="stat-card color-primary">
+        <div class="stat-header">
+            <div>
+                <div class="stat-label">{{ _("规则总数") }}</div>
+                <div class="stat-value" id="arTotal">--</div>
+            </div>
+            <div class="stat-icon"><i class="bi bi-chat-dots"></i></div>
+        </div>
+    </div>
+    <div class="stat-card color-success">
+        <div class="stat-header">
+            <div>
+                <div class="stat-label">{{ _("已启用") }}</div>
+                <div class="stat-value" id="arEnabled">--</div>
+            </div>
+            <div class="stat-icon"><i class="bi bi-toggle-on"></i></div>
+        </div>
+    </div>
+    <div class="stat-card color-info">
+        <div class="stat-header">
+            <div>
+                <div class="stat-label">{{ _("总匹配次数") }}</div>
+                <div class="stat-value" id="arUsage">--</div>
+            </div>
+            <div class="stat-icon"><i class="bi bi-lightning-charge"></i></div>
+        </div>
+    </div>
+</div>
+
+<div class="filter-bar">
+    <button class="btn-custom btn-custom-primary" onclick="openModal('addAutoReplyModal')">
+        <i class="bi bi-plus-circle"></i>{{ _("创建规则") }}
+    </button>
+    <button class="btn-custom btn-custom-outline" onclick="showTestModal()">
+        <i class="bi bi-chat-square-text"></i>{{ _("测试匹配") }}
+    </button>
+</div>
+
+<div class="card-custom">
+    <div class="card-header">
+        <span class="card-title"><i class="bi bi-chat-dots text-primary"></i>{{ _("自动回复规则") }}</span>
+        <span class="text-sm text-muted" id="arPageInfo">{{ _("加载中...") }}</span>
+    </div>
+    <div class="card-body p-0">
+        <div class="table-container">
+            <table class="table-custom">
+                <thead>
+                    <tr>
+                        <th>{{ _("规则名称") }}</th>
+                        <th>{{ _("触发关键词") }}</th>
+                        <th>{{ _("匹配方式") }}</th>
+                        <th>{{ _("优先级") }}</th>
+                        <th>{{ _("使用次数") }}</th>
+                        <th style="width:80px">{{ _("状态") }}</th>
+                        <th style="width:120px">{{ _("操作") }}</th>
+                    </tr>
+                </thead>
+                <tbody id="arTableBody">
+                    <tr><td colspan="7"><div class="empty-state"><div class="empty-icon"><i class="bi bi-chat-dots"></i></div><div class="empty-title">{{ _("暂无自动回复规则") }}</div><div class="empty-desc">{{ _("创建规则来自动回复客户消息") }}</div></div></td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="modal-overlay" id="addAutoReplyModal">
+    <div class="modal-box">
+        <div class="modal-header">
+            <h5><i class="bi bi-plus-circle text-primary"></i> {{ _("创建自动回复规则") }}</h5>
+            <button class="modal-close" onclick="closeModal('addAutoReplyModal')">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form id="addAutoReplyForm">
+                <div class="form-group">
+                    <label class="form-label">{{ _("规则名称") }}</label>
+                    <input type="text" class="form-custom" id="arName" placeholder="{{ _('如：发货咨询自动回复') }}">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">{{ _("触发关键词（逗号分隔）") }}</label>
+                    <input type="text" class="form-custom" id="arKeywords" placeholder="{{ _('如：发货,物流,快递') }}">
+                </div>
+                <div class="grid-2" style="margin-bottom:0;">
+                    <div class="form-group">
+                        <label class="form-label">{{ _("匹配方式") }}</label>
+                        <select class="form-custom" id="arMatchType">
+                            <option value="contains">{{ _("包含") }}</option>
+                            <option value="exact">{{ _("精确匹配") }}</option>
+                            <option value="regex">{{ _("正则表达式") }}</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">{{ _("优先级") }}</label>
+                        <input type="number" class="form-custom" id="arPriority" value="0" min="0">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">{{ _("回复模板") }}</label>
+                    <textarea class="form-custom" id="arReplyTemplate" rows="3" placeholder="{{ _('输入自动回复内容...') }}"></textarea>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn-custom btn-custom-outline" onclick="closeModal('addAutoReplyModal')">{{ _("取消") }}</button>
+            <button type="button" class="btn-custom btn-custom-primary" onclick="createAutoReply()">{{ _("创建") }}</button>
+        </div>
+    </div>
+</div>
+
+<div class="modal-overlay" id="testAutoReplyModal">
+    <div class="modal-box">
+        <div class="modal-header">
+            <h5><i class="bi bi-chat-square-text text-info"></i> {{ _("测试消息匹配") }}</h5>
+            <button class="modal-close" onclick="closeModal('testAutoReplyModal')">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label class="form-label">{{ _("模拟客户消息") }}</label>
+                <textarea class="form-custom" id="arTestMessage" rows="3" placeholder="{{ _('输入测试消息...') }}"></textarea>
+            </div>
+            <div id="arTestResult" style="display:none;">
+                <hr>
+                <div class="fw-medium mb-2">{{ _("匹配结果：") }}</div>
+                <div id="arTestResultContent"></div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn-custom btn-custom-outline" onclick="closeModal('testAutoReplyModal')">{{ _("关闭") }}</button>
+            <button type="button" class="btn-custom btn-custom-primary" onclick="testAutoReply()">{{ _("测试") }}</button>
+        </div>
+    </div>
+</div>
+
+<script>
+let arPage = 1;
+const arPageSize = 50;
+
+async function refreshAutoReply() {
+    try {
+        const res = await fetch(`/api/v1/auto-reply?page=${arPage}&page_size=${arPageSize}`);
+        const data = await res.json();
+        const items = data.items || [];
+
+        const tbody = document.getElementById('arTableBody');
+        if (!items.length) {
+            tbody.innerHTML = '<tr><td colspan="7"><div class="empty-state"><div class="empty-icon"><i class="bi bi-chat-dots"></i></div><div class="empty-title">' + _t('暂无自动回复规则') + '</div><div class="empty-desc">' + _t('创建规则来自动回复客户消息') + '</div></div></td></tr>';
+        } else {
+            tbody.innerHTML = items.map(r => {
+                const mtText = r.match_type === 'exact' ? _t('精确') : r.match_type === 'regex' ? _t('正则') : _t('包含');
+                const kwText = (r.trigger_keywords || []).slice(0, 3).join(', ') + ((r.trigger_keywords || []).length > 3 ? '...' : '');
+                return `<tr>
+                    <td class="fw-medium">${r.name}</td>
+                    <td class="text-sm text-muted">${kwText || '--'}</td>
+                    <td><span class="tag tag-info">${mtText}</span></td>
+                    <td>${r.priority}</td>
+                    <td>${r.usage_count}</td>
+                    <td><span class="tag ${r.is_enabled ? 'tag-success' : 'tag-neutral'}">${r.is_enabled ? _t('启用') : _t('停用')}</span></td>
+                    <td>
+                        <div class="cell-actions">
+                            <button class="btn-custom btn-custom-outline btn-custom-sm" onclick="toggleAutoReply(${r.id})">
+                                <i class="bi ${r.is_enabled ? 'bi-pause' : 'bi-play'}"></i>
+                            </button>
+                            <button class="btn-custom btn-custom-outline btn-custom-sm text-danger" onclick="deleteAutoReply(${r.id})">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>`;
+            }).join('');
+        }
+
+        const el = document.getElementById('arPageInfo');
+        if (el) el.textContent = _t('共') + ' ' + data.total + _t('条');
+    } catch (e) {
+        console.error('自动回复加载失败:', e);
+        showToast(_t('自动回复数据加载失败'), 'error');
+    }
+}
+
+async function createAutoReply() {
+    const name = document.getElementById('arName').value;
+    const keywords = document.getElementById('arKeywords').value;
+    const reply = document.getElementById('arReplyTemplate').value;
+    if (!name || !keywords || !reply) { showToast(_t('请填写完整信息'), 'warning'); return; }
+    try {
+        const res = await fetch('/api/v1/auto-reply', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                name,
+                trigger_keywords: keywords.split(',').map(k => k.trim()).filter(Boolean),
+                match_type: document.getElementById('arMatchType').value,
+                reply_template: reply,
+                priority: parseInt(document.getElementById('arPriority').value) || 0,
+            }),
+        });
+        if (!res.ok) throw new Error(await res.text());
+        showToast(_t('规则创建成功！'), 'success');
+        closeModal('addAutoReplyModal');
+        document.getElementById('addAutoReplyForm').reset();
+        refreshAutoReply();
+        loadArStats();
+    } catch (e) {
+        showToast(_t('创建失败') + ': ' + e.message, 'error');
+    }
+}
+
+async function toggleAutoReply(id) {
+    try {
+        const res = await fetch(`/api/v1/auto-reply/${id}/toggle`, { method: 'POST' });
+        if (!res.ok) throw new Error(await res.text());
+        showToast(_t('规则状态已更新'), 'success');
+        refreshAutoReply();
+        loadArStats();
+    } catch (e) {
+        showToast(_t('操作失败') + ': ' + e.message, 'error');
+    }
+}
+
+async function deleteAutoReply(id) {
+    if (!confirm(_t('确定删除此规则？'))) return;
+    try {
+        const res = await fetch(`/api/v1/auto-reply/${id}`, { method: 'DELETE' });
+        if (!res.ok) throw new Error(await res.text());
+        showToast(_t('规则已删除'), 'success');
+        refreshAutoReply();
+        loadArStats();
+    } catch (e) {
+        showToast(_t('删除失败') + ': ' + e.message, 'error');
+    }
+}
+
+function showTestModal() {
+    document.getElementById('arTestResult').style.display = 'none';
+    document.getElementById('arTestMessage').value = '';
+    openModal('testAutoReplyModal');
+}
+
+async function testAutoReply() {
+    const message = document.getElementById('arTestMessage').value;
+    if (!message) { showToast(_t('请输入测试消息'), 'warning'); return; }
+    try {
+        const res = await fetch('/api/v1/auto-reply/test', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ message }),
+        });
+        const data = await res.json();
+        const container = document.getElementById('arTestResult');
+        const content = document.getElementById('arTestResultContent');
+        container.style.display = 'block';
+        if (data.matched) {
+            content.innerHTML = `<div class="tag tag-success mb-2">${_t('匹配成功')}</div>
+                <div class="mb-1"><strong>${_t('匹配规则：')}</strong>${data.rule?.name || '--'}</div>
+                <div><strong>${_t('回复内容：')}</strong><br>${data.reply || '--'}</div>`;
+        } else {
+            content.innerHTML = '<div class="tag tag-warning">' + _t('未匹配到任何规则') + '</div>';
+        }
+    } catch (e) {
+        showToast(_t('测试失败') + ': ' + e.message, 'error');
+    }
+}
+
+async function loadArStats() {
+    try {
+        const res = await fetch('/api/v1/auto-reply/stats');
+        const data = await res.json();
+        document.getElementById('arTotal').textContent = data.total_rules;
+        document.getElementById('arEnabled').content = data.enabled;
+        document.getElementById('arUsage').textContent = data.total_usage;
+    } catch (e) { console.error(e); }
+}
+
+document.addEventListener('DOMContentLoaded', loadArStats);
+</script>
+{% endblock %}

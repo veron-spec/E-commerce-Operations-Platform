@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+{% block title %}{{ _("操作日志") }} - {{ _("电商运营平台") }}{% endblock %}
+{% block page_title %}{{ _("操作日志") }}{% endblock %}
+{% block breadcrumb %}
+<li class="breadcrumb-item"><a href="/">{{ _("首页") }}</a></li>
+<li class="breadcrumb-item active">{{ _("操作日志") }}</li>
+{% endblock %}
+
+{% block content %}
+<body data-page="logs">
+<div class="card-custom">
+    <div class="card-header">
+        <span class="card-title"><i class="bi bi-journal-text text-primary"></i>{{ _("审计日志") }}</span>
+        <div class="flex gap-2">
+            <select class="form-custom" id="actionFilter" style="width:auto" onchange="loadLogs()">
+                <option value="">{{ _("所有操作") }}</option>
+                <option value="create">{{ _("创建") }}</option>
+                <option value="update">{{ _("更新") }}</option>
+                <option value="delete">{{ _("删除") }}</option>
+                <option value="login">{{ _("登录") }}</option>
+                <option value="register">{{ _("注册") }}</option>
+                <option value="export">{{ _("导出") }}</option>
+            </select>
+            <select class="form-custom" id="resourceFilter" style="width:auto" onchange="loadLogs()">
+                <option value="">{{ _("所有资源") }}</option>
+                <option value="store">{{ _("店铺") }}</option>
+                <option value="order">{{ _("订单") }}</option>
+                <option value="automation_rule">{{ _("自动化规则") }}</option>
+                <option value="auto_reply">{{ _("自动回复") }}</option>
+                <option value="product_selection">{{ _("选品") }}</option>
+                <option value="suggestion">{{ _("建议") }}</option>
+                <option value="retrospective">{{ _("复盘") }}</option>
+            </select>
+            <button class="btn-custom btn-custom-outline" onclick="loadLogs()"><i class="bi bi-arrow-clockwise"></i>{{ _("刷新") }}</button>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table-custom">
+                <thead>
+                    <tr>
+                        <th>{{ _("时间") }}</th>
+                        <th>{{ _("操作") }}</th>
+                        <th>{{ _("资源") }}</th>
+                        <th>{{ _("详情") }}</th>
+                        <th>IP</th>
+                    </tr>
+                </thead>
+                <tbody id="logTableBody">
+                    <tr><td colspan="5" class="text-center text-muted py-4">{{ _("加载中...") }}</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="flex justify-between items-center mt-3" id="pagination">
+            <div class="text-sm text-muted" id="logCount">{{ _("共") }} 0 {{ _("条") }}</div>
+            <div class="flex gap-2">
+                <button class="btn-custom btn-custom-outline btn-sm" id="prevPage" onclick="changePage(-1)" disabled>{{ _("上一页") }}</button>
+                <span class="text-sm text-muted px-2" id="pageInfo">{{ _("第") }} 1 / 1 {{ _("页") }}</span>
+                <button class="btn-custom btn-custom-outline btn-sm" id="nextPage" onclick="changePage(1)">{{ _("下一页") }}</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+let currentPage = 1;
+let totalPages = 1;
+
+async function loadLogs() {
+    const action = document.getElementById('actionFilter').value;
+    const resource = document.getElementById('resourceFilter').value;
+    const params = new URLSearchParams({page: currentPage, page_size: 20});
+    if (action) params.set('action', action);
+    if (resource) params.set('resource_type', resource);
+
+    try {
+        const resp = await fetch(`/api/v1/operation-logs/operation-logs?${params}`);
+        const data = await resp.json();
+        const tbody = document.getElementById('logTableBody');
+        totalPages = data.total_pages || 1;
+
+        if (data.items.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="5" class="text-center text-muted py-4">' + _t('暂无操作记录') + '</td></tr>';
+        } else {
+            tbody.innerHTML = data.items.map(log => {
+                const actionMap = {create: _t('创建'), update: _t('更新'), delete: _t('删除'), login: _t('登录'), register: _t('注册'), export: _t('导出')};
+                const resourceMap = {store: _t('店铺'), order: _t('订单'), automation_rule: _t('自动化规则'), auto_reply: _t('自动回复'), product_selection: _t('选品'), suggestion: _t('建议'), retrospective: _t('复盘')};
+                const actionLabel = actionMap[log.action] || log.action;
+                const resourceLabel = resourceMap[log.resource_type] || log.resource_type;
+                const time = new Date(log.created_at).toLocaleString('zh-CN');
+                const badgeClass = {create: 'badge-create', update: 'badge-update', delete: 'badge-delete', login: 'badge-info', register: 'badge-info', export: 'badge-info'}[log.action] || 'badge-info';
+                return `<tr>
+                    <td class="text-xs text-muted">${time}</td>
+                    <td><span class="badge-custom ${badgeClass}">${actionLabel}</span></td>
+                    <td>${resourceLabel}${log.resource_id ? ` #${log.resource_id}` : ''}</td>
+                    <td class="text-sm">${log.detail || '-'}</td>
+                    <td class="text-xs text-muted">${log.ip_address || '-'}</td>
+                </tr>`;
+            }).join('');
+        }
+
+        document.getElementById('logCount').textContent = _t('共') + ' ' + data.total + _t('条');
+        document.getElementById('pageInfo').textContent = _t('第') + ' ' + data.page + ' / ' + totalPages + _t('页');
+        document.getElementById('prevPage').disabled = currentPage <= 1;
+        document.getElementById('nextPage').disabled = currentPage >= totalPages;
+    } catch (e) {
+        document.getElementById('logTableBody').innerHTML = '<tr><td colspan="5" class="text-center text-danger py-4">' + _t('加载失败') + '</td></tr>';
+    }
+}
+
+function changePage(delta) {
+    const next = currentPage + delta;
+    if (next < 1 || next > totalPages) return;
+    currentPage = next;
+    loadLogs();
+}
+
+document.addEventListener('DOMContentLoaded', loadLogs);
+</script>
+{% endblock %}

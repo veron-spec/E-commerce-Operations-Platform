@@ -1,0 +1,256 @@
+{% extends "base.html" %}
+{% block title %}{{ _("运营建议") }} - {{ _("电商运营平台") }}{% endblock %}
+{% block page_title %}{{ _("运营建议") }}{% endblock %}
+{% block breadcrumb %}
+<li class="breadcrumb-item"><a href="/">{{ _("首页") }}</a></li>
+<li class="breadcrumb-item active">{{ _("运营建议") }}</li>
+{% endblock %}
+
+{% block content %}
+<body data-page="suggestions">
+<div class="stats-grid">
+    <div class="stat-card color-primary">
+        <div class="stat-header">
+            <div>
+                <div class="stat-label">{{ _("总建议") }}</div>
+                <div class="stat-value" id="sgTotal">--</div>
+            </div>
+            <div class="stat-icon"><i class="bi bi-lightbulb"></i></div>
+        </div>
+    </div>
+    <div class="stat-card color-success">
+        <div class="stat-header">
+            <div>
+                <div class="stat-label">{{ _("采纳率") }}</div>
+                <div class="stat-value" id="sgRate">--</div>
+            </div>
+            <div class="stat-icon"><i class="bi bi-check-circle"></i></div>
+        </div>
+    </div>
+    <div class="stat-card color-warning">
+        <div class="stat-header">
+            <div>
+                <div class="stat-label">{{ _("待处理") }}</div>
+                <div class="stat-value" id="sgPending">--</div>
+            </div>
+            <div class="stat-icon"><i class="bi bi-hourglass"></i></div>
+        </div>
+    </div>
+    <div class="stat-card color-purple">
+        <div class="stat-header">
+            <div>
+                <div class="stat-label">{{ _("类型") }}</div>
+                <div class="stat-value" id="sgTypes" style="font-size:14px;">--</div>
+            </div>
+            <div class="stat-icon"><i class="bi bi-pie-chart"></i></div>
+        </div>
+    </div>
+</div>
+
+<div class="filter-bar">
+    <div class="flex items-center gap-2">
+        <label class="form-label mb-0 text-sm">{{ _("类型") }}</label>
+        <select class="form-custom" id="sgTypeFilter" onchange="sgPage=1;refreshSuggestions()">
+            <option value="">{{ _("全部") }}</option>
+            <option value="restock">{{ _("补货提醒") }}</option>
+            <option value="price_adjustment">{{ _("价格调整") }}</option>
+            <option value="marketing_campaign">{{ _("营销活动") }}</option>
+            <option value="inventory_optimization">{{ _("库存优化") }}</option>
+        </select>
+    </div>
+    <div class="flex items-center gap-2">
+        <label class="form-label mb-0 text-sm">{{ _("状态") }}</label>
+        <select class="form-custom" id="sgStatusFilter" onchange="sgPage=1;refreshSuggestions()">
+            <option value="">{{ _("全部") }}</option>
+            <option value="pending">{{ _("待处理") }}</option>
+            <option value="applied">{{ _("已采纳") }}</option>
+            <option value="dismissed">{{ _("已忽略") }}</option>
+        </select>
+    </div>
+    <div class="flex items-center gap-2">
+        <label class="form-label mb-0 text-sm">{{ _("优先级") }}</label>
+        <select class="form-custom" id="sgPriorityFilter" onchange="sgPage=1;refreshSuggestions()">
+            <option value="">{{ _("全部") }}</option>
+            <option value="high">{{ _("高") }}</option>
+            <option value="medium">{{ _("中") }}</option>
+            <option value="low">{{ _("低") }}</option>
+        </select>
+    </div>
+    <div class="ms-auto"></div>
+    <button class="btn-custom btn-custom-primary" onclick="generateSuggestions()">
+        <i class="bi bi-magic"></i>{{ _("生成建议") }}
+    </button>
+</div>
+
+<div class="card-custom">
+    <div class="card-header">
+        <span class="card-title"><i class="bi bi-lightbulb text-warning"></i>{{ _("运营建议列表") }}</span>
+        <span class="text-sm text-muted" id="sgPageInfo">{{ _("加载中...") }}</span>
+    </div>
+    <div class="card-body">
+        <div id="sgCardContainer">
+            <div class="empty-state"><div class="empty-icon"><i class="bi bi-lightbulb"></i></div><div class="empty-title">{{ _("暂无建议") }}</div><div class="empty-desc">{{ _("点击「生成建议」基于数据分析生成运营建议") }}</div></div>
+        </div>
+    </div>
+    <div class="card-footer">
+        <div class="pagination-custom">
+            <span class="page-info" id="sgPageInfoBottom">{{ _("共") }} 0 {{ _("条") }}</span>
+            <div class="page-btns">
+                <button class="btn-custom btn-custom-outline btn-custom-sm" id="sgPagePrev" onclick="sgChangePage(-1)" disabled>
+                    <i class="bi bi-chevron-left"></i> {{ _("上一页") }}
+                </button>
+                <button class="btn-custom btn-custom-outline btn-custom-sm" id="sgPageNext" onclick="sgChangePage(1)">
+                    {{ _("下一页") }} <i class="bi bi-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+let sgPage = 1;
+const sgPageSize = 10;
+
+const SG_TYPE_MAP = {
+    restock: { label: _t('补货提醒'), color: 'tag-warning', icon: 'bi-box-seam' },
+    price_adjustment: { label: _t('价格调整'), color: 'tag-info', icon: 'bi-currency-yen' },
+    marketing_campaign: { label: _t('营销活动'), color: 'tag-purple', icon: 'bi-megaphone' },
+    inventory_optimization: { label: _t('库存优化'), color: 'tag-success', icon: 'bi-archive' },
+};
+
+const SG_PRIORITY_MAP = {
+    high: { label: _t('高'), color: 'tag-danger' },
+    medium: { label: _t('中'), color: 'tag-warning' },
+    low: { label: _t('低'), color: 'tag-info' },
+};
+
+const SG_STATUS_MAP = {
+    pending: { label: _t('待处理'), color: 'tag-warning' },
+    applied: { label: _t('已采纳'), color: 'tag-success' },
+    dismissed: { label: _t('已忽略'), color: 'tag-neutral' },
+};
+
+async function refreshSuggestions() {
+    try {
+        const st = document.getElementById('sgTypeFilter')?.value || '';
+        const status = document.getElementById('sgStatusFilter')?.value || '';
+        const priority = document.getElementById('sgPriorityFilter')?.value || '';
+        let url = `/api/v1/suggestions?page=${sgPage}&page_size=${sgPageSize}`;
+        if (st) url += `&suggestion_type=${st}`;
+        if (status) url += `&status=${status}`;
+        if (priority) url += `&priority=${priority}`;
+
+        const res = await fetch(url);
+        const data = await res.json();
+        const items = data.items || [];
+
+        const container = document.getElementById('sgCardContainer');
+        if (!items.length) {
+            container.innerHTML = '<div class="empty-state"><div class="empty-icon"><i class="bi bi-lightbulb"></i></div><div class="empty-title">' + _t('暂无建议') + '</div><div class="empty-desc">' + _t('点击「生成建议」基于数据分析生成运营建议') + '</div></div>';
+        } else {
+            container.innerHTML = items.map(s => {
+                const t = SG_TYPE_MAP[s.suggestion_type] || { label: s.suggestion_type, color: 'tag-neutral', icon: 'bi-lightbulb' };
+                const p = SG_PRIORITY_MAP[s.priority] || { label: s.priority, color: 'tag-neutral' };
+                const st = SG_STATUS_MAP[s.status] || { label: s.status, color: 'tag-neutral' };
+                return `<div class="card-custom mb-3 suggestion-card" style="border-left: 3px solid var(--primary);">
+                    <div class="card-body">
+                        <div class="flex items-center justify-between mb-2">
+                            <div class="flex items-center gap-2">
+                                <span class="tag ${t.color}"><i class="bi ${t.icon} me-1"></i>${t.label}</span>
+                                <span class="tag ${p.color}">${p.label}${_t('优先级')}</span>
+                                <span class="tag ${st.color}">${st.label}</span>
+                            </div>
+                            <div class="text-xs text-muted">${s.created_at ? new Date(s.created_at).toLocaleDateString('zh-CN') : '--'}</div>
+                        </div>
+                        <div class="fw-medium mb-1" style="font-size:15px;">${s.title}</div>
+                        <div class="text-sm text-muted mb-3">${s.description}</div>
+                        <div class="flex items-center gap-2">
+                            ${s.status === 'pending' ? `
+                                <button class="btn-custom btn-custom-success btn-custom-sm" onclick="applySuggestion(${s.id})">
+                                    <i class="bi bi-check-lg"></i>${_t('采纳')}
+                                </button>
+                                <button class="btn-custom btn-custom-outline btn-custom-sm" onclick="dismissSuggestion(${s.id})">
+                                    <i class="bi bi-x-lg"></i>${_t('忽略')}
+                                </button>
+                            ` : ''}
+                            ${Object.keys(s.related_metrics || {}).length ? `
+                                <span class="text-xs text-muted ms-auto">${_t('数据来源:')} ${s.data_source || '--'}</span>
+                            ` : ''}
+                        </div>
+                    </div>
+                </div>`;
+            }).join('');
+        }
+
+        for (const id of ['sgPageInfo', 'sgPageInfoBottom']) {
+            const el = document.getElementById(id);
+            if (el) el.textContent = _t('共') + ' ' + data.total + _t('条，第') + ' ' + data.page + '/' + data.total_pages + _t('页');
+        }
+        document.getElementById('sgPagePrev').disabled = data.page <= 1;
+        document.getElementById('sgPageNext').disabled = data.page >= data.total_pages;
+    } catch (e) {
+        console.error('建议加载失败:', e);
+        showToast(_t('建议数据加载失败'), 'error');
+    }
+}
+
+async function generateSuggestions() {
+    try {
+        showToast(_t('正在分析数据生成建议...'), 'info');
+        const res = await fetch('/api/v1/suggestions/generate?store_id=1', { method: 'POST' });
+        const data = await res.json();
+        showToast(_t('已生成') + ' ' + data.generated + _t('条建议'), 'success');
+        refreshSuggestions();
+        loadSgStats();
+    } catch (e) {
+        showToast(_t('生成失败') + ': ' + e.message, 'error');
+    }
+}
+
+async function applySuggestion(id) {
+    try {
+        const res = await fetch(`/api/v1/suggestions/${id}/apply`, { method: 'POST' });
+        if (!res.ok) throw new Error(await res.text());
+        showToast(_t('建议已标记为已采纳'), 'success');
+        refreshSuggestions();
+        loadSgStats();
+    } catch (e) {
+        showToast(_t('操作失败') + ': ' + e.message, 'error');
+    }
+}
+
+async function dismissSuggestion(id) {
+    try {
+        const res = await fetch(`/api/v1/suggestions/${id}/dismiss`, { method: 'POST' });
+        if (!res.ok) throw new Error(await res.text());
+        showToast(_t('建议已忽略'), 'info');
+        refreshSuggestions();
+        loadSgStats();
+    } catch (e) {
+        showToast(_t('操作失败') + ': ' + e.message, 'error');
+    }
+}
+
+function sgChangePage(delta) {
+    sgPage = Math.max(1, sgPage + delta);
+    refreshSuggestions();
+}
+
+async function loadSgStats() {
+    try {
+        const res = await fetch('/api/v1/suggestions/stats');
+        const data = await res.json();
+        document.getElementById('sgTotal').textContent = data.total;
+        document.getElementById('sgRate').textContent = data.applied_rate + '%';
+        document.getElementById('sgPending').textContent = (data.by_status?.pending || 0);
+        const types = Object.entries(data.by_type || {}).map(([k, v]) => {
+            const names = { restock: _t('补货'), price_adjustment: _t('价格'), marketing_campaign: _t('营销'), inventory_optimization: _t('库存') };
+            return (names[k] || k) + ':' + v;
+        }).join(' | ');
+        document.getElementById('sgTypes').textContent = types || '--';
+    } catch (e) { console.error(e); }
+}
+
+document.addEventListener('DOMContentLoaded', loadSgStats);
+</script>
+{% endblock %}

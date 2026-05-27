@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="{{ current_lang }}" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{{ _("电商运营平台") }}{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="/static/style.css">
+    {% block head %}{% endblock %}
+</head>
+<body>
+    <!-- Mobile Overlay -->
+    <div class="mobile-sidebar-overlay" id="mobileSidebarOverlay"></div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <div class="app-layout">
+        <!-- ===== Sidebar ===== -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-brand">
+                <div class="brand-icon"><i class="bi bi-shop"></i></div>
+                <span class="brand-text">{{ _("电商运营") }}</span>
+            </div>
+
+            <div class="sidebar-divider"><span>{{ _("概览") }}</span></div>
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <a href="/" class="nav-link" data-page="dashboard">
+                        <span class="nav-icon"><i class="bi bi-grid-1x2"></i></span>
+                        <span class="nav-text">{{ _("数据看板") }}</span>
+                    </a>
+                    <a href="/orders" class="nav-link" data-page="orders">
+                        <span class="nav-icon"><i class="bi bi-receipt"></i></span>
+                        <span class="nav-text">{{ _("订单管理") }}</span>
+                        <span class="nav-badge" id="orderBadge">0</span>
+                    </a>
+                </div>
+
+                <div class="sidebar-divider"><span>{{ _("分析") }}</span></div>
+                <div class="nav-section">
+                    <a href="/sales" class="nav-link" data-page="sales">
+                        <span class="nav-icon"><i class="bi bi-graph-up-arrow"></i></span>
+                        <span class="nav-text">{{ _("销售分析") }}</span>
+                    </a>
+                    <a href="/inventory" class="nav-link" data-page="inventory">
+                        <span class="nav-icon"><i class="bi bi-box-seam"></i></span>
+                        <span class="nav-text">{{ _("库存管理") }}</span>
+                    </a>
+                </div>
+
+                <div class="sidebar-divider"><span>{{ _("管理") }}</span></div>
+                <div class="nav-section">
+                    <a href="/stores" class="nav-link" data-page="stores">
+                        <span class="nav-icon"><i class="bi bi-shop-window"></i></span>
+                        <span class="nav-text">{{ _("店铺管理") }}</span>
+                    </a>
+                    <a href="/automation" class="nav-link" data-page="automation">
+                        <span class="nav-icon"><i class="bi bi-lightning-charge"></i></span>
+                        <span class="nav-text">{{ _("自动化规则") }}</span>
+                    </a>
+                    <a href="/product-selections" class="nav-link" data-page="product-selections">
+                        <span class="nav-icon"><i class="bi bi-star"></i></span>
+                        <span class="nav-text">{{ _("捕获选品") }}</span>
+                    </a>
+                    <a href="/auto-reply" class="nav-link" data-page="auto-reply">
+                        <span class="nav-icon"><i class="bi bi-chat-dots"></i></span>
+                        <span class="nav-text">{{ _("自动化客服") }}</span>
+                    </a>
+                    <a href="/suggestions" class="nav-link" data-page="suggestions">
+                        <span class="nav-icon"><i class="bi bi-lightbulb"></i></span>
+                        <span class="nav-text">{{ _("运营建议") }}</span>
+                    </a>
+                    <a href="/retrospectives" class="nav-link" data-page="retrospectives">
+                        <span class="nav-icon"><i class="bi bi-clock-history"></i></span>
+                        <span class="nav-text">{{ _("复盘分析") }}</span>
+                    </a>
+                </div>
+
+                <div class="sidebar-divider"><span>{{ _("系统") }}</span></div>
+                <div class="nav-section">
+                    <a href="/logs" class="nav-link" data-page="logs">
+                        <span class="nav-icon"><i class="bi bi-journal-text"></i></span>
+                        <span class="nav-text">{{ _("操作日志") }}</span>
+                    </a>
+                    <a href="/settings" class="nav-link" data-page="settings">
+                        <span class="nav-icon"><i class="bi bi-gear"></i></span>
+                        <span class="nav-text">{{ _("系统设置") }}</span>
+                    </a>
+                </div>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="nav-link" onclick="toggleSidebar()">
+                    <span class="nav-icon"><i class="bi bi-chevron-left"></i></span>
+                    <span class="nav-text">{{ _("收起侧栏") }}</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- ===== Main Area ===== -->
+        <div class="main-area">
+            <!-- Topbar -->
+            <header class="topbar">
+                <div class="topbar-left">
+                    <button class="topbar-btn d-md-none" onclick="toggleMobileSidebar()">
+                        <i class="bi bi-list"></i>
+                    </button>
+                    <div>
+                        <h1 class="page-title">{% block page_title %}{{ _("数据看板") }}{% endblock %}</h1>
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                {% block breadcrumb %}
+                                <li class="breadcrumb-item"><a href="/">{{ _("首页") }}</a></li>
+                                <li class="breadcrumb-item active">{{ _("数据看板") }}</li>
+                                {% endblock %}
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+                <div class="topbar-right">
+                    <button class="topbar-btn" onclick="toggleDarkMode()" title="{{ _('切换主题') }}">
+                        <i class="bi bi-moon-stars" id="themeIcon"></i>
+                    </button>
+                    <button class="topbar-btn" onclick="switchLang()" title="{{ _('切换语言') }}">
+                        <i class="bi bi-globe"></i>
+                    </button>
+                    <button class="topbar-btn" onclick="triggerRefresh()" title="{{ _('刷新数据') }}">
+                        <i class="bi bi-arrow-clockwise"></i>
+                    </button>
+                    <span class="text-muted text-xs" id="updateTime">--</span>
+                    {% if user_name %}
+                    <div class="user-menu" id="userMenu">
+                        <button class="topbar-btn" onclick="toggleUserMenu()">
+                            <i class="bi bi-person-circle"></i>
+                        </button>
+                        <div class="user-menu-dropdown" id="userMenuDropdown">
+                            <div class="user-menu-header">{{ user_name }}</div>
+                            <div class="user-menu-divider"></div>
+                            <a class="user-menu-item" href="/logout"><i class="bi bi-box-arrow-right"></i> {{ _("退出登录") }}</a>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </header>
+
+            <!-- Content -->
+            <main class="content-area">
+                {% block content %}{% endblock %}
+            </main>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <script>
+    /** Client-side i18n: mirror of the server _() function. */
+    window._t = function(key) {
+        var m = {
+            "暂无数据": "{{ _("暂无数据") }}",
+            "暂无预警，库存正常": "{{ _("暂无预警，库存正常") }}",
+            "加载中": "{{ _("加载中") }}",
+            "加载失败": "{{ _("加载失败") }}",
+            "所有商品库存正常": "{{ _("所有商品库存正常") }}",
+            "暂无订单": "{{ _("暂无订单") }}",
+            "暂无店铺": "{{ _("暂无店铺") }}",
+            "暂无自动化规则": "{{ _("暂无自动化规则") }}",
+            "暂无自动回复规则": "{{ _("暂无自动回复规则") }}",
+            "暂无选品": "{{ _("暂无选品") }}",
+            "暂无复盘记录": "{{ _("暂无复盘记录") }}",
+            "暂无建议": "{{ _("暂无建议") }}",
+            "暂无操作记录": "{{ _("暂无操作记录") }}",
+            "缺货": "{{ _("缺货") }}",
+            "偏低": "{{ _("偏低") }}",
+            "紧急": "{{ _("紧急") }}",
+            "预警": "{{ _("预警") }}",
+            "已付款": "{{ _("已付款") }}",
+            "已退款": "{{ _("已退款") }}",
+            "正常": "{{ _("正常") }}",
+            "停用": "{{ _("停用") }}",
+            "启用": "{{ _("启用") }}",
+            "注册": "{{ _("注册") }}",
+            "定时": "{{ _("定时") }}",
+            "事件": "{{ _("事件") }}",
+            "未分类": "{{ _("未分类") }}",
+            "未知": "{{ _("未知") }}",
+            "已切换为浅色模式": "{{ _("已切换为浅色模式") }}",
+            "已切换为深色模式": "{{ _("已切换为深色模式") }}",
+            "正在刷新数据...": "{{ _("正在刷新数据...") }}",
+            "看板数据加载失败": "{{ _("看板数据加载失败") }}",
+            "销售数据加载失败": "{{ _("销售数据加载失败") }}",
+            "库存数据加载失败": "{{ _("库存数据加载失败") }}",
+            "订单数据加载失败": "{{ _("订单数据加载失败") }}",
+            "店铺数据加载失败": "{{ _("店铺数据加载失败") }}",
+            "规则数据加载失败": "{{ _("规则数据加载失败") }}",
+            "自动回复数据加载失败": "{{ _("自动回复数据加载失败") }}",
+            "选品数据加载失败": "{{ _("选品数据加载失败") }}",
+            "建议数据加载失败": "{{ _("建议数据加载失败") }}",
+            "复盘数据加载失败": "{{ _("复盘数据加载失败") }}",
+            "请填写完整信息": "{{ _("请填写完整信息") }}",
+            "请填写所有必填项": "{{ _("请填写所有必填项") }}",
+            "操作失败": "{{ _("操作失败") }}",
+            "添加失败": "{{ _("添加失败") }}",
+            "创建失败": "{{ _("创建失败") }}",
+            "删除失败": "{{ _("删除失败") }}",
+            "测试失败": "{{ _("测试失败") }}",
+            "发布失败": "{{ _("发布失败") }}",
+            "生成失败": "{{ _("生成失败") }}",
+            "同步失败": "{{ _("同步失败") }}",
+            "扫描失败": "{{ _("扫描失败") }}",
+            "同步任务已触发": "{{ _("同步任务已触发") }}",
+            "店铺添加成功！": "{{ _("店铺添加成功！") }}",
+            "规则状态已更新": "{{ _("规则状态已更新") }}",
+            "规则创建成功！": "{{ _("规则创建成功！") }}",
+            "规则已删除": "{{ _("规则已删除") }}",
+            "选品添加成功！": "{{ _("选品添加成功！") }}",
+            "复盘生成成功": "{{ _("复盘生成成功") }}",
+            "复盘已发布": "{{ _("复盘已发布") }}",
+            "建议已标记为已采纳": "{{ _("建议已标记为已采纳") }}",
+            "建议已忽略": "{{ _("建议已忽略") }}",
+            "订单详情开发中": "{{ _("订单详情开发中") }}",
+            "编辑功能开发中": "{{ _("编辑功能开发中") }}",
+            "删除功能开发中": "{{ _("删除功能开发中") }}",
+            "更多模板开发中": "{{ _("更多模板开发中") }}",
+            "CSV 导出功能开发中": "{{ _("CSV 导出功能开发中") }}",
+            "Excel 导出功能开发中": "{{ _("Excel 导出功能开发中") }}",
+            "同步历史功能开发中": "{{ _("同步历史功能开发中") }}",
+            "确定要清除所有数据吗？该操作不可恢复": "{{ _("确定要清除所有数据吗？该操作不可恢复") }}",
+            "确定删除此规则？": "{{ _("确定删除此规则？") }}",
+            "请输入测试消息": "{{ _("请输入测试消息") }}",
+            "请输入商品名称": "{{ _("请输入商品名称") }}",
+            "匹配成功": "{{ _("匹配成功") }}",
+            "未匹配到任何规则": "{{ _("未匹配到任何规则") }}",
+            "补货": "{{ _("补货") }}",
+            "价格": "{{ _("价格") }}",
+            "营销": "{{ _("营销") }}",
+            "库存": "{{ _("库存") }}",
+            "发布": "{{ _("发布") }}",
+            "采纳": "{{ _("采纳") }}",
+            "忽略": "{{ _("忽略") }}",
+            "待审核": "{{ _("待审核") }}",
+            "已通过": "{{ _("已通过") }}",
+            "已拒绝": "{{ _("已拒绝") }}",
+            "已归档": "{{ _("已归档") }}",
+            "待处理": "{{ _("待处理") }}",
+            "已采纳": "{{ _("已采纳") }}",
+            "已忽略": "{{ _("已忽略") }}",
+            "自动": "{{ _("自动") }}",
+            "手动": "{{ _("手动") }}",
+            "精确": "{{ _("精确") }}",
+            "正则": "{{ _("正则") }}",
+            "包含": "{{ _("包含") }}",
+            "草稿": "{{ _("草稿") }}",
+            "已发布": "{{ _("已发布") }}",
+            "共": "{{ _("共") }}",
+            "条": "{{ _("条") }}",
+            "页": "{{ _("页") }}",
+            "暂无洞察": "{{ _("暂无洞察") }}",
+            "暂无行动项": "{{ _("暂无行动项") }}",
+            "加载详情失败": "{{ _("加载详情失败") }}",
+            "统计加载失败": "{{ _("统计加载失败") }}",
+            "正在扫描选品...": "{{ _("正在扫描选品...") }}",
+            "正在生成复盘分析...": "{{ _("正在生成复盘分析...") }}",
+            "正在分析数据生成建议...": "{{ _("正在分析数据生成建议...") }}",
+            "销售额": "{{ _("销售额") }}",
+            "订单数": "{{ _("订单数") }}",
+            "退款率": "{{ _("退款率") }}",
+            "发布于:": "{{ _("发布于:") }}",
+            "发布复盘": "{{ _("发布复盘") }}",
+            "数据来源:": "{{ _("数据来源:") }}",
+            "优先级": "{{ _("优先级") }}",
+            "启用规则": "{{ _("启用规则") }}",
+            "今日执行": "{{ _("今日执行") }}",
+            "规则列表": "{{ _("规则列表") }}",
+            "规则模板": "{{ _("规则模板") }}",
+            "规则名称": "{{ _("规则名称") }}",
+            "触发方式": "{{ _("触发方式") }}",
+            "条件": "{{ _("条件") }}",
+            "创建规则": "{{ _("创建规则") }}",
+            "审计日志": "{{ _("审计日志") }}",
+            "所有操作": "{{ _("所有操作") }}",
+            "所有资源": "{{ _("所有资源") }}",
+            "刷新": "{{ _("刷新") }}",
+            "创建": "{{ _("创建") }}",
+            "更新": "{{ _("更新") }}",
+            "删除": "{{ _("删除") }}",
+            "登录": "{{ _("登录") }}",
+            "导出": "{{ _("导出") }}",
+            "时间": "{{ _("时间") }}",
+            "资源": "{{ _("资源") }}",
+            "店铺": "{{ _("店铺") }}",
+            "订单": "{{ _("订单") }}",
+            "自动回复": "{{ _("自动回复") }}",
+            "选品": "{{ _("选品") }}",
+            "建议": "{{ _("建议") }}",
+            "复盘": "{{ _("复盘") }}",
+            "上一页": "{{ _("上一页") }}",
+            "下一页": "{{ _("下一页") }}",
+            "开发中": "{{ _("开发中") }}",
+            "扫描完成，发现": "{{ _("扫描完成，发现") }}",
+            "匹配规则：": "{{ _("匹配规则：") }}",
+            "回复内容：": "{{ _("回复内容：") }}",
+            "个候选商品": "{{ _("个候选商品") }}",
+            "条，第": "{{ _("条，第") }}",
+            "销售额变化：": "{{ _("销售额变化：") }}",
+            "订单变化：": "{{ _("订单变化：") }}",
+            "状态：": "{{ _("状态：") }}",
+            "客单价": "{{ _("客单价") }}",
+            "已生成": "{{ _("已生成") }}",
+            "条建议": "{{ _("条建议") }}",
+            "数据来源:": "{{ _("数据来源:") }}",
+            "点击「自动扫描」或手动添加选品": "{{ _("点击「自动扫描」或手动添加选品") }}",
+            "点击「生成复盘」开始分析": "{{ _("点击「生成复盘」开始分析") }}",
+            "点击「生成建议」基于数据分析生成运营建议": "{{ _("点击「生成建议」基于数据分析生成运营建议") }}",
+            "加载中...": "{{ _("加载中...") }}",
+            "第": "{{ _("第") }}",
+        };
+        return m[key] !== undefined ? m[key] : key;
+    };
+    </script>
+    <script src="/static/app.js?v=2"></script>
+    <script>
+        // Highlight active menu
+        document.querySelectorAll('.nav-link[data-page]').forEach(el => {
+            if (el.getAttribute('href') === location.pathname) {
+                el.classList.add('active');
+            }
+        });
+    </script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>
