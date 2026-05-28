@@ -3,6 +3,9 @@ from pydantic_settings import BaseSettings
 
 class Settings(BaseSettings):
     app_name: str = "E-Commerce Operations Platform"
+
+    # Edition: "enterprise" (full features) or "community" (open-source)
+    edition: str = "community"
     debug: bool = False
     secret_key: str = "change-me"
     encryption_key: str = "change-me"

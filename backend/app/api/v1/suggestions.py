@@ -4,7 +4,7 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.api.deps import get_current_user, get_db, get_user_store_ids, verify_store_access
-from app.core.suggestion.service import SuggestionService
+from app.pro.suggestion.service import SuggestionService
 from app.models.suggestion import Suggestion
 from app.models.user import User
 

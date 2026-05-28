@@ -5,7 +5,7 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.api.deps import get_current_user, get_db, get_user_store_ids, verify_store_access
-from app.core.product_selection.service import ProductSelectionService
+from app.pro.product_selection.service import ProductSelectionService
 from app.models.product_selection import ProductSelection
 from app.models.user import User
 

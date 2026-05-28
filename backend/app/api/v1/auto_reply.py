@@ -5,7 +5,7 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.api.deps import get_current_user, get_db, get_user_store_ids, verify_store_access
-from app.core.auto_reply.service import AutoReplyService
+from app.pro.auto_reply.service import AutoReplyService
 from app.models.auto_reply import AutoReply
 from app.models.user import User
 
