@@ -2,12 +2,30 @@
 {% block title %}{{ _("店铺管理") }} - {{ _("电商运营平台") }}{% endblock %}
 {% block page_title %}{{ _("店铺管理") }}{% endblock %}
 {% block breadcrumb %}
-<li class="breadcrumb-item"><a href="/">{{ _("首页") }}</a></li>
-<li class="breadcrumb-item active">{{ _("店铺管理") }}</li>
+<li><a href="/">{{ _("首页") }}</a></li>
+<span>—</span>
+<li class="active">{{ _("店铺管理") }}</li>
 {% endblock %}
 
 {% block content %}
 <body data-page="stores">
+<script>
+// 处理淘宝 OAuth 回调结果
+(function() {
+    const params = new URLSearchParams(window.location.search);
+    const auth = params.get('taobao_auth');
+    if (auth === 'success') {
+        // 等待页面完全渲染后弹出 toast
+        setTimeout(function() { showToast('{{ _("淘宝授权成功！") }}', 'success'); }, 500);
+        // 清除 URL 参数
+        window.history.replaceState({}, '', '/stores');
+    } else if (auth === 'error') {
+        var msg = params.get('msg') || '{{ _("未知错误") }}';
+        setTimeout(function() { showToast('{{ _("淘宝授权失败") }}: ' + decodeURIComponent(msg), 'error'); }, 500);
+        window.history.replaceState({}, '', '/stores');
+    }
+})();
+</script>
 <!-- Actions -->
 <div class="mb-4">
     <button class="btn-custom btn-custom-primary" onclick="openModal('addStoreModal')">
@@ -18,7 +36,7 @@
 <!-- Store List -->
 <div class="card-custom">
     <div class="card-header">
-        <span class="card-title"><i class="bi bi-shop-window text-primary"></i>{{ _("已接入店铺") }}</span>
+        <span class="card-title"><i class="bi bi-shop-window" style="color:var(--gold)"></i>{{ _("已接入店铺") }}</span>
     </div>
     <div class="card-body p-0">
         <div class="table-container">
@@ -44,7 +62,7 @@
 <div class="modal-overlay" id="addStoreModal">
     <div class="modal-box">
         <div class="modal-header">
-            <h5><i class="bi bi-plus-circle text-primary"></i> {{ _("添加店铺") }}</h5>
+            <h5><i class="bi bi-plus-circle" style="color:var(--gold)"></i> {{ _("添加店铺") }}</h5>
             <button class="modal-close" onclick="closeModal('addStoreModal')">&times;</button>
         </div>
         <div class="modal-body">
@@ -60,6 +78,7 @@
                         <option value="shopify">Shopify</option>
                         <option value="shopee">Shopee</option>
                         <option value="lazada">Lazada</option>
+                    </select>
                 </div>
                 <div class="form-group">
                     <label class="form-label">{{ _("店铺地址") }}</label>

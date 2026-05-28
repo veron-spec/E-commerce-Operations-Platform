@@ -2,7 +2,10 @@ from datetime import datetime
 
 import pytest
 
-from app.core.adapters.shopify import ShopifyAdapter
+try:
+    from app.pro.adapters.shopify import ShopifyAdapter
+except ImportError:
+    pytest.skip("pro/ 包未安装，跳过商业版测试", allow_module_level=True)
 
 
 def test_normalize_order(sample_shopify_order):

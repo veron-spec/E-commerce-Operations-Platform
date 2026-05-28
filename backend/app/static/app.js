@@ -1,5 +1,5 @@
-/* ============================================================
-   电商运营自动化平台 - App Core
+﻿/* ============================================================
+   鐢靛晢杩愯惀鑷姩鍖栧钩鍙?- App Core
    Toast, Dark Mode, Sidebar, Charts, Refresh, Loading
    ============================================================ */
 
@@ -41,7 +41,7 @@ function toggleDarkMode() {
     html.setAttribute('data-theme', isDark ? 'light' : 'dark');
     localStorage.setItem('theme', isDark ? 'light' : 'dark');
     updateThemeIcon(!isDark);
-    showToast(isDark ? _t('已切换为浅色模式') : _t('已切换为深色模式'), 'info');
+    showToast(isDark ? _t('宸插垏鎹负娴呰壊妯″紡') : _t('宸插垏鎹负娣辫壊妯″紡'), 'info');
 }
 
 function updateThemeIcon(isDark) {
@@ -49,13 +49,11 @@ function updateThemeIcon(isDark) {
     if (icon) icon.className = isDark ? 'bi-sun' : 'bi-moon-stars';
 }
 
-// Restore theme
+// Always start in light mode (dark sidebar + light content).
+// The toggleDarkMode() respects saved preference for manual toggles.
 (function initTheme() {
-    const saved = localStorage.getItem('theme');
-    if (saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-        document.documentElement.setAttribute('data-theme', 'dark');
-        updateThemeIcon(true);
-    }
+    document.documentElement.setAttribute('data-theme', 'light');
+    updateThemeIcon(false);
 })();
 
 /* ===== Modal System ===== */
@@ -131,7 +129,7 @@ function updateTime() {
 }
 
 /* ===== Formatters ===== */
-function formatMoney(v) { return '¥' + Number(v || 0).toLocaleString('zh-CN', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
+function formatMoney(v) { return '楼' + Number(v || 0).toLocaleString('zh-CN', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
 function formatNum(v) { return Number(v || 0).toLocaleString('zh-CN'); }
 function formatPercent(v) { return (v || 0) + '%'; }
 function formatDate(d) { if (!d) return '--'; const dt = new Date(d); return isNaN(dt) ? d : dt.toLocaleDateString('zh-CN'); }
@@ -153,7 +151,7 @@ const _pageRefreshMap = {
 
 function triggerRefresh() {
     const page = document.body.dataset.page || 'dashboard';
-    showToast(_t('正在刷新数据...'), 'info');
+    showToast(_t('姝ｅ湪鍒锋柊鏁版嵁...'), 'info');
     const fnName = _pageRefreshMap[page];
     if (fnName && typeof window[fnName] === 'function') {
         window[fnName]();
@@ -214,11 +212,11 @@ function renderLineChart(canvasId, label, labels, data, color) {
                     borderWidth: 1,
                     padding: 12,
                     cornerRadius: 8,
-                    callbacks: { label: ctx => label + ': ¥' + Number(ctx.parsed.y).toLocaleString() }
+                    callbacks: { label: ctx => label + ': 楼' + Number(ctx.parsed.y).toLocaleString() }
                 }
             },
             scales: {
-                y: { beginAtZero: true, grid: { color: gridColor }, ticks: { color: textColor, callback: v => '¥' + v.toLocaleString() } },
+                y: { beginAtZero: true, grid: { color: gridColor }, ticks: { color: textColor, callback: v => '楼' + v.toLocaleString() } },
                 x: { grid: { display: false }, ticks: { color: textColor, maxTicksLimit: 15, font: { size: 11 } } }
             },
             interaction: { intersect: false, mode: 'index' }
@@ -230,11 +228,11 @@ function renderDoughnut(canvasId, labels, data) {
     destroyChart(canvasId);
     const ctx = document.getElementById(canvasId);
     if (!ctx || !labels || !labels.length) {
-        if (ctx) { const p = ctx.parentElement; if (p) p.innerHTML = '<div class="empty-state"><div class="empty-icon"><i class="bi bi-pie-chart"></i></div><div class="empty-title">' + _t('暂无数据') + '</div></div>'; }
+        if (ctx) { const p = ctx.parentElement; if (p) p.innerHTML = '<div class="empty-state"><div class="empty-icon"><i class="bi bi-pie-chart"></i></div><div class="empty-title">' + _t('鏆傛棤鏁版嵁') + '</div></div>'; }
         return;
     }
     const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-    const colors = ['#4f46e5','#8b5cf6','#10b981','#f59e0b','#ef4444','#3b82f6','#ec4899','#14b8a6','#f97316','#6366f1'];
+    const colors = ['#b8945a','#5a8a6a','#5a7a9a','#c45a5a','#b88a4a','#8f8068','#a9977a','#334155','#64748b','#7a8a7a'];
 
     chartInstances[canvasId] = new Chart(ctx.getContext('2d'), {
         type: 'doughnut',
@@ -252,7 +250,7 @@ function renderDoughnut(canvasId, labels, data) {
                     borderColor: isDark ? '#334155' : '#e2e8f0',
                     borderWidth: 1,
                     cornerRadius: 8,
-                    callbacks: { label: ctx => ' ' + ctx.label + ': ' + ctx.parsed + ' 件' }
+                    callbacks: { label: ctx => ' ' + ctx.label + ': ' + ctx.parsed + ' 浠? }
                 }
             }
         }
@@ -306,14 +304,14 @@ async function refreshDashboard() {
         setStat('totalProducts', formatNum(summary.total_products));
 
         // Sales chart
-        renderLineChart('salesChart', '销售额 (¥)',
+        renderLineChart('salesChart', '閿€鍞 (楼)',
             (sales.revenue_by_day || []).map(d => d.period ? d.period.substring(5, 10) : ''),
             (sales.revenue_by_day || []).map(d => d.revenue || 0),
-            '#4f46e5');
+            '#b8945a');
 
         // Category chart
         renderDoughnut('categoryChart',
-            (inventory.category_distribution || []).map(d => d.category || '未分类'),
+            (inventory.category_distribution || []).map(d => d.category || '鏈垎绫?),
             (inventory.category_distribution || []).map(d => d.count));
 
         // Top products table
@@ -332,8 +330,8 @@ async function refreshDashboard() {
             }
         }
     } catch (e) {
-        console.error('看板加载失败:', e);
-        showToast(_t('看板数据加载失败'), 'error');
+        console.error('鐪嬫澘鍔犺浇澶辫触:', e);
+        showToast(_t('鐪嬫澘鏁版嵁鍔犺浇澶辫触'), 'error');
     }
 }
 
@@ -346,12 +344,12 @@ function renderTopProducts(products) {
     const tbody = document.getElementById('topProductsBody');
     if (!tbody) return;
     if (!products.length) {
-        tbody.innerHTML = '<tr><td colspan="4"><div class="empty-state"><div class="empty-title">' + _t('暂无数据') + '</div></div></td></tr>';
+        tbody.innerHTML = '<tr><td colspan="4"><div class="empty-state"><div class="empty-title">' + _t('鏆傛棤鏁版嵁') + '</div></div></td></tr>';
         return;
     }
     tbody.innerHTML = products.map((p, i) => `<tr>
         <td class="fw-bold text-muted">${i+1}</td>
-        <td><span class="truncate" style="display:inline-block;max-width:200px">${p.title || _t('未知')}</span></td>
+        <td><span class="truncate" style="display:inline-block;max-width:200px">${p.title || _t('鏈煡')}</span></td>
         <td>${formatNum(p.quantity)}</td>
         <td class="fw-bold">${formatMoney(p.revenue)}</td>
     </tr>`).join('');
@@ -361,15 +359,15 @@ function renderInventoryAlerts(items) {
     const tbody = document.getElementById('inventoryAlertBody');
     if (!tbody) return;
     if (!items.length) {
-        tbody.innerHTML = '<tr><td colspan="4"><div class="empty-state"><div class="empty-title">' + _t('暂无预警，库存正常') + '</div></div></td></tr>';
+        tbody.innerHTML = '<tr><td colspan="4"><div class="empty-state"><div class="empty-title">' + _t('鏆傛棤棰勮锛屽簱瀛樻甯?) + '</div></div></td></tr>';
         return;
     }
     tbody.innerHTML = items.map(item => {
         const qty = item.quantity || 0;
         const cls = qty <= 0 ? 'tag-danger' : qty < 5 ? 'tag-warning' : 'tag-warning';
-        const txt = qty <= 0 ? _t('缺货') : _t('偏低');
+        const txt = qty <= 0 ? _t('缂鸿揣') : _t('鍋忎綆');
         return `<tr>
-            <td>${item.title || _t('未知')}</td>
+            <td>${item.title || _t('鏈煡')}</td>
             <td class="text-muted">${item.sku || '--'}</td>
             <td class="fw-medium">${qty}</td>
             <td><span class="tag ${cls}">${txt}</span></td>
@@ -386,10 +384,10 @@ async function refreshSales() {
             fetch(`/api/v1/analytics/trends?days=${days * 2}`).then(r => r.json()),
         ]);
 
-        renderLineChart('salesTrendChart', '销售额 (¥)',
+        renderLineChart('salesTrendChart', '閿€鍞 (楼)',
             (salesData.revenue_by_day || []).map(d => d.period ? d.period.substring(5, 10) : ''),
             (salesData.revenue_by_day || []).map(d => d.revenue || 0),
-            '#10b981');
+            '#5a8a6a');
 
         const total = (salesData.revenue_by_day || []).reduce((s, d) => s + (d.revenue || 0), 0);
         const count = (salesData.revenue_by_day || []).reduce((s, d) => s + (d.order_count || 0), 0);
@@ -407,7 +405,7 @@ async function refreshSales() {
         if (tbody) {
             const rows = salesData.revenue_by_day || [];
             if (!rows.length) {
-                tbody.innerHTML = '<tr><td colspan="4"><div class="empty-state"><div class="empty-title">' + _t('暂无数据') + '</div></div></td></tr>';
+                tbody.innerHTML = '<tr><td colspan="4"><div class="empty-state"><div class="empty-title">' + _t('鏆傛棤鏁版嵁') + '</div></div></td></tr>';
             } else {
                 tbody.innerHTML = rows.slice().reverse().map(d => `<tr>
                     <td>${d.period || '--'}</td>
@@ -418,8 +416,8 @@ async function refreshSales() {
             }
         }
     } catch (e) {
-        console.error('销售分析加载失败:', e);
-        showToast(_t('销售数据加载失败'), 'error');
+        console.error('閿€鍞垎鏋愬姞杞藉け璐?', e);
+        showToast(_t('閿€鍞暟鎹姞杞藉け璐?), 'error');
     }
 }
 
@@ -434,32 +432,32 @@ async function refreshInventoryPage() {
         setStat('invOutOfStock', formatNum(data.out_of_stock_count));
 
         renderDoughnut('invCategoryChart',
-            (data.category_distribution || []).map(d => d.category || '未分类'),
+            (data.category_distribution || []).map(d => d.category || '鏈垎绫?),
             (data.category_distribution || []).map(d => d.count));
 
         const tbody = document.getElementById('invTableBody');
         if (tbody) {
             const items = data.low_stock_items || [];
             if (!items.length) {
-                tbody.innerHTML = '<tr><td colspan="5"><div class="empty-state"><div class="empty-title">' + _t('所有商品库存正常') + '</div></div></td></tr>';
+                tbody.innerHTML = '<tr><td colspan="5"><div class="empty-state"><div class="empty-title">' + _t('鎵€鏈夊晢鍝佸簱瀛樻甯?) + '</div></div></td></tr>';
             } else {
                 tbody.innerHTML = items.map(item => {
                     const qty = item.quantity || 0;
                     const cls = qty <= 0 ? 'tag-danger' : qty < 5 ? 'tag-warning' : 'tag-warning';
-                    const txt = qty <= 0 ? _t('缺货') : qty < 5 ? _t('紧急') : _t('预警');
+                    const txt = qty <= 0 ? _t('缂鸿揣') : qty < 5 ? _t('绱ф€?) : _t('棰勮');
                     return `<tr>
-                        <td>${item.title || _t('未知')}</td>
+                        <td>${item.title || _t('鏈煡')}</td>
                         <td class="text-muted">${item.sku || '--'}</td>
                         <td class="fw-medium">${qty}</td>
                         <td><span class="tag ${cls}">${txt}</span></td>
-                        <td><button class="btn-custom btn-custom-outline btn-custom-sm" onclick="showToast(_t('补货') + ' — ' + _t('开发中'), 'info')">${_t('补货')}</button></td>
+                        <td><button class="btn-custom btn-custom-outline btn-custom-sm" onclick="showToast(_t('琛ヨ揣') + ' 鈥?' + _t('寮€鍙戜腑'), 'info')">${_t('琛ヨ揣')}</button></td>
                     </tr>`;
                 }).join('');
             }
         }
     } catch (e) {
-        console.error('库存加载失败:', e);
-        showToast(_t('库存数据加载失败'), 'error');
+        console.error('搴撳瓨鍔犺浇澶辫触:', e);
+        showToast(_t('搴撳瓨鏁版嵁鍔犺浇澶辫触'), 'error');
     }
 }
 
@@ -472,36 +470,18 @@ async function refreshStores() {
         if (!tbody) return;
 
         if (!stores.length) {
-            tbody.innerHTML = '<tr><td colspan="5"><div class="empty-state"><div class="empty-title">' + _t('暂无店铺') + '</div><div class="empty-desc">' + _t('点击上方按钮添加你的第一个店铺') + '</div></div></td></tr>';
+            tbody.innerHTML = '<tr><td colspan="5"><div class="empty-state"><div class="empty-title">' + _t('鏆傛棤搴楅摵') + '</div><div class="empty-desc">' + _t('鐐瑰嚮涓婃柟鎸夐挳娣诲姞浣犵殑绗竴涓簵閾?) + '</div></div></td></tr>';
             return;
         }
         tbody.innerHTML = stores.map(s => `<tr>
             <td class="fw-medium">${s.name}</td>
-            <td><span class="tag tag-${s.platform_type === 'taobao' ? 'warning' : s.platform_type === 'shopify' || s.platform_type === 'shopee' || s.platform_type === 'lazada' ? 'info' : 'neutral'}">${s.platform_type === 'taobao' ? '淘宝' : s.platform_type === 'shopify' ? 'Shopify' : s.platform_type === 'shopee' ? 'Shopee' : s.platform_type === 'lazada' ? 'Lazada' : s.platform_type}</span></td>
+            <td><span class="tag tag-${s.platform_type === 'taobao' ? 'warning' : s.platform_type === 'shopify' || s.platform_type === 'shopee' || s.platform_type === 'lazada' ? 'info' : 'neutral'}">${s.platform_type === 'taobao' ? '娣樺疂' : s.platform_type === 'shopify' ? 'Shopify' : s.platform_type === 'shopee' ? 'Shopee' : s.platform_type === 'lazada' ? 'Lazada' : s.platform_type}</span></td>
             <td class="text-muted text-sm">${s.store_url}</td>
-            <td><span class="tag ${s.is_active ? 'tag-success' : 'tag-neutral'}">${s.is_active ? _t('正常') : _t('停用')}</span></td>
+            <td><span class="tag ${s.is_active ? 'tag-success' : 'tag-neutral'}">${s.is_active ? _t('姝ｅ父') : _t('鍋滅敤')}</span></td>
             <td>
                 <div class="cell-actions">
                     <button class="btn-custom btn-custom-outline btn-custom-sm" onclick="syncStore(${s.id})"><i class="bi bi-arrow-repeat"></i></button>
-                    <button class="btn-custom btn-custom-outline btn-custom-sm text-danger" onclick="showToast(_t('删除功能开发中'), 'info')"><i class="bi bi-trash"></i></button>
-                </div>
-            </td>
-        </tr>`).join('');
-        document.getElementById('orderBadge').textContent = stores.length;
-    } catch (e) {
-        console.error('店铺加载失败:', e);
-        showToast(_t('店铺数据加载失败'), 'error');
-    }
-}
-
-async function syncStore(id) {
-    try {
-        const res = await fetch(`/api/v1/stores/${id}/sync`);
-        if (!res.ok) throw new Error(await res.text());
-        showToast(_t('同步任务已触发'), 'success');
-    } catch (e) {
-        showToast(_t('同步失败') + ': ' + e.message, 'error');
-    }
+                    ${s.platform_type === 'taobao' ? `<button class="btn-custom btn-custom-outline btn-custom-sm text-primary" onclick="authorizeTaobao(${s.id})" title="娣樺疂鎺堟潈">${_t('鎺堟潈')}</button>` : ''}    }
 }
 
 async function addStore() {
@@ -512,7 +492,7 @@ async function addStore() {
     const secret = document.getElementById('storeSecret').value;
 
     if (!name || !url || !key || !secret) {
-        showToast(_t('请填写所有必填项'), 'warning');
+        showToast(_t('璇峰～鍐欐墍鏈夊繀濉」'), 'warning');
         return;
     }
 
@@ -520,12 +500,12 @@ async function addStore() {
         const params = new URLSearchParams({ name, platform_type: platform, store_url: url, api_key: key, api_secret: secret });
         const res = await fetch('/api/v1/stores?' + params, { method: 'POST' });
         if (!res.ok) throw new Error(await res.text());
-        showToast(_t('店铺添加成功！'), 'success');
+        showToast(_t('搴楅摵娣诲姞鎴愬姛锛?), 'success');
         closeModal('addStoreModal');
         document.getElementById('addStoreForm').reset();
         refreshStores();
     } catch (e) {
-        showToast(_t('添加失败') + ': ' + e.message, 'error');
+        showToast(_t('娣诲姞澶辫触') + ': ' + e.message, 'error');
     }
 }
 
@@ -548,11 +528,11 @@ async function refreshOrders() {
 
         const orders = data.orders || data.items || [];
         if (!orders.length) {
-            tbody.innerHTML = '<tr><td colspan="7"><div class="empty-state"><div class="empty-icon"><i class="bi bi-receipt"></i></div><div class="empty-title">' + _t('暂无订单') + '</div><div class="empty-desc">' + _t('同步数据后订单将在此显示') + '</div></div></td></tr>';
+            tbody.innerHTML = '<tr><td colspan="7"><div class="empty-state"><div class="empty-icon"><i class="bi bi-receipt"></i></div><div class="empty-title">' + _t('鏆傛棤璁㈠崟') + '</div><div class="empty-desc">' + _t('鍚屾鏁版嵁鍚庤鍗曞皢鍦ㄦ鏄剧ず') + '</div></div></td></tr>';
         } else {
             tbody.innerHTML = orders.map(o => {
                 const statusClass = o.financial_status === 'paid' ? 'tag-success' : o.financial_status === 'refunded' ? 'tag-danger' : 'tag-warning';
-                const statusText = o.financial_status === 'paid' ? _t('已付款') : o.financial_status === 'refunded' ? _t('已退款') : o.financial_status || _t('未知');
+                const statusText = o.financial_status === 'paid' ? _t('宸蹭粯娆?) : o.financial_status === 'refunded' ? _t('宸查€€娆?) : o.financial_status || _t('鏈煡');
                 const itemCount = (o.line_items || []).reduce((s, i) => s + (i.quantity || 0), 0);
                 return `<tr>
                     <td class="fw-medium">${o.order_number || '--'}</td>
@@ -562,7 +542,7 @@ async function refreshOrders() {
                     <td class="fw-medium">${formatMoney(o.total_price)}</td>
                     <td><span class="tag ${statusClass}">${statusText}</span></td>
                     <td>
-                        <button class="btn-custom btn-custom-outline btn-custom-sm" onclick="showToast(_t('订单详情开发中'), 'info')">${_t('详情')}</button>
+                        <button class="btn-custom btn-custom-outline btn-custom-sm" onclick="showToast(_t('璁㈠崟璇︽儏寮€鍙戜腑'), 'info')">${_t('璇︽儏')}</button>
                     </td>
                 </tr>`;
             }).join('');
@@ -571,14 +551,14 @@ async function refreshOrders() {
         // Pagination
         updatePagination(data.total || data.count || 0, data.page || orderPage, data.total_pages || 1);
     } catch (e) {
-        console.error('订单加载失败:', e);
-        showToast(_t('订单数据加载失败'), 'error');
+        console.error('璁㈠崟鍔犺浇澶辫触:', e);
+        showToast(_t('璁㈠崟鏁版嵁鍔犺浇澶辫触'), 'error');
     }
 }
 
 function updatePagination(total, currentPage, totalPages) {
     const el = document.getElementById('pageInfo');
-    if (el) el.textContent = _t('共') + ' ' + total + _t('条，第') + ' ' + currentPage + '/' + totalPages + _t('页');
+    if (el) el.textContent = _t('鍏?) + ' ' + total + _t('鏉★紝绗?) + ' ' + currentPage + '/' + totalPages + _t('椤?);
     const prev = document.getElementById('pagePrev');
     const next = document.getElementById('pageNext');
     if (prev) prev.disabled = currentPage <= 1;
@@ -600,29 +580,29 @@ async function refreshAutomation() {
 
         const items = rules.rules || rules || [];
         if (!items.length) {
-            tbody.innerHTML = '<tr><td colspan="5"><div class="empty-state"><div class="empty-icon"><i class="bi bi-lightning-charge"></i></div><div class="empty-title">' + _t('暂无自动化规则') + '</div><div class="empty-desc">' + _t('创建规则来自动处理库存预警、价格调整等操作') + '</div></div></td></tr>';
+            tbody.innerHTML = '<tr><td colspan="5"><div class="empty-state"><div class="empty-icon"><i class="bi bi-lightning-charge"></i></div><div class="empty-title">' + _t('鏆傛棤鑷姩鍖栬鍒?) + '</div><div class="empty-desc">' + _t('鍒涘缓瑙勫垯鏉ヨ嚜鍔ㄥ鐞嗗簱瀛橀璀︺€佷环鏍艰皟鏁寸瓑鎿嶄綔') + '</div></div></td></tr>';
             return;
         }
         tbody.innerHTML = items.map(r => {
-            const triggerText = r.trigger_type === 'scheduled' ? _t('定时') : r.trigger_type === 'event' ? _t('事件') : r.trigger_type || '--';
+            const triggerText = r.trigger_type === 'scheduled' ? _t('瀹氭椂') : r.trigger_type === 'event' ? _t('浜嬩欢') : r.trigger_type || '--';
             const cond = r.conditions || {};
             const condText = cond.field ? `${cond.field} ${cond.operator} ${cond.value}` : '--';
             return `<tr>
                 <td class="fw-medium">${r.name}</td>
                 <td><span class="tag tag-info">${triggerText}</span></td>
                 <td class="text-sm text-muted">${condText}</td>
-                <td><span class="tag ${r.is_enabled ? 'tag-success' : 'tag-neutral'}">${r.is_enabled ? _t('启用') : _t('停用')}</span></td>
+                <td><span class="tag ${r.is_enabled ? 'tag-success' : 'tag-neutral'}">${r.is_enabled ? _t('鍚敤') : _t('鍋滅敤')}</span></td>
                 <td>
                     <div class="cell-actions">
-                        <button class="btn-custom btn-custom-outline btn-custom-sm" onclick="showToast(_t('编辑功能开发中'), 'info')"><i class="bi bi-pencil"></i></button>
+                        <button class="btn-custom btn-custom-outline btn-custom-sm" onclick="showToast(_t('缂栬緫鍔熻兘寮€鍙戜腑'), 'info')"><i class="bi bi-pencil"></i></button>
                         <button class="btn-custom btn-custom-outline btn-custom-sm" onclick="toggleRule(${r.id})"><i class="bi ${r.is_enabled ? 'bi-pause' : 'bi-play'}"></i></button>
                     </div>
                 </td>
             </tr>`;
         }).join('');
     } catch (e) {
-        console.error('自动化规则加载失败:', e);
-        showToast('规则数据加载失败', 'error');
+        console.error('鑷姩鍖栬鍒欏姞杞藉け璐?', e);
+        showToast('瑙勫垯鏁版嵁鍔犺浇澶辫触', 'error');
     }
 }
 
@@ -630,10 +610,10 @@ async function toggleRule(id) {
     try {
         const res = await fetch(`/api/v1/automation/rules/${id}/toggle`, { method: 'POST' });
         if (!res.ok) throw new Error(await res.text());
-        showToast(_t('规则状态已更新'), 'success');
+        showToast(_t('瑙勫垯鐘舵€佸凡鏇存柊'), 'success');
         refreshAutomation();
     } catch (e) {
-        showToast(_t('操作失败') + ': ' + e.message, 'error');
+        showToast(_t('鎿嶄綔澶辫触') + ': ' + e.message, 'error');
     }
 }
 
@@ -643,7 +623,7 @@ async function createRule() {
     const operator = document.getElementById('ruleOperator').value;
     const value = document.getElementById('ruleValue').value;
 
-    if (!name || !field || !value) { showToast(_t('请填写完整信息'), 'warning'); return; }
+    if (!name || !field || !value) { showToast(_t('璇峰～鍐欏畬鏁翠俊鎭?), 'warning'); return; }
 
     try {
         const res = await fetch('/api/v1/automation/rules', {
@@ -657,12 +637,12 @@ async function createRule() {
             }),
         });
         if (!res.ok) throw new Error(await res.text());
-        showToast(_t('规则创建成功！'), 'success');
+        showToast(_t('瑙勫垯鍒涘缓鎴愬姛锛?), 'success');
         closeModal('addRuleModal');
         document.getElementById('addRuleForm').reset();
         refreshAutomation();
     } catch (e) {
-        showToast(_t('创建失败') + ': ' + e.message, 'error');
+        showToast(_t('鍒涘缓澶辫触') + ': ' + e.message, 'error');
     }
 }
 

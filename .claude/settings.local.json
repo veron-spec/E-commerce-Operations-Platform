@@ -2,10 +2,10 @@
   "permissions": {
     "allow": [
       "PowerShell(winget install *)",
-      "PowerShell(Get-Service *)",
-      "PowerShell($env:PYTHONIOENCODING = \"utf-8\"; Set-Location D:\\\\github_product\\\\\"E-commerce Operations Plugins\"\\\\E-commerce-Operations-Plugins\\\\backend; python test_page.py 2>&1)",
-      "PowerShell(try { $r = Invoke-WebRequest -Uri \"http://localhost:8100/api/v1/suggestions/generate\" -Method POST -UseBasicParsing; Write-Output \"[OK] Generate suggestions: $\\($r.Content\\)\" } catch { $stream = $_.Exception.Response.GetResponseStream\\(\\); $reader = New-Object System.IO.StreamReader\\($stream\\); Write-Output \"[FAIL] Generate suggestions: $\\($reader.ReadToEnd\\(\\)\\)\" })",
-      "PowerShell(curl.exe -s -X POST http://localhost:8100/api/v1/suggestions/generate 2>&1)"
+      "PowerShell(Get-Service *)"
     ]
+  },
+  "env": {
+    "ANTHROPIC_BETA": "output-128k-2025-02-19,prompt-caching-2025-04-30"
   }
 }

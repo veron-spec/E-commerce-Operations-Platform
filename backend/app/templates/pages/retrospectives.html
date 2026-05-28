@@ -2,15 +2,16 @@
 {% block title %}{{ _("复盘分析") }} - {{ _("电商运营平台") }}{% endblock %}
 {% block page_title %}{{ _("复盘分析") }}{% endblock %}
 {% block breadcrumb %}
-<li class="breadcrumb-item"><a href="/">{{ _("首页") }}</a></li>
-<li class="breadcrumb-item active">{{ _("复盘分析") }}</li>
+<li><a href="/">{{ _("首页") }}</a></li>
+<span>—</span>
+<li class="active">{{ _("复盘分析") }}</li>
 {% endblock %}
 
 {% block content %}
 <body data-page="retrospectives">
 <div class="stats-grid">
-    <div class="stat-card color-primary">
-        <div class="stat-header">
+    <div class="stat stat-primary">
+        <div class="stat-top">
             <div>
                 <div class="stat-label">{{ _("总复盘次数") }}</div>
                 <div class="stat-value" id="rtTotal">--</div>
@@ -18,8 +19,8 @@
             <div class="stat-icon"><i class="bi bi-clock-history"></i></div>
         </div>
     </div>
-    <div class="stat-card color-info">
-        <div class="stat-header">
+    <div class="stat stat-info">
+        <div class="stat-top">
             <div>
                 <div class="stat-label">{{ _("周度") }}</div>
                 <div class="stat-value" id="rtWeekly">--</div>
@@ -27,8 +28,8 @@
             <div class="stat-icon"><i class="bi bi-calendar-week"></i></div>
         </div>
     </div>
-    <div class="stat-card color-success">
-        <div class="stat-header">
+    <div class="stat stat-success">
+        <div class="stat-top">
             <div>
                 <div class="stat-label">{{ _("月度") }}</div>
                 <div class="stat-value" id="rtMonthly">--</div>
@@ -36,8 +37,8 @@
             <div class="stat-icon"><i class="bi bi-calendar-month"></i></div>
         </div>
     </div>
-    <div class="stat-card color-warning">
-        <div class="stat-header">
+    <div class="stat stat-warning">
+        <div class="stat-top">
             <div>
                 <div class="stat-label">{{ _("最近复盘") }}</div>
                 <div class="stat-value" id="rtLatest" style="font-size:14px;">--</div>
@@ -74,7 +75,7 @@
 
 <div class="card-custom">
     <div class="card-header">
-        <span class="card-title"><i class="bi bi-clock-history text-primary"></i>{{ _("复盘列表") }}</span>
+        <span class="card-title"><i class="bi bi-clock-history" style="color:var(--gold)"></i>{{ _("复盘列表") }}</span>
         <span class="text-sm text-muted" id="rtPageInfo">{{ _("加载中...") }}</span>
     </div>
     <div class="card-body p-0">
@@ -117,7 +118,7 @@
 <!-- Detail Panel -->
 <div class="card-custom mt-4" id="rtDetailPanel" style="display:none;">
     <div class="card-header">
-        <span class="card-title"><i class="bi bi-file-text text-primary"></i>{{ _("复盘详情") }}</span>
+        <span class="card-title"><i class="bi bi-file-text" style="color:var(--gold)"></i>{{ _("复盘详情") }}</span>
         <button class="btn-custom btn-custom-outline btn-custom-sm" onclick="closeDetail()">
             <i class="bi bi-x-lg"></i>{{ _("关闭") }}
         </button>
@@ -129,7 +130,7 @@
 <div class="modal-overlay" id="generateRetroModal">
     <div class="modal-box" style="max-width:400px;">
         <div class="modal-header">
-            <h5><i class="bi bi-plus-circle text-primary"></i> {{ _("生成复盘") }}</h5>
+            <h5><i class="bi bi-plus-circle" style="color:var(--gold)"></i> {{ _("生成复盘") }}</h5>
             <button class="modal-close" onclick="closeModal('generateRetroModal')">&times;</button>
         </div>
         <div class="modal-body">
@@ -277,19 +278,19 @@ async function loadDetail(id) {
 
         content.innerHTML = `
             <div class="grid-4 mb-4">
-                <div class="stat-card" style="padding:12px;">
+                <div class="stat stat-primary" style="padding:12px;">
                     <div class="stat-label">${_t('销售额')}</div>
                     <div class="fw-bold" style="font-size:20px;">${formatMoney(ds.total_revenue)}</div>
                 </div>
-                <div class="stat-card" style="padding:12px;">
+                <div class="stat stat-default" style="padding:12px;">
                     <div class="stat-label">${_t('订单数')}</div>
                     <div class="fw-bold" style="font-size:20px;">${formatNum(ds.total_orders)}</div>
                 </div>
-                <div class="stat-card" style="padding:12px;">
+                <div class="stat stat-success" style="padding:12px;">
                     <div class="stat-label">${_t('客单价')}</div>
                     <div class="fw-bold" style="font-size:20px;">${formatMoney(ds.avg_order_value)}</div>
                 </div>
-                <div class="stat-card" style="padding:12px;">
+                <div class="stat stat-warning" style="padding:12px;">
                     <div class="stat-label">${_t('退款率')}</div>
                     <div class="fw-bold" style="font-size:20px;">${ds.refund_rate || 0}%</div>
                 </div>

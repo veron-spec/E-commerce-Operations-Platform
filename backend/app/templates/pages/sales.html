@@ -2,49 +2,42 @@
 {% block title %}{{ _("销售分析") }} - {{ _("电商运营平台") }}{% endblock %}
 {% block page_title %}{{ _("销售分析") }}{% endblock %}
 {% block breadcrumb %}
-<li class="breadcrumb-item"><a href="/">{{ _("首页") }}</a></li>
-<li class="breadcrumb-item active">{{ _("销售分析") }}</li>
+<li><a href="/">{{ _("首页") }}</a></li>
+<span>—</span>
+<li class="active">{{ _("销售分析") }}</li>
 {% endblock %}
 
 {% block content %}
 <body data-page="sales">
 <!-- Stats -->
 <div class="stats-grid">
-    <div class="stat-card color-success">
-        <div class="stat-header">
-            <div>
-                <div class="stat-label">{{ _("总销售额") }}</div>
-                <div class="stat-value" id="salesTotalRevenue">--</div>
-            </div>
+    <div class="stat stat-primary">
+        <div class="stat-top">
+            <div class="stat-label">{{ _("总销售额") }}</div>
             <div class="stat-icon"><i class="bi bi-currency-yen"></i></div>
         </div>
+        <div class="stat-value" id="salesTotalRevenue">--</div>
     </div>
-    <div class="stat-card color-primary">
-        <div class="stat-header">
-            <div>
-                <div class="stat-label">{{ _("总订单数") }}</div>
-                <div class="stat-value" id="salesTotalOrders">--</div>
-            </div>
+    <div class="stat stat-default">
+        <div class="stat-top">
+            <div class="stat-label">{{ _("总订单数") }}</div>
             <div class="stat-icon"><i class="bi bi-receipt"></i></div>
         </div>
+        <div class="stat-value" id="salesTotalOrders">--</div>
     </div>
-    <div class="stat-card color-warning">
-        <div class="stat-header">
-            <div>
-                <div class="stat-label">{{ _("平均客单价") }}</div>
-                <div class="stat-value" id="salesAvgOrder">--</div>
-            </div>
+    <div class="stat stat-success">
+        <div class="stat-top">
+            <div class="stat-label">{{ _("平均客单价") }}</div>
             <div class="stat-icon"><i class="bi bi-cart3"></i></div>
         </div>
+        <div class="stat-value" id="salesAvgOrder">--</div>
     </div>
-    <div class="stat-card color-info">
-        <div class="stat-header">
-            <div>
-                <div class="stat-label">{{ _("环比增长") }}</div>
-                <div class="stat-value" id="salesRevenueGrowth">--</div>
-            </div>
+    <div class="stat stat-info">
+        <div class="stat-top">
+            <div class="stat-label">{{ _("环比增长") }}</div>
             <div class="stat-icon"><i class="bi bi-graph-up-arrow"></i></div>
         </div>
+        <div class="stat-value" id="salesRevenueGrowth">--</div>
     </div>
 </div>
 
@@ -61,7 +54,7 @@
 <!-- Chart -->
 <div class="card-custom mb-4">
     <div class="card-header">
-        <span class="card-title"><i class="bi bi-graph-up-arrow text-success"></i>{{ _("销售趋势") }}</span>
+        <span class="card-title"><i class="bi bi-graph-up-arrow" style="color:var(--emerald)"></i>{{ _("销售趋势") }}</span>
     </div>
     <div class="card-body">
         <div class="chart-wrapper">
@@ -73,7 +66,7 @@
 <!-- Table -->
 <div class="card-custom">
     <div class="card-header">
-        <span class="card-title"><i class="bi bi-table text-muted"></i>{{ _("每日明细") }}</span>
+        <span class="card-title"><i class="bi bi-table" style="color:var(--gold)"></i>{{ _("每日明细") }}</span>
     </div>
     <div class="card-body p-0">
         <div class="table-container">
