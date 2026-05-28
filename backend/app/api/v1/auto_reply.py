@@ -1,4 +1,4 @@
-﻿"""鑷姩鍖栧鏈?API - 鑷姩鍥炲瑙勫垯绠＄悊銆佹秷鎭祴璇曘€?""
+"""自动化客服 API - 自动回复规则管理、消息测试。"""
 from fastapi import APIRouter, Depends, HTTPException, Query
 from pydantic import BaseModel
 from sqlalchemy import select
@@ -10,7 +10,8 @@ from app.models.auto_reply import AutoReply
 try:
     from app.pro.auto_reply.service import AutoReplyService
 except ImportError:
-    AutoReplyService = Nonefrom app.models.user import User
+    AutoReplyService = None
+from app.models.user import User
 
 router = APIRouter()
 
@@ -43,12 +44,12 @@ async def _verify_rule_owner(rule_id: int, user: User, db: AsyncSession) -> Auto
     result = await db.execute(select(AutoReply).where(AutoReply.id == rule_id))
     rule = result.scalar_one_or_none()
     if not rule:
-        raise HTTPException(status_code=404, detail="瑙勫垯涓嶅瓨鍦?)
+        raise HTTPException(status_code=404, detail="规则不存在")
     await verify_store_access(rule.store_id, user, db)
     return rule
 
 
-@router.get("", summary="鑷姩鍥炲瑙勫垯鍒楄〃")
+@router.get("", summary="自动回复规则列表")
 async def list_rules(
     page: int = Query(1, ge=1),
     page_size: int = Query(20, ge=1, le=100),
@@ -67,7 +68,7 @@ async def list_rules(
     )
 
 
-@router.post("", summary="鍒涘缓瑙勫垯", status_code=201)
+@router.post("", summary="创建规则", status_code=201)
 async def create_rule(
     req: CreateAutoReplyRequest,
     user: User = Depends(get_current_user),
@@ -78,7 +79,7 @@ async def create_rule(
     return await service.create_rule(req.model_dump())
 
 
-@router.get("/stats", summary="鍖归厤缁熻")
+@router.get("/stats", summary="匹配统计")
 async def match_stats(
     user: User = Depends(get_current_user),
     db: AsyncSession = Depends(get_db),
@@ -90,7 +91,7 @@ async def match_stats(
     return await service.get_match_stats(store_ids=store_ids)
 
 
-@router.post("/test", summary="娴嬭瘯娑堟伅鍖归厤")
+@router.post("/test", summary="测试消息匹配")
 async def test_match(
     req: TestMatchRequest,
     user: User = Depends(get_current_user),
@@ -100,7 +101,7 @@ async def test_match(
     return await service.test_match(req.message)
 
 
-@router.get("/{rule_id}", summary="瑙勫垯璇︽儏")
+@router.get("/{rule_id}", summary="规则详情")
 async def get_rule(
     rule_id: int,
     user: User = Depends(get_current_user),
@@ -111,7 +112,7 @@ async def get_rule(
     return await service.get_rule(rule_id)
 
 
-@router.put("/{rule_id}", summary="鏇存柊瑙勫垯")
+@router.put("/{rule_id}", summary="更新规则")
 async def update_rule(
     rule_id: int,
     req: UpdateAutoReplyRequest,
@@ -124,7 +125,7 @@ async def update_rule(
     return result
 
 
-@router.delete("/{rule_id}", summary="鍒犻櫎瑙勫垯", status_code=204)
+@router.delete("/{rule_id}", summary="删除规则", status_code=204)
 async def delete_rule(
     rule_id: int,
     user: User = Depends(get_current_user),
@@ -135,7 +136,7 @@ async def delete_rule(
     await service.delete_rule(rule_id)
 
 
-@router.post("/{rule_id}/toggle", summary="鍚敤/鍋滅敤瑙勫垯")
+@router.post("/{rule_id}/toggle", summary="启用/停用规则")
 async def toggle_rule(
     rule_id: int,
     user: User = Depends(get_current_user),

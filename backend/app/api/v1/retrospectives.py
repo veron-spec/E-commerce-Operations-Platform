@@ -1,4 +1,4 @@
-﻿"""澶嶇洏鍒嗘瀽 API - 澶嶇洏鍒楄〃銆佺敓鎴愩€佸彂甯冦€?""
+"""复盘分析 API - 复盘列表、生成、发布。"""
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -9,10 +9,11 @@ try:
     from app.pro.retrospective.service import RetrospectiveService
 except ImportError:
     RetrospectiveService = None
+
 router = APIRouter()
 
 
-@router.get("", summary="澶嶇洏鍒楄〃")
+@router.get("", summary="复盘列表")
 async def list_retrospectives(
     page: int = Query(1, ge=1),
     page_size: int = Query(20, ge=1, le=100),
@@ -29,7 +30,7 @@ async def list_retrospectives(
     )
 
 
-@router.get("/stats", summary="澶嶇洏缁熻")
+@router.get("/stats", summary="复盘统计")
 async def retrospective_stats(
     user: User = Depends(get_current_user),
     db: AsyncSession = Depends(get_db),
@@ -39,9 +40,9 @@ async def retrospective_stats(
     return await service.get_stats(store_ids=store_ids)
 
 
-@router.post("/generate", summary="鐢熸垚澶嶇洏鍒嗘瀽", status_code=201)
+@router.post("/generate", summary="生成复盘分析", status_code=201)
 async def generate_retrospective(
-    store_id: int = Query(..., description="搴楅摵ID"),
+    store_id: int = Query(..., description="店铺ID"),
     period_type: str = Query("weekly", pattern="^(weekly|monthly|quarterly)$"),
     user: User = Depends(get_current_user),
     db: AsyncSession = Depends(get_db),
@@ -51,7 +52,7 @@ async def generate_retrospective(
     return await service.generate(store_id=store_id, period_type=period_type)
 
 
-@router.get("/{retro_id}", summary="澶嶇洏璇︽儏")
+@router.get("/{retro_id}", summary="复盘详情")
 async def get_retrospective(
     retro_id: int,
     user: User = Depends(get_current_user),
@@ -60,12 +61,12 @@ async def get_retrospective(
     service = RetrospectiveService(db)
     result = await service.get_retrospective(retro_id)
     if not result:
-        raise HTTPException(status_code=404, detail="澶嶇洏涓嶅瓨鍦?)
+        raise HTTPException(status_code=404, detail="复盘不存在")
     await verify_store_access(result["store_id"], user, db)
     return result
 
 
-@router.post("/{retro_id}/publish", summary="鍙戝竷澶嶇洏")
+@router.post("/{retro_id}/publish", summary="发布复盘")
 async def publish_retrospective(
     retro_id: int,
     user: User = Depends(get_current_user),
@@ -74,6 +75,6 @@ async def publish_retrospective(
     service = RetrospectiveService(db)
     result = await service.publish(retro_id)
     if not result:
-        raise HTTPException(status_code=404, detail="澶嶇洏涓嶅瓨鍦?)
+        raise HTTPException(status_code=404, detail="复盘不存在")
     await verify_store_access(result["store_id"], user, db)
     return result

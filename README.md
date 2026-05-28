@@ -1,16 +1,17 @@
-﻿# E-Commerce Operations Platform
+# E-Commerce Operations Platform
 
 > **Multi-platform e-commerce data synchronization, intelligent analytics, and automated operations management platform**
 
-A comprehensive, production-ready e-commerce operations backend that aggregates store data across **Taobao / Shopify / WooCommerce / Shopee / Lazada**. Built with FastAPI + SQLAlchemy async architecture, it forms a complete closed loop from data ingestion to operational decision-making 鈥?dashboard analytics, inventory management, intelligent product selection, automated rules, customer service auto-reply, and business retrospectives.
+A comprehensive, production-ready e-commerce operations backend that aggregates store data across **Taobao / Shopify / WooCommerce / Shopee / Lazada**. Built with FastAPI + SQLAlchemy async architecture, it forms a complete closed loop from data ingestion to operational decision-making — dashboard analytics, inventory management, intelligent product selection, automated rules, customer service auto-reply, and business retrospectives.
 
 ---
-## 鉁?Key Features
+
+## ✨ Key Features
 
 | Module | Description |
 |--------|-------------|
 | **Dashboard** | Real-time KPIs (sales, order count, avg order value), sales trend charts, category distribution, Top 10 products, inventory alerts |
-| **Sales Analytics** | Multi-dimension trend analysis (7/30/90 days), daily breakdown,鐜瘮 growth, category aggregation |
+| **Sales Analytics** | Multi-dimension trend analysis (7/30/90 days), daily breakdown, MoM growth, category aggregation |
 | **Inventory Management** | Stock classification (normal/low/out-of-stock), category distribution, alert lists |
 | **Store Management** | Multi-platform integration (Taobao/Shopify/WooCommerce/Shopee/Lazada), OAuth authorization, data sync trigger |
 | **Automation Rules** | Condition-triggered automation (inventory alerts, sales spikes), enable/disable toggle |
@@ -26,25 +27,25 @@ A comprehensive, production-ready e-commerce operations backend that aggregates 
 
 ---
 
-## 馃彈锔?Architecture Highlights
+## 🏗️ Architecture Highlights
 
-- **Platform Adapter Pattern**: Unified `PlatformAdapter` interface abstracts multi-platform API differences 鈥?adding a new platform requires only 5 method implementations + factory registration
+- **Platform Adapter Pattern**: Unified `PlatformAdapter` interface abstracts multi-platform API differences — adding a new platform requires only 5 method implementations + factory registration
 - **Dual-Layer Cache**: L1 in-memory (30s TTL / LRU) + L2 Redis, managed automatically via `@cached` decorator
-- **Data Isolation**: Three-tier permission isolation (User 鈫?Store 鈫?Entity), covered by integration tests
+- **Data Isolation**: Three-tier permission isolation (User → Store → Entity), covered by integration tests
 - **Rotatable Encryption**: Encryption keys support `reencrypt_api_key()` migration without data loss
 - **Zero Framework Frontend**: Fully custom CSS design system + vanilla JavaScript, no Bootstrap/jQuery dependency
 - **i18n Architecture**: Translation JSON + `_(text)` global function, auto language detection via Cookie/Header
-- **Conditional Pro Module**: Commercial features load via `try/except ImportError` 鈥?community edition works standalone with graceful degradation
+- **Conditional Pro Module**: Commercial features load via `try/except ImportError` — community edition works standalone with graceful degradation
 
 ---
 
-## 馃洜锔?Tech Stack
+## 🛠️ Tech Stack
 
 | Layer | Technology |
 |-------|-----------|
 | **Backend** | Python 3.14, FastAPI, SQLAlchemy 2.0 (async), Alembic |
 | **Database** | PostgreSQL 16 / SQLite (dev), Redis 7 |
-| **Frontend** | Jinja2 templates, custom CSS design system (脡lan), Chart.js, vanilla JS |
+| **Frontend** | Jinja2 templates, custom CSS design system (Élan), Chart.js, vanilla JS |
 | **Auth** | JWT (python-jose), bcrypt password hashing |
 | **Encryption** | Fernet (AES-128-CBC + HMAC-SHA256), PBKDF2 key derivation |
 | **Async Tasks** | Celery + Redis (data sync, report generation) |
@@ -53,7 +54,7 @@ A comprehensive, production-ready e-commerce operations backend that aggregates 
 
 ---
 
-## 馃殌 Quick Start
+## 🚀 Quick Start
 
 ### Prerequisites
 
@@ -65,7 +66,7 @@ A comprehensive, production-ready e-commerce operations backend that aggregates 
 ```bash
 # 1. Configure environment
 cp backend/.env.example backend/.env
-# Edit backend/.env 鈥?update SECRET_KEY and ENCRYPTION_KEY
+# Edit backend/.env — update SECRET_KEY and ENCRYPTION_KEY
 
 # 2. Start all services
 docker compose -f docker/docker-compose.yml up -d
@@ -109,7 +110,8 @@ Login to explore: Dashboard, Store Management, Sales Analytics, Product Selectio
 
 ---
 
-## 馃И Testing
+## 🧪 Testing
+
 ```bash
 cd backend
 python -m pytest tests/ -v --tb=short
@@ -119,34 +121,35 @@ Test coverage includes: authentication, stores, orders, product selection, autom
 
 ---
 
-## 馃搧 Project Structure
+## 📁 Project Structure
+
 ```
 backend/
-鈹溾攢鈹€ app/
-鈹?  鈹溾攢鈹€ api/v1/             # API routes (auth / stores / analytics / automation / etc.)
-鈹?  鈹?  鈹溾攢鈹€ pages.py        # Page routes (Jinja2 template rendering)
-鈹?  鈹?  鈹斺攢鈹€ *.py            # REST endpoints
-鈹?  鈹溾攢鈹€ core/               # Core business logic (community)
-鈹?  鈹?  鈹溾攢鈹€ auth.py         # JWT + password
-鈹?  鈹?  鈹溾攢鈹€ crypto.py       # Fernet encryption
-鈹?  鈹?  鈹溾攢鈹€ i18n.py         # Internationalization
-鈹?  鈹?  鈹斺攢鈹€ operation_log.py # Audit logging
-鈹?  鈹溾攢鈹€ pro/                # Commercial modules (optional, loaded via try/except)
-鈹?  鈹溾攢鈹€ infrastructure/     # Database, cache, rate limiter, Celery
-鈹?  鈹溾攢鈹€ models/             # 15 SQLAlchemy ORM models
-鈹?  鈹溾攢鈹€ static/             # CSS design system, JS
-鈹?  鈹溾攢鈹€ templates/          # Jinja2 templates (14 pages)
-鈹?  鈹斺攢鈹€ config.py           # Pydantic settings
-鈹溾攢鈹€ tasks/                  # Celery async tasks
-鈹溾攢鈹€ tests/                  # Test suite
-鈹溾攢鈹€ migrations/             # Alembic database migrations
-鈹溾攢鈹€ docker/                 # Docker Compose + Nginx config
-鈹斺攢鈹€ docs/                   # API documentation
+├── app/
+│   ├── api/v1/             # API routes (auth / stores / analytics / automation / etc.)
+│   │   ├── pages.py        # Page routes (Jinja2 template rendering)
+│   │   └── *.py            # REST endpoints
+│   ├── core/               # Core business logic (community)
+│   │   ├── auth.py         # JWT + password
+│   │   ├── crypto.py       # Fernet encryption
+│   │   ├── i18n.py         # Internationalization
+│   │   └── operation_log.py # Audit logging
+│   ├── pro/                # Commercial modules (optional, loaded via try/except)
+│   ├── infrastructure/     # Database, cache, rate limiter, Celery
+│   ├── models/             # 15 SQLAlchemy ORM models
+│   ├── static/             # CSS design system, JS
+│   ├── templates/          # Jinja2 templates (14 pages)
+│   └── config.py           # Pydantic settings
+├── tasks/                  # Celery async tasks
+├── tests/                  # Test suite
+├── migrations/             # Alembic database migrations
+├── docker/                 # Docker Compose + Nginx config
+└── docs/                   # API documentation
 ```
 
 ---
 
-## 馃寪 Supported Platforms
+## 🌐 Supported Platforms
 
 | Platform | Credentials | Auth Type |
 |----------|-------------|-----------|
@@ -158,7 +161,7 @@ backend/
 
 ---
 
-## 馃攽 Environment Variables
+## 🔑 Environment Variables
 
 | Variable | Description | Default |
 |----------|-------------|---------|
@@ -170,17 +173,17 @@ backend/
 
 ---
 
-## 馃搳 Evaluation Highlights
+## 📊 Evaluation Highlights
 
 This project is designed with the following principles valued by the 3D evaluation framework:
 
-- **Product Value**: Functionally complete e-commerce operations backend 鈥?from multi-platform data ingestion to actionable business insights, all in one deployable system
+- **Product Value**: Functionally complete e-commerce operations backend — from multi-platform data ingestion to actionable business insights, all in one deployable system
 - **Technical Quality**: Clean architecture with adapter pattern, dual-layer caching, async processing, comprehensive security measures, and automated testing
 - **Global Scalability**: Multi-platform e-commerce support (5 platforms), bilingual i18n, extensible pro module system, containerized deployment ready for any cloud provider
-- **Execution Quality**: Working authentication, real-time dashboards, data-driven suggestions, automated workflows 鈥?not just concepts but shipped features
+- **Execution Quality**: Working authentication, real-time dashboards, data-driven suggestions, automated workflows — not just concepts but shipped features
 
 ---
 
-## 馃搫 License
+## 📄 License
 
 This project is the Community Edition of an e-commerce operations platform.

@@ -1,70 +1,72 @@
-﻿{% extends "base.html" %}
-{% block title %}{{ _("璁㈠崟绠＄悊") }} - {{ _("鐢靛晢杩愯惀骞冲彴") }}{% endblock %}
-{% block page_title %}{{ _("璁㈠崟绠＄悊") }}{% endblock %}
+{% extends "base.html" %}
+{% block title %}{{ _("订单管理") }} - {{ _("电商运营平台") }}{% endblock %}
+{% block page_title %}{{ _("订单管理") }}{% endblock %}
 {% block breadcrumb %}
-<li><a href="/">{{ _("棣栭〉") }}</a></li>
-<span>鈥?/span>
-<li class="active">{{ _("璁㈠崟绠＄悊") }}</li>{% endblock %}
+<li><a href="/">{{ _("首页") }}</a></li>
+<span>—</span>
+<li class="active">{{ _("订单管理") }}</li>
+{% endblock %}
 
 {% block content %}
 <body data-page="orders">
 <!-- Filters -->
 <div class="filter-bar">
     <div class="flex items-center gap-2">
-        <label class="form-label mb-0 text-sm">{{ _("鐘舵€?) }}</label>
+        <label class="form-label mb-0 text-sm">{{ _("状态") }}</label>
         <select class="form-custom" id="orderStatusFilter" onchange="orderPage=1;refreshOrders()">
-            <option value="">{{ _("鍏ㄩ儴璁㈠崟") }}</option>
-            <option value="paid">{{ _("宸蹭粯娆?) }}</option>
-            <option value="refunded">{{ _("宸查€€娆?) }}</option>
-            <option value="pending">{{ _("寰呭鐞?) }}</option>
+            <option value="">{{ _("全部订单") }}</option>
+            <option value="paid">{{ _("已付款") }}</option>
+            <option value="refunded">{{ _("已退款") }}</option>
+            <option value="pending">{{ _("待处理") }}</option>
         </select>
     </div>
     <div class="flex items-center gap-2">
-        <label class="form-label mb-0 text-sm">{{ _("鎼滅储") }}</label>
-        <input type="text" class="form-custom" id="orderSearch" placeholder="{{ _('璁㈠崟鍙?/ 涔板閭...') }}" style="width:200px">
+        <label class="form-label mb-0 text-sm">{{ _("搜索") }}</label>
+        <input type="text" class="form-custom" id="orderSearch" placeholder="{{ _('订单号 / 买家邮箱...') }}" style="width:200px">
     </div>
     <button class="btn-custom btn-custom-primary" onclick="orderPage=1;refreshOrders()">
-        <i class="bi bi-search"></i>{{ _("鏌ヨ") }}
+        <i class="bi bi-search"></i>{{ _("查询") }}
     </button>
     <button class="btn-custom btn-custom-outline ms-auto" onclick="refreshOrders()">
-        <i class="bi bi-arrow-clockwise"></i>{{ _("鍒锋柊") }}
+        <i class="bi bi-arrow-clockwise"></i>{{ _("刷新") }}
     </button>
 </div>
 
 <!-- Orders Table -->
 <div class="card-custom">
     <div class="card-header">
-        <span class="card-title"><i class="bi bi-receipt" style="color:var(--gold)"></i>{{ _("璁㈠崟鍒楄〃") }}</span>        <span class="text-sm text-muted" id="pageInfo">{{ _("鍔犺浇涓?..") }}</span>
+        <span class="card-title"><i class="bi bi-receipt" style="color:var(--gold)"></i>{{ _("订单列表") }}</span>
+        <span class="text-sm text-muted" id="pageInfo">{{ _("加载中...") }}</span>
     </div>
     <div class="card-body p-0">
         <div class="table-container">
             <table class="table-custom">
                 <thead>
                     <tr>
-                        <th>{{ _("璁㈠崟鍙?) }}</th>
-                        <th>{{ _("鏃堕棿") }}</th>
-                        <th>{{ _("涔板") }}</th>
-                        <th style="width:60px">{{ _("鏁伴噺") }}</th>
-                        <th style="width:110px">{{ _("閲戦") }}</th>
-                        <th style="width:80px">{{ _("鐘舵€?) }}</th>
-                        <th style="width:80px">{{ _("鎿嶄綔") }}</th>
+                        <th>{{ _("订单号") }}</th>
+                        <th>{{ _("时间") }}</th>
+                        <th>{{ _("买家") }}</th>
+                        <th style="width:60px">{{ _("数量") }}</th>
+                        <th style="width:110px">{{ _("金额") }}</th>
+                        <th style="width:80px">{{ _("状态") }}</th>
+                        <th style="width:80px">{{ _("操作") }}</th>
                     </tr>
                 </thead>
                 <tbody id="ordersTableBody">
-                    <tr><td colspan="7"><div class="empty-state"><div class="empty-title">{{ _("鍔犺浇涓?..") }}</div></div></td></tr>
+                    <tr><td colspan="7"><div class="empty-state"><div class="empty-title">{{ _("加载中...") }}</div></div></td></tr>
                 </tbody>
             </table>
         </div>
     </div>
     <div class="card-footer flex items-center justify-between">
         <div class="pagination-custom">
-            <span class="page-info" id="pageInfo">{{ _("鍏?) }} 0 {{ _("鏉?) }}</span>
+            <span class="page-info" id="pageInfo">{{ _("共") }} 0 {{ _("条") }}</span>
             <div class="page-btns">
                 <button class="btn-custom btn-custom-outline btn-custom-sm" id="pagePrev" onclick="changePage(-1)" disabled>
-                    <i class="bi bi-chevron-left"></i> {{ _("涓婁竴椤?) }}
+                    <i class="bi bi-chevron-left"></i> {{ _("上一页") }}
                 </button>
                 <button class="btn-custom btn-custom-outline btn-custom-sm" id="pageNext" onclick="changePage(1)">
-                    {{ _("涓嬩竴椤?) }} <i class="bi bi-chevron-right"></i>
+                    {{ _("下一页") }} <i class="bi bi-chevron-right"></i>
                 </button>
             </div>
         </div>
