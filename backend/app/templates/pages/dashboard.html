@@ -1,9 +1,9 @@
 {% extends "base.html" %}
-{% block title %}数据看板 - 电商运营平台{% endblock %}
-{% block page_title %}数据看板{% endblock %}
+{% block title %}{{ _("数据看板") }} - {{ _("电商运营平台") }}{% endblock %}
+{% block page_title %}{{ _("数据看板") }}{% endblock %}
 {% block breadcrumb %}
-<li class="breadcrumb-item"><a href="/">首页</a></li>
-<li class="breadcrumb-item active">数据看板</li>
+<li class="breadcrumb-item"><a href="/">{{ _("首页") }}</a></li>
+<li class="breadcrumb-item active">{{ _("数据看板") }}</li>
 {% endblock %}
 
 {% block content %}
@@ -13,7 +13,7 @@
     <div class="stat-card color-primary">
         <div class="stat-header">
             <div>
-                <div class="stat-label">总销售额</div>
+                <div class="stat-label">{{ _("总销售额") }}</div>
                 <div class="stat-value" id="totalSales">--</div>
                 <div class="stat-change up" id="salesGrowth">--</div>
             </div>
@@ -23,9 +23,9 @@
     <div class="stat-card color-success">
         <div class="stat-header">
             <div>
-                <div class="stat-label">订单数</div>
+                <div class="stat-label">{{ _("订单数") }}</div>
                 <div class="stat-value" id="orderCount">--</div>
-                <div class="stat-change up">近30天</div>
+                <div class="stat-change up">{{ _("近30天") }}</div>
             </div>
             <div class="stat-icon"><i class="bi bi-receipt"></i></div>
         </div>
@@ -33,7 +33,7 @@
     <div class="stat-card color-warning">
         <div class="stat-header">
             <div>
-                <div class="stat-label">平均客单价</div>
+                <div class="stat-label">{{ _("平均客单价") }}</div>
                 <div class="stat-value" id="avgOrderValue">--</div>
             </div>
             <div class="stat-icon"><i class="bi bi-cart3"></i></div>
@@ -42,7 +42,7 @@
     <div class="stat-card color-purple">
         <div class="stat-header">
             <div>
-                <div class="stat-label">商品总数</div>
+                <div class="stat-label">{{ _("商品总数") }}</div>
                 <div class="stat-value" id="totalProducts">--</div>
             </div>
             <div class="stat-icon"><i class="bi bi-box-seam"></i></div>
@@ -54,7 +54,7 @@
 <div class="grid-2 mb-4">
     <div class="card-custom">
         <div class="card-header">
-            <span class="card-title"><i class="bi bi-graph-up text-primary"></i>销售趋势（近30天）</span>
+            <span class="card-title"><i class="bi bi-graph-up text-primary"></i>{{ _("销售趋势（近30天）") }}</span>
         </div>
         <div class="card-body">
             <div class="chart-wrapper">
@@ -64,7 +64,7 @@
     </div>
     <div class="card-custom">
         <div class="card-header">
-            <span class="card-title"><i class="bi bi-pie-chart text-primary"></i>品类分布</span>
+            <span class="card-title"><i class="bi bi-pie-chart text-primary"></i>{{ _("品类分布") }}</span>
         </div>
         <div class="card-body">
             <div class="chart-wrapper">
@@ -78,21 +78,21 @@
 <div class="grid-2">
     <div class="card-custom">
         <div class="card-header">
-            <span class="card-title"><i class="bi bi-trophy text-warning"></i>畅销商品 Top 10</span>
+            <span class="card-title"><i class="bi bi-trophy text-warning"></i>{{ _("畅销商品 Top 10") }}</span>
         </div>
         <div class="card-body p-0">
             <div class="table-container">
                 <table class="table-custom">
                     <thead>
                         <tr>
-                            <th style="width:50px">排名</th>
-                            <th>商品名称</th>
-                            <th style="width:80px">销量</th>
-                            <th style="width:120px">销售额</th>
+                            <th style="width:50px">{{ _("排名") }}</th>
+                            <th>{{ _("商品名称") }}</th>
+                            <th style="width:80px">{{ _("销量") }}</th>
+                            <th style="width:120px">{{ _("销售额") }}</th>
                         </tr>
                     </thead>
                     <tbody id="topProductsBody">
-                        <tr><td colspan="4"><div class="empty-state"><div class="empty-title">加载中...</div></div></td></tr>
+                        <tr><td colspan="4"><div class="empty-state"><div class="empty-title">{{ _("加载中...") }}</div></div></td></tr>
                     </tbody>
                 </table>
             </div>
@@ -100,21 +100,21 @@
     </div>
     <div class="card-custom">
         <div class="card-header">
-            <span class="card-title"><i class="bi bi-exclamation-triangle text-danger"></i>库存预警</span>
+            <span class="card-title"><i class="bi bi-exclamation-triangle text-danger"></i>{{ _("库存预警") }}</span>
         </div>
         <div class="card-body p-0">
             <div class="table-container">
                 <table class="table-custom">
                     <thead>
                         <tr>
-                            <th>商品</th>
+                            <th>{{ _("商品") }}</th>
                             <th>SKU</th>
-                            <th style="width:60px">库存</th>
-                            <th style="width:70px">状态</th>
+                            <th style="width:60px">{{ _("库存") }}</th>
+                            <th style="width:70px">{{ _("状态") }}</th>
                         </tr>
                     </thead>
                     <tbody id="inventoryAlertBody">
-                        <tr><td colspan="4"><div class="empty-state"><div class="empty-title">加载中...</div></div></td></tr>
+                        <tr><td colspan="4"><div class="empty-state"><div class="empty-title">{{ _("加载中...") }}</div></div></td></tr>
                     </tbody>
                 </table>
             </div>

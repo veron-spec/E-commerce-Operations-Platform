@@ -1,9 +1,9 @@
 {% extends "base.html" %}
-{% block title %}销售分析 - 电商运营平台{% endblock %}
-{% block page_title %}销售分析{% endblock %}
+{% block title %}{{ _("销售分析") }} - {{ _("电商运营平台") }}{% endblock %}
+{% block page_title %}{{ _("销售分析") }}{% endblock %}
 {% block breadcrumb %}
-<li class="breadcrumb-item"><a href="/">首页</a></li>
-<li class="breadcrumb-item active">销售分析</li>
+<li class="breadcrumb-item"><a href="/">{{ _("首页") }}</a></li>
+<li class="breadcrumb-item active">{{ _("销售分析") }}</li>
 {% endblock %}
 
 {% block content %}
@@ -13,7 +13,7 @@
     <div class="stat-card color-success">
         <div class="stat-header">
             <div>
-                <div class="stat-label">总销售额</div>
+                <div class="stat-label">{{ _("总销售额") }}</div>
                 <div class="stat-value" id="salesTotalRevenue">--</div>
             </div>
             <div class="stat-icon"><i class="bi bi-currency-yen"></i></div>
@@ -22,7 +22,7 @@
     <div class="stat-card color-primary">
         <div class="stat-header">
             <div>
-                <div class="stat-label">总订单数</div>
+                <div class="stat-label">{{ _("总订单数") }}</div>
                 <div class="stat-value" id="salesTotalOrders">--</div>
             </div>
             <div class="stat-icon"><i class="bi bi-receipt"></i></div>
@@ -31,7 +31,7 @@
     <div class="stat-card color-warning">
         <div class="stat-header">
             <div>
-                <div class="stat-label">平均客单价</div>
+                <div class="stat-label">{{ _("平均客单价") }}</div>
                 <div class="stat-value" id="salesAvgOrder">--</div>
             </div>
             <div class="stat-icon"><i class="bi bi-cart3"></i></div>
@@ -40,7 +40,7 @@
     <div class="stat-card color-info">
         <div class="stat-header">
             <div>
-                <div class="stat-label">环比增长</div>
+                <div class="stat-label">{{ _("环比增长") }}</div>
                 <div class="stat-value" id="salesRevenueGrowth">--</div>
             </div>
             <div class="stat-icon"><i class="bi bi-graph-up-arrow"></i></div>
@@ -50,18 +50,18 @@
 
 <!-- Filter -->
 <div class="filter-bar">
-    <label class="form-label mb-0 text-sm">统计周期</label>
+    <label class="form-label mb-0 text-sm">{{ _("统计周期") }}</label>
     <select class="form-custom" id="salesDays" onchange="refreshSales()">
-        <option value="7">最近 7 天</option>
-        <option value="30" selected>最近 30 天</option>
-        <option value="90">最近 90 天</option>
+        <option value="7">{{ _("最近 7 天") }}</option>
+        <option value="30" selected>{{ _("最近 30 天") }}</option>
+        <option value="90">{{ _("最近 90 天") }}</option>
     </select>
 </div>
 
 <!-- Chart -->
 <div class="card-custom mb-4">
     <div class="card-header">
-        <span class="card-title"><i class="bi bi-graph-up-arrow text-success"></i>销售趋势</span>
+        <span class="card-title"><i class="bi bi-graph-up-arrow text-success"></i>{{ _("销售趋势") }}</span>
     </div>
     <div class="card-body">
         <div class="chart-wrapper">
@@ -73,21 +73,21 @@
 <!-- Table -->
 <div class="card-custom">
     <div class="card-header">
-        <span class="card-title"><i class="bi bi-table text-muted"></i>每日明细</span>
+        <span class="card-title"><i class="bi bi-table text-muted"></i>{{ _("每日明细") }}</span>
     </div>
     <div class="card-body p-0">
         <div class="table-container">
             <table class="table-custom">
                 <thead>
                     <tr>
-                        <th>日期</th>
-                        <th>销售额</th>
-                        <th>订单数</th>
-                        <th>折扣金额</th>
+                        <th>{{ _("日期") }}</th>
+                        <th>{{ _("销售额") }}</th>
+                        <th>{{ _("订单数") }}</th>
+                        <th>{{ _("折扣金额") }}</th>
                     </tr>
                 </thead>
                 <tbody id="salesTableBody">
-                    <tr><td colspan="4"><div class="empty-state"><div class="empty-title">加载中...</div></div></td></tr>
+                    <tr><td colspan="4"><div class="empty-state"><div class="empty-title">{{ _("加载中...") }}</div></div></td></tr>
                 </tbody>
             </table>
         </div>

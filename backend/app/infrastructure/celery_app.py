@@ -23,9 +23,10 @@ celery_app.conf.update(
             "task": "tasks.product_selection_tasks.scan_product_selections",
             "schedule": 86400,  # daily
         },
-        "generate-weekly-retrospective": {
-            "task": "tasks.retrospective_tasks.generate_weekly_retrospective",
-            "schedule": 604800,  # weekly
-        },
     },
+    imports=(
+        "tasks.sync_tasks",
+        "tasks.product_selection_tasks",
+        "tasks.report_tasks",
+    ),
 )

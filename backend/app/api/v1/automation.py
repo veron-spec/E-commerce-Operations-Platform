@@ -1,18 +1,20 @@
 """自动化规则 API - 规则列表、创建、启停。"""
 from datetime import datetime
 
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
 from sqlalchemy import select, func
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.api.deps import get_db
+from app.api.deps import get_current_user, get_db, get_user_store_ids, verify_store_access
 from app.models.automation_rule import AutomationRule
+from app.models.user import User
 
 router = APIRouter()
 
 
 class CreateRuleRequest(BaseModel):
+    store_id: int
     name: str
     trigger_type: str = "scheduled"
     conditions: dict | None = None
@@ -20,9 +22,20 @@ class CreateRuleRequest(BaseModel):
     is_enabled: bool = True
 
 
-@router.get("/rules", summary="规则列表", description="获取所有自动化规则")
-async def list_rules(db: AsyncSession = Depends(get_db)):
-    result = await db.execute(select(AutomationRule).order_by(AutomationRule.created_at.desc()))
+@router.get("/rules", summary="规则列表", description="获取当前用户的自动化规则")
+async def list_rules(
+    user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
+    store_ids = await get_user_store_ids(user, db)
+    if not store_ids:
+        return {"rules": [], "total": 0, "active_count": 0}
+
+    result = await db.execute(
+        select(AutomationRule)
+        .where(AutomationRule.store_id.in_(store_ids))
+        .order_by(AutomationRule.created_at.desc())
+    )
     rules = result.scalars().all()
 
     active_count = sum(1 for r in rules if r.is_enabled)
@@ -47,9 +60,14 @@ async def list_rules(db: AsyncSession = Depends(get_db)):
 
 
 @router.post("/rules", summary="创建规则", description="创建一条自动化规则", status_code=201)
-async def create_rule(req: CreateRuleRequest, db: AsyncSession = Depends(get_db)):
+async def create_rule(
+    req: CreateRuleRequest,
+    user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
+    await verify_store_access(req.store_id, user, db)
     rule = AutomationRule(
-        store_id=1,  # Default to first store; TODO: support multi-store
+        store_id=req.store_id,
         name=req.name,
         trigger_type=req.trigger_type,
         conditions=req.conditions or {},
@@ -62,12 +80,18 @@ async def create_rule(req: CreateRuleRequest, db: AsyncSession = Depends(get_db)
     return {"id": rule.id, "name": rule.name, "message": "规则创建成功"}
 
 
-@router.post("/rules/{rule_id}/toggle", summary="切换规则状态", description="启用或停用指定规则")
-async def toggle_rule(rule_id: int, db: AsyncSession = Depends(get_db)):
+@router.post("/rules/{rule_id}/toggle", summary="切换规则状态")
+async def toggle_rule(
+    rule_id: int,
+    user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
     result = await db.execute(select(AutomationRule).where(AutomationRule.id == rule_id))
     rule = result.scalar_one_or_none()
     if not rule:
-        return {"error": "规则不存在"}, 404
+        raise HTTPException(status_code=404, detail="规则不存在")
+    # Verify the rule belongs to one of user's stores
+    await verify_store_access(rule.store_id, user, db)
 
     rule.is_enabled = not rule.is_enabled
     await db.commit()
@@ -78,13 +102,22 @@ async def toggle_rule(rule_id: int, db: AsyncSession = Depends(get_db)):
     }
 
 
-@router.get("/rules/stats", summary="规则统计", description="获取规则运行统计")
-async def rule_stats(db: AsyncSession = Depends(get_db)):
-    result = await db.execute(select(AutomationRule))
+@router.get("/rules/stats", summary="规则统计")
+async def rule_stats(
+    user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
+    store_ids = await get_user_store_ids(user, db)
+    if not store_ids:
+        return {"total_rules": 0, "active_rules": 0, "today_executions": 0}
+
+    result = await db.execute(
+        select(AutomationRule).where(AutomationRule.store_id.in_(store_ids))
+    )
     rules = result.scalars().all()
     active = sum(1 for r in rules if r.is_enabled)
     return {
         "total_rules": len(rules),
         "active_rules": active,
-        "today_executions": 0,  # TODO: implement execution logging
+        "today_executions": 0,
     }

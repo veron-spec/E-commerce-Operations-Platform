@@ -1,9 +1,9 @@
 {% extends "base.html" %}
-{% block title %}库存管理 - 电商运营平台{% endblock %}
-{% block page_title %}库存管理{% endblock %}
+{% block title %}{{ _("库存管理") }} - {{ _("电商运营平台") }}{% endblock %}
+{% block page_title %}{{ _("库存管理") }}{% endblock %}
 {% block breadcrumb %}
-<li class="breadcrumb-item"><a href="/">首页</a></li>
-<li class="breadcrumb-item active">库存管理</li>
+<li class="breadcrumb-item"><a href="/">{{ _("首页") }}</a></li>
+<li class="breadcrumb-item active">{{ _("库存管理") }}</li>
 {% endblock %}
 
 {% block content %}
@@ -13,7 +13,7 @@
     <div class="stat-card color-primary">
         <div class="stat-header">
             <div>
-                <div class="stat-label">商品总数</div>
+                <div class="stat-label">{{ _("商品总数") }}</div>
                 <div class="stat-value" id="invTotal">--</div>
             </div>
             <div class="stat-icon"><i class="bi bi-box-seam"></i></div>
@@ -22,7 +22,7 @@
     <div class="stat-card color-warning">
         <div class="stat-header">
             <div>
-                <div class="stat-label">库存偏低</div>
+                <div class="stat-label">{{ _("库存偏低") }}</div>
                 <div class="stat-value" id="invLowStock">--</div>
             </div>
             <div class="stat-icon"><i class="bi bi-exclamation-triangle"></i></div>
@@ -31,7 +31,7 @@
     <div class="stat-card color-danger">
         <div class="stat-header">
             <div>
-                <div class="stat-label">已缺货</div>
+                <div class="stat-label">{{ _("已缺货") }}</div>
                 <div class="stat-value" id="invOutOfStock">--</div>
             </div>
             <div class="stat-icon"><i class="bi bi-x-circle"></i></div>
@@ -43,7 +43,7 @@
     <!-- Category Chart -->
     <div class="card-custom">
         <div class="card-header">
-            <span class="card-title"><i class="bi bi-pie-chart text-primary"></i>品类分布</span>
+            <span class="card-title"><i class="bi bi-pie-chart text-primary"></i>{{ _("品类分布") }}</span>
         </div>
         <div class="card-body">
             <div class="chart-wrapper">
@@ -55,22 +55,22 @@
     <!-- Alert List -->
     <div class="card-custom">
         <div class="card-header">
-            <span class="card-title"><i class="bi bi-exclamation-triangle text-danger"></i>库存预警列表</span>
+            <span class="card-title"><i class="bi bi-exclamation-triangle text-danger"></i>{{ _("库存预警列表") }}</span>
         </div>
         <div class="card-body p-0">
             <div class="table-container">
                 <table class="table-custom">
                     <thead>
                         <tr>
-                            <th>商品名称</th>
+                            <th>{{ _("商品名称") }}</th>
                             <th>SKU</th>
-                            <th style="width:70px">库存</th>
-                            <th style="width:70px">状态</th>
-                            <th style="width:80px">操作</th>
+                            <th style="width:70px">{{ _("库存") }}</th>
+                            <th style="width:70px">{{ _("状态") }}</th>
+                            <th style="width:80px">{{ _("操作") }}</th>
                         </tr>
                     </thead>
                     <tbody id="invTableBody">
-                        <tr><td colspan="5"><div class="empty-state"><div class="empty-title">加载中...</div></div></td></tr>
+                        <tr><td colspan="5"><div class="empty-state"><div class="empty-title">{{ _("加载中...") }}</div></div></td></tr>
                     </tbody>
                 </table>
             </div>

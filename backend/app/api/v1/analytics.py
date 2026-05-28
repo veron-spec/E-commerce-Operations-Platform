@@ -1,64 +1,75 @@
-from datetime import datetime, timedelta
+from datetime import UTC, datetime, timedelta
 
 from fastapi import APIRouter, Depends, Query
 from sqlalchemy import select, func
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.api.deps import get_db
-from app.core.analytics.sales import SalesAnalyzer
-from app.core.analytics.inventory import InventoryAnalyzer
-from app.core.analytics.trends import TrendAnalyzer
+from app.api.deps import get_current_user, get_db, verify_store_access
+from app.pro.analytics.sales import SalesAnalyzer
+from app.pro.analytics.inventory import InventoryAnalyzer
+from app.pro.analytics.trends import TrendAnalyzer
+from app.infrastructure.cache import cached
 from app.models.order import Order
+from app.models.user import User
 
 router = APIRouter()
 
 
-@router.get("/sales", summary="销售分析", description="按日/周/月聚合的销售数据：收入、订单数、折扣金额")
+@router.get("/sales", summary="销售分析", description="按日/周/月聚合的销售数据")
+@cached(ttl=300, prefix="analytics:sales")
 async def sales_analysis(
     days: int = Query(30, ge=1, le=365, description="统计天数"),
     store_id: int | None = Query(None, description="店铺ID"),
-    granularity: str = Query("day", pattern="^(day|week|month)$", description="聚合粒度：day=按天, week=按周, month=按月"),
+    granularity: str = Query("day", pattern="^(day|week|month)$", description="聚合粒度"),
+    user: User = Depends(get_current_user),
     db: AsyncSession = Depends(get_db),
 ):
+    await verify_store_access(store_id, user, db)
     analyzer = SalesAnalyzer(db)
-    result = await analyzer.analyze(days=days, store_id=store_id, granularity=granularity)
-    return result
+    return await analyzer.analyze(days=days, store_id=store_id, granularity=granularity)
 
 
-@router.get("/inventory", summary="库存分析", description="库存状况分析：缺货商品、低库存预警、品类分布")
+@router.get("/inventory", summary="库存分析", description="库存状况分析")
+@cached(ttl=300, prefix="analytics:inventory")
 async def inventory_analysis(
     store_id: int | None = Query(None, description="店铺ID"),
     low_stock_threshold: int = Query(10, ge=0, description="低库存预警阈值"),
+    user: User = Depends(get_current_user),
     db: AsyncSession = Depends(get_db),
 ):
+    await verify_store_access(store_id, user, db)
     analyzer = InventoryAnalyzer(db)
-    result = await analyzer.analyze(store_id=store_id, low_stock_threshold=low_stock_threshold)
-    return result
+    return await analyzer.analyze(store_id=store_id, low_stock_threshold=low_stock_threshold)
 
 
-@router.get("/trends", summary="趋势分析", description="环比/同比增长分析：收入增长率、订单增长率、每日趋势")
+@router.get("/trends", summary="趋势分析", description="环比/同比增长分析")
+@cached(ttl=300, prefix="analytics:trends")
 async def trend_analysis(
     days: int = Query(60, ge=14, le=730, description="分析周期天数"),
     store_id: int | None = Query(None, description="店铺ID"),
+    user: User = Depends(get_current_user),
     db: AsyncSession = Depends(get_db),
 ):
+    await verify_store_access(store_id, user, db)
     analyzer = TrendAnalyzer(db)
-    result = await analyzer.analyze(days=days, store_id=store_id)
-    return result
+    return await analyzer.analyze(days=days, store_id=store_id)
 
 
 @router.get("/products/top", summary="畅销商品排行", description="按销售额排名的 Top N 畅销商品")
+@cached(ttl=120, prefix="analytics:top_products")
 async def top_products(
     days: int = Query(30, ge=1, le=365, description="统计天数"),
     limit: int = Query(10, ge=1, le=100, description="返回数量"),
     store_id: int | None = Query(None, description="店铺ID"),
+    user: User = Depends(get_current_user),
     db: AsyncSession = Depends(get_db),
 ):
-    since = datetime.utcnow() - timedelta(days=days)
+    store_ids = await verify_store_access(store_id, user, db)
+    since = datetime.now(UTC) - timedelta(days=days)
 
-    stmt = select(Order.line_items).where(Order.created_at >= since)
-    if store_id:
-        stmt = stmt.where(Order.store_id == store_id)
+    stmt = select(Order.line_items).where(
+        Order.created_at >= since, Order.store_id.in_(store_ids)
+    )
 
     result = await db.execute(stmt)
     rows = result.all()

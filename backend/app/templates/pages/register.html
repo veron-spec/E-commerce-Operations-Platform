@@ -1,0 +1,276 @@
+{% extends "base.html" %}
+{% block title %}{{ _("注册") }} - {{ _("电商运营平台") }}{% endblock %}
+
+{% block head %}
+<style>
+.auth-page .sidebar, .auth-page .topbar, .auth-page .sidebar-footer { display: none !important; }
+.auth-page .main-area { margin-left: 0 !important; }
+</style>
+{% endblock %}
+
+{% block breadcrumb %}{% endblock %}
+
+{% block content %}
+<body data-page="register">
+<div class="auth-page">
+  <div class="auth-shapes">
+    <div class="auth-shape auth-shape-1"></div>
+    <div class="auth-shape auth-shape-2"></div>
+    <div class="auth-shape auth-shape-3"></div>
+  </div>
+
+  <div style="position:fixed;top:20px;right:20px;z-index:100">
+    <button onclick="switchLang()" title="{{ _('切换语言') }}" style="width:38px;height:38px;border-radius:10px;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.15);color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;backdrop-filter:blur(8px);transition:all 0.2s" onmouseover="this.style.background='rgba(255,255,255,0.2)'" onmouseout="this.style.background='rgba(255,255,255,0.12)'">
+      <i class="bi bi-globe"></i>
+    </button>
+  </div>
+
+  <div class="auth-card">
+    <div class="auth-card-inner">
+      <div class="auth-logo"><i class="bi bi-shop"></i></div>
+      <h1 class="auth-title">{{ _("电商运营自动化平台") }}</h1>
+      <p class="auth-subtitle">{{ _("创建新账户") }}</p>
+
+      <div id="registerAlert" class="form-alert form-alert-danger" style="display:none"></div>
+
+      <form id="registerForm">
+        <div class="form-group" style="margin-bottom:12px">
+          <label class="form-label">{{ _("昵称") }}</label>
+          <div class="auth-input-group">
+            <i class="bi bi-person auth-input-icon"></i>
+            <input type="text" class="form-custom" name="name" required placeholder="{{ _('输入昵称') }}" autocomplete="name">
+          </div>
+        </div>
+
+        <div class="form-group" style="margin-bottom:12px">
+          <label class="form-label">{{ _("邮箱") }}</label>
+          <div class="auth-input-group">
+            <i class="bi bi-envelope auth-input-icon"></i>
+            <input type="email" class="form-custom" name="email" required placeholder="{{ _('输入邮箱地址') }}" autocomplete="email">
+          </div>
+        </div>
+
+        <div class="form-group" style="margin-bottom:8px">
+          <label class="form-label">{{ _("密码") }}</label>
+          <div class="auth-input-group">
+            <i class="bi bi-lock auth-input-icon"></i>
+            <input type="password" class="form-custom" name="password" required minlength="6" placeholder="{{ _('至少 8 位，含大小写字母和数字') }}" autocomplete="new-password" id="regPassword">
+            <button type="button" class="auth-pwd-toggle" onclick="togglePwd('regPassword',this)" tabindex="-1">
+              <i class="bi bi-eye"></i>
+            </button>
+          </div>
+          <!-- Strength bar -->
+          <div class="auth-strength" id="strengthBar" style="display:none">
+            <div class="auth-strength-bar">
+              <div class="auth-strength-bar-fill" id="strengthFill"></div>
+            </div>
+            <span class="auth-strength-text" id="strengthText">{{ _("请输入密码") }}</span>
+          </div>
+        </div>
+
+        <div class="form-group" style="margin-bottom:8px">
+          <label class="form-label">{{ _("确认密码") }}</label>
+          <div class="auth-input-group">
+            <i class="bi bi-lock-fill auth-input-icon"></i>
+            <input type="password" class="form-custom" name="confirm_password" required placeholder="{{ _('确认密码') }}" autocomplete="new-password" id="confirmPassword">
+            <button type="button" class="auth-pwd-toggle" onclick="togglePwd('confirmPassword',this)" tabindex="-1">
+              <i class="bi bi-eye"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="text-xs text-muted" style="line-height:1.5;padding:8px 10px;background:var(--hover-bg);border-radius:var(--radius-sm)">
+            <i class="bi bi-shield-check" style="color:var(--success);margin-right:4px"></i>
+            {{ _("密码至少 8 位") }}，{{ _("密码需要包含大写字母") }}，{{ _("密码需要包含小写字母") }}，{{ _("密码需要包含数字") }}，{{ _("密码需要包含特殊字符") }}
+          </div>
+        </div>
+
+        <button type="submit" class="btn-custom btn-custom-primary w-full btn-custom-lg" style="justify-content:center;border-radius:10px;padding:12px;font-size:15px">
+          {{ _("注册") }}
+        </button>
+      </form>
+
+      <div style="text-align:center;margin-top:20px">
+        <span class="text-muted text-sm">{{ _("已有账户？") }}</span>
+        <a href="/login" class="fw-medium" style="color:var(--primary);text-decoration:none;font-size:14px">{{ _("登录") }}</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function togglePwd(id, btn) {
+  const inp = document.getElementById(id);
+  const icon = btn.querySelector('i');
+  if (inp.type === 'password') {
+    inp.type = 'text';
+    icon.className = 'bi bi-eye-slash';
+  } else {
+    inp.type = 'password';
+    icon.className = 'bi bi-eye';
+  }
+}
+
+const STRENGTH_LABELS = {
+  0: '{{ _("请输入密码") }}',
+  1: '{{ _("弱") }}',
+  2: '{{ _("中") }}',
+  3: '{{ _("强") }}',
+  4: '{{ _("非常强") }}',
+};
+
+const STRENGTH_COLORS = ['', 'var(--danger)', 'var(--warning)', '#10b981', 'var(--primary)'];
+
+function calcStrength(pwd) {
+  let score = 0;
+  if (pwd.length >= 8) score++;
+  if (/[A-Z]/.test(pwd)) score++;
+  if (/[a-z]/.test(pwd)) score++;
+  if (/[0-9]/.test(pwd)) score++;
+  if (/[^A-Za-z0-9]/.test(pwd)) score++;
+  return Math.min(score, 4);
+}
+
+function updateStrength(pwd) {
+  const bar = document.getElementById('strengthBar');
+  const fill = document.getElementById('strengthFill');
+  const text = document.getElementById('strengthText');
+  if (!pwd) {
+    bar.style.display = 'none';
+    return;
+  }
+  bar.style.display = 'flex';
+  const score = calcStrength(pwd);
+  const pct = (score / 4) * 100;
+  fill.style.width = pct + '%';
+  fill.style.background = STRENGTH_COLORS[score];
+  text.textContent = STRENGTH_LABELS[score];
+  text.style.color = STRENGTH_COLORS[score] || 'var(--text-muted)';
+}
+
+function clearValidation(field) {
+  field.classList.remove('is-invalid', 'is-valid');
+  const hint = field.closest('.form-group')?.querySelector('.field-error');
+  if (hint) hint.remove();
+}
+
+function showFieldError(field, msg) {
+  field.classList.add('is-invalid');
+  field.classList.remove('is-valid');
+  const group = field.closest('.form-group');
+  let hint = group?.querySelector('.field-error');
+  if (!hint && group && msg) {
+    hint = document.createElement('div');
+    hint.className = 'field-error';
+    hint.style.cssText = 'font-size:12px;color:var(--danger);margin-top:4px;';
+    group.appendChild(hint);
+  }
+  if (hint) hint.textContent = msg || '';
+}
+
+function validatePassword(pwd) {
+  if (pwd.length < 8) return '{{ _("密码至少 8 位") }}';
+  if (!/[A-Z]/.test(pwd)) return '{{ _("密码需要包含大写字母") }}';
+  if (!/[a-z]/.test(pwd)) return '{{ _("密码需要包含小写字母") }}';
+  if (!/[0-9]/.test(pwd)) return '{{ _("密码需要包含数字") }}';
+  if (!/[^A-Za-z0-9]/.test(pwd)) return '{{ _("密码需要包含特殊字符") }}';
+  return '';
+}
+
+document.getElementById('registerForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const form = e.target;
+  const alert = document.getElementById('registerAlert');
+  const btn = form.querySelector('button[type="submit"]');
+  alert.style.display = 'none';
+
+  let hasError = false;
+  [form.name, form.email, form.password, form.confirm_password].forEach(f => clearValidation(f));
+
+  if (!form.name.value.trim()) {
+    showFieldError(form.name, '{{ _("请输入昵称") }}');
+    hasError = true;
+  }
+  if (!form.email.value.trim() || !form.email.value.includes('@')) {
+    showFieldError(form.email, '{{ _("请输入有效的邮箱地址") }}');
+    hasError = true;
+  }
+  const pwdErr = validatePassword(form.password.value);
+  if (pwdErr) {
+    showFieldError(form.password, pwdErr);
+    hasError = true;
+  }
+  if (form.password.value !== form.confirm_password.value) {
+    showFieldError(form.confirm_password, '{{ _("密码不匹配") }}');
+    hasError = true;
+  }
+  if (hasError) return;
+
+  btn.classList.add('is-loading');
+  try {
+    const res = await fetch('/api/v1/auth/register', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name: form.name.value, email: form.email.value, password: form.password.value }),
+    });
+
+    if (res.ok) {
+      const data = await res.json();
+      document.cookie = `token=${data.access_token}; path=/; max-age=604800; SameSite=Lax`;
+      window.location.href = '/';
+    } else {
+      const err = await res.json();
+      if (err.detail && err.detail.includes('{{ _("邮箱") }}')) {
+        showFieldError(form.email, err.detail);
+      } else if (err.detail && err.detail.includes('{{ _("密码") }}')) {
+        showFieldError(form.password, err.detail);
+      } else {
+        alert.textContent = err.detail || '{{ _("注册失败") }}';
+        alert.style.display = '';
+      }
+    }
+  } catch (e) {
+    alert.textContent = '{{ _("网络错误，请重试") }}';
+    alert.style.display = '';
+  } finally {
+    btn.classList.remove('is-loading');
+  }
+});
+
+// Real-time password strength + confirm match
+document.querySelector('input[name="password"]').addEventListener('input', function() {
+  updateStrength(this.value);
+  const pwdErr = validatePassword(this.value);
+  if (this.value.length === 0) {
+    clearValidation(this);
+  } else if (pwdErr) {
+    showFieldError(this, pwdErr);
+  } else {
+    this.classList.remove('is-invalid');
+    this.classList.add('is-valid');
+    const hint = this.closest('.form-group')?.querySelector('.field-error');
+    if (hint) hint.remove();
+  }
+  // Check confirm match in real time
+  const confirm = document.querySelector('input[name="confirm_password"]');
+  if (confirm.value) checkConfirmMatch();
+});
+
+function checkConfirmMatch() {
+  const pwd = document.querySelector('input[name="password"]');
+  const confirm = document.querySelector('input[name="confirm_password"]');
+  clearValidation(confirm);
+  if (confirm.value && pwd.value !== confirm.value) {
+    showFieldError(confirm, '{{ _("密码不匹配") }}');
+  } else if (confirm.value) {
+    confirm.classList.remove('is-invalid');
+    confirm.classList.add('is-valid');
+  }
+}
+
+document.querySelector('input[name="confirm_password"]').addEventListener('input', checkConfirmMatch);
+
+document.querySelector('input[name="email"]')?.focus();
+</script>
+{% endblock %}

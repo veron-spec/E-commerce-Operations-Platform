@@ -5,8 +5,9 @@ from fastapi import APIRouter, Depends, Query
 from sqlalchemy import select, func, or_
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.api.deps import get_db
+from app.api.deps import get_current_user, get_db, verify_store_access
 from app.models.order import Order
+from app.models.user import User
 
 router = APIRouter()
 
@@ -18,19 +19,22 @@ async def list_orders(
     status: str | None = Query(None, description="财务状态筛选：paid / refunded / pending"),
     search: str | None = Query(None, description="搜索订单号或买家邮箱"),
     store_id: int | None = Query(None, description="店铺ID"),
+    user: User = Depends(get_current_user),
     db: AsyncSession = Depends(get_db),
 ):
     # Base query
     base_query = select(Order)
     count_query = select(func.count(Order.id))
 
+    # User data isolation - scope to user's stores
+    store_ids = await verify_store_access(store_id, user, db)
+    base_query = base_query.where(Order.store_id.in_(store_ids))
+    count_query = count_query.where(Order.store_id.in_(store_ids))
+
     # Filters
     if status:
         base_query = base_query.where(Order.financial_status == status)
         count_query = count_query.where(Order.financial_status == status)
-    if store_id:
-        base_query = base_query.where(Order.store_id == store_id)
-        count_query = count_query.where(Order.store_id == store_id)
     if search:
         like = f"%{search}%"
         filter_cond = or_(Order.order_number.ilike(like), Order.email.ilike(like))

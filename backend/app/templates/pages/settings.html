@@ -1,9 +1,9 @@
 {% extends "base.html" %}
-{% block title %}系统设置 - 电商运营平台{% endblock %}
-{% block page_title %}系统设置{% endblock %}
+{% block title %}{{ _("系统设置") }} - {{ _("电商运营平台") }}{% endblock %}
+{% block page_title %}{{ _("系统设置") }}{% endblock %}
 {% block breadcrumb %}
-<li class="breadcrumb-item"><a href="/">首页</a></li>
-<li class="breadcrumb-item active">系统设置</li>
+<li class="breadcrumb-item"><a href="/">{{ _("首页") }}</a></li>
+<li class="breadcrumb-item active">{{ _("系统设置") }}</li>
 {% endblock %}
 
 {% block content %}
@@ -12,32 +12,32 @@
     <!-- Basic Settings -->
     <div class="card-custom">
         <div class="card-header">
-            <span class="card-title"><i class="bi bi-gear text-primary"></i>基本设置</span>
+            <span class="card-title"><i class="bi bi-gear text-primary"></i>{{ _("基本设置") }}</span>
         </div>
         <div class="card-body">
             <div class="form-group">
-                <label class="form-label">系统名称</label>
-                <input type="text" class="form-custom" value="电商运营自动化平台" readonly>
-                <div class="form-hint">当前版本 v1.0.0</div>
+                <label class="form-label">{{ _("系统名称") }}</label>
+                <input type="text" class="form-custom" value="{{ _('电商运营自动化平台') }}" readonly>
+                <div class="form-hint">{{ _("当前版本 v1.0.0") }}</div>
             </div>
             <div class="form-group">
-                <label class="form-label">数据同步间隔</label>
+                <label class="form-label">{{ _("数据同步间隔") }}</label>
                 <select class="form-custom" style="max-width:200px">
-                    <option value="15">15 分钟</option>
-                    <option value="30" selected>30 分钟</option>
-                    <option value="60">60 分钟</option>
+                    <option value="15">{{ _("15 分钟") }}</option>
+                    <option value="30" selected>{{ _("30 分钟") }}</option>
+                    <option value="60">{{ _("60 分钟") }}</option>
                 </select>
-                <div class="form-hint">自动从各平台拉取最新数据的间隔时间</div>
+                <div class="form-hint">{{ _("自动从各平台拉取最新数据的间隔时间") }}</div>
             </div>
             <div class="form-group">
-                <label class="form-label">报表缓存时长</label>
+                <label class="form-label">{{ _("报表缓存时长") }}</label>
                 <select class="form-custom" style="max-width:200px">
-                    <option value="1">1 小时</option>
-                    <option value="3">3 小时</option>
-                    <option value="6" selected>6 小时</option>
-                    <option value="12">12 小时</option>
+                    <option value="1">{{ _("1 小时") }}</option>
+                    <option value="3">{{ _("3 小时") }}</option>
+                    <option value="6" selected>{{ _("6 小时") }}</option>
+                    <option value="12">{{ _("12 小时") }}</option>
                 </select>
-                <div class="form-hint">减少重复计算，提升看板加载速度</div>
+                <div class="form-hint">{{ _("减少重复计算，提升看板加载速度") }}</div>
             </div>
         </div>
     </div>
@@ -45,34 +45,97 @@
     <!-- Data Management -->
     <div class="card-custom">
         <div class="card-header">
-            <span class="card-title"><i class="bi bi-database text-success"></i>数据管理</span>
+            <span class="card-title"><i class="bi bi-database text-success"></i>{{ _("数据管理") }}</span>
         </div>
         <div class="card-body">
             <div class="mb-4">
-                <label class="form-label">数据导出</label>
+                <label class="form-label">{{ _("数据导出") }}</label>
                 <div class="flex gap-3">
-                    <button class="btn-custom btn-custom-outline" onclick="showToast('CSV 导出功能开发中', 'info')">
-                        <i class="bi bi-download"></i>导出 CSV 报表
+                    <button class="btn-custom btn-custom-outline" onclick="showToast('{{ _("CSV 导出功能开发中") }}', 'info')">
+                        <i class="bi bi-download"></i>{{ _("导出 CSV 报表") }}
                     </button>
-                    <button class="btn-custom btn-custom-outline" onclick="showToast('Excel 导出功能开发中', 'info')">
-                        <i class="bi bi-file-earmark-excel"></i>导出 Excel
+                    <button class="btn-custom btn-custom-outline" onclick="showToast('{{ _("Excel 导出功能开发中") }}', 'info')">
+                        <i class="bi bi-file-earmark-excel"></i>{{ _("导出 Excel") }}
                     </button>
                 </div>
             </div>
             <div class="mb-4">
-                <label class="form-label">同步历史</label>
-                <div class="text-sm text-muted mb-2">查看最近的数据同步记录</div>
-                <button class="btn-custom btn-custom-outline" onclick="showToast('同步历史功能开发中', 'info')">
-                    <i class="bi bi-clock-history"></i>查看同步日志
+                <label class="form-label">{{ _("同步历史") }}</label>
+                <div class="text-sm text-muted mb-2">{{ _("查看同步日志") }}</div>
+                <button class="btn-custom btn-custom-outline" onclick="showToast('{{ _("同步历史功能开发中") }}', 'info')">
+                    <i class="bi bi-clock-history"></i>{{ _("查看同步日志") }}
                 </button>
             </div>
             <div>
-                <label class="form-label">危险操作</label>
+                <label class="form-label">{{ _("危险操作") }}</label>
                 <div>
-                    <button class="btn-custom btn-custom-outline" style="color:var(--danger);border-color:var(--danger);" onclick="showToast('确定要清除所有数据吗？该操作不可恢复', 'warning')">
-                        <i class="bi bi-trash"></i>清除演示数据
+                    <button class="btn-custom btn-custom-outline" style="color:var(--danger);border-color:var(--danger);" onclick="showToast('{{ _("确定要清除所有数据吗？该操作不可恢复") }}', 'warning')">
+                        <i class="bi bi-trash"></i>{{ _("清除演示数据") }}
                     </button>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Third-Party API Keys -->
+    <div class="card-custom" style="grid-column: 1 / -1;">
+        <div class="card-header">
+            <span class="card-title"><i class="bi bi-key text-danger"></i>{{ _("第三方 API 密钥") }}</span>
+            <button class="btn-custom btn-custom-primary btn-custom-sm" onclick="openModal('addKeyModal')">
+                <i class="bi bi-plus-circle"></i>{{ _("添加密钥") }}
+            </button>
+        </div>
+        <div class="card-body p-0">
+            <div class="table-container">
+                <table class="table-custom">
+                    <thead>
+                        <tr>
+                            <th>{{ _("服务商") }}</th>
+                            <th>{{ _("备注") }}</th>
+                            <th>{{ _("密钥") }}</th>
+                            <th style="width:80px">{{ _("状态") }}</th>
+                            <th style="width:100px">{{ _("操作") }}</th>
+                        </tr>
+                    </thead>
+                    <tbody id="keyTableBody">
+                        <tr><td colspan="5"><div class="empty-state"><div class="empty-title">{{ _("加载中...") }}</div></div></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Key Modal -->
+    <div class="modal-overlay" id="addKeyModal">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h5><i class="bi bi-plus-circle text-danger"></i> {{ _("添加第三方 API 密钥") }}</h5>
+                <button class="modal-close" onclick="closeModal('addKeyModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="form-label">{{ _("服务商") }}</label>
+                    <select class="form-custom" id="keyProvider">
+                        <option value="openai">OpenAI</option>
+                        <option value="claude">Anthropic Claude</option>
+                        <option value="deepseek">DeepSeek</option>
+                        <option value="qwen">{{ _("通义千问") }}</option>
+                        <option value="ernie">{{ _("文心一言") }}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">{{ _("备注名称") }}</label>
+                    <input type="text" class="form-custom" id="keyLabel" placeholder="{{ _('如：我的 OpenAI Key') }}">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">API Key</label>
+                    <input type="password" class="form-custom" id="keyValue" placeholder="{{ _('粘贴你的 API Key') }}">
+                    <div class="form-hint">{{ _("密钥将加密存储，仅用于自动化运营。添加后不会再次显示完整密钥。") }}</div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-custom btn-custom-outline" onclick="closeModal('addKeyModal')">{{ _("取消") }}</button>
+                <button type="button" class="btn-custom btn-custom-primary" onclick="addKey()">{{ _("添加") }}</button>
             </div>
         </div>
     </div>
@@ -80,36 +143,119 @@
     <!-- About -->
     <div class="card-custom" style="grid-column: 1 / -1;">
         <div class="card-header">
-            <span class="card-title"><i class="bi bi-info-circle text-muted"></i>关于</span>
+            <span class="card-title"><i class="bi bi-info-circle text-muted"></i>{{ _("关于") }}</span>
         </div>
         <div class="card-body">
             <div class="grid-3">
                 <div>
-                    <div class="stat-label">应用名称</div>
-                    <div class="fw-medium">电商运营自动化平台</div>
+                    <div class="stat-label">{{ _("应用名称") }}</div>
+                    <div class="fw-medium">{{ _("电商运营自动化平台") }}</div>
                 </div>
                 <div>
-                    <div class="stat-label">版本</div>
+                    <div class="stat-label">{{ _("版本") }}</div>
                     <div class="fw-medium">v1.0.0</div>
                 </div>
                 <div>
-                    <div class="stat-label">技术栈</div>
+                    <div class="stat-label">{{ _("技术栈") }}</div>
                     <div class="fw-medium">FastAPI + PostgreSQL + Redis + Celery</div>
                 </div>
                 <div>
-                    <div class="stat-label">适配平台</div>
-                    <div class="fw-medium">淘宝 / Shopify / WooCommerce（开发中）</div>
+                    <div class="stat-label">{{ _("适配平台") }}</div>
+                    <div class="fw-medium">淘宝 / Shopify / WooCommerce / Shopee / Lazada</div>
                 </div>
                 <div>
                     <div class="stat-label">Python</div>
                     <div class="fw-medium">3.12+</div>
                 </div>
                 <div>
-                    <div class="stat-label">协议</div>
+                    <div class="stat-label">{{ _("协议") }}</div>
                     <div class="fw-medium">MIT</div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+const PROVIDER_NAMES = { openai: 'OpenAI', claude: 'Anthropic Claude', deepseek: 'DeepSeek', qwen: _t('通义千问'), ernie: _t('文心一言') };
+
+async function loadKeys() {
+    try {
+        const res = await fetch('/api/v1/third-party-keys');
+        const data = await res.json();
+        const tbody = document.getElementById('keyTableBody');
+        if (!data.items || !data.items.length) {
+            tbody.innerHTML = '<tr><td colspan="5"><div class="empty-state"><div class="empty-icon"><i class="bi bi-key"></i></div><div class="empty-title">' + _t('尚未配置第三方 API 密钥') + '</div><div class="empty-desc">' + _t('添加密钥后，自动化运营将使用你的额度') + '</div></div></td></tr>';
+            return;
+        }
+        tbody.innerHTML = data.items.map(k => `<tr>
+            <td><span class="tag tag-info">${PROVIDER_NAMES[k.provider] || k.provider}</span></td>
+            <td class="fw-medium">${k.label}</td>
+            <td class="text-muted text-sm">${k.key_prefix}</td>
+            <td><span class="tag ${k.is_active ? 'tag-success' : 'tag-neutral'}">${k.is_active ? _t('启用') : _t('停用')}</span></td>
+            <td>
+                <div class="cell-actions">
+                    <button class="btn-custom btn-custom-outline btn-custom-sm" onclick="toggleKey(${k.id})">
+                        <i class="bi ${k.is_active ? 'bi-pause' : 'bi-play'}"></i>
+                    </button>
+                    <button class="btn-custom btn-custom-outline btn-custom-sm text-danger" onclick="deleteKey(${k.id})">
+                        <i class="bi bi-trash"></i>
+                    </button>
+                </div>
+            </td>
+        </tr>`).join('');
+    } catch (e) {
+        document.getElementById('keyTableBody').innerHTML = '<tr><td colspan="5" class="text-center text-danger py-4">' + _t('加载失败') + '</td></tr>';
+    }
+}
+
+async function addKey() {
+    const provider = document.getElementById('keyProvider').value;
+    const label = document.getElementById('keyLabel').value;
+    const apiKey = document.getElementById('keyValue').value;
+    if (!label || !apiKey) { showToast(_t('请填写完整信息'), 'warning'); return; }
+    try {
+        const res = await fetch('/api/v1/third-party-keys', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ provider, label, api_key: apiKey }),
+        });
+        if (!res.ok) { const err = await res.json(); showToast(err.detail || _t('添加失败'), 'error'); return; }
+        showToast(_t('密钥添加成功！密钥已加密存储'), 'success');
+        closeModal('addKeyModal');
+        document.getElementById('keyLabel').value = '';
+        document.getElementById('keyValue').value = '';
+        loadKeys();
+    } catch (e) {
+        showToast(_t('添加失败') + ': ' + e.message, 'error');
+    }
+}
+
+async function toggleKey(id) {
+    try {
+        const res = await fetch(`/api/v1/third-party-keys/${id}/toggle`, { method: 'POST' });
+        if (!res.ok) throw new Error(await res.text());
+        const data = await res.json();
+        showToast(data.detail, 'success');
+        loadKeys();
+    } catch (e) {
+        showToast(_t('操作失败') + ': ' + e.message, 'error');
+    }
+}
+
+async function deleteKey(id) {
+    if (!confirm(_t('确定删除此密钥？'))) return;
+    try {
+        await fetch(`/api/v1/third-party-keys/${id}`, { method: 'DELETE' });
+        showToast(_t('密钥已删除'), 'info');
+        loadKeys();
+    } catch (e) {
+        showToast(_t('删除失败') + ': ' + e.message, 'error');
+    }
+}
+
+document.addEventListener('DOMContentLoaded', loadKeys);
+</script>
 {% endblock %}

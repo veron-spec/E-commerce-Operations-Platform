@@ -6,7 +6,7 @@ from loguru import logger
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.core.sync.orchestrator import SyncOrchestrator
+from app.pro.sync.orchestrator import SyncOrchestrator
 from app.infrastructure.celery_app import celery_app
 from app.infrastructure.database import async_session
 from app.models.store import Store

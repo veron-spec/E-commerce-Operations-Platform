@@ -3,7 +3,7 @@ from asyncio import run
 
 from loguru import logger
 
-from app.core.product_selection.service import ProductSelectionService
+from app.pro.product_selection.service import ProductSelectionService
 from app.infrastructure.celery_app import celery_app
 from app.infrastructure.database import async_session
 

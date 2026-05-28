@@ -1,9 +1,9 @@
 {% extends "base.html" %}
-{% block title %}订单管理 - 电商运营平台{% endblock %}
-{% block page_title %}订单管理{% endblock %}
+{% block title %}{{ _("订单管理") }} - {{ _("电商运营平台") }}{% endblock %}
+{% block page_title %}{{ _("订单管理") }}{% endblock %}
 {% block breadcrumb %}
-<li class="breadcrumb-item"><a href="/">首页</a></li>
-<li class="breadcrumb-item active">订单管理</li>
+<li class="breadcrumb-item"><a href="/">{{ _("首页") }}</a></li>
+<li class="breadcrumb-item active">{{ _("订单管理") }}</li>
 {% endblock %}
 
 {% block content %}
@@ -11,66 +11,64 @@
 <!-- Filters -->
 <div class="filter-bar">
     <div class="flex items-center gap-2">
-        <label class="form-label mb-0 text-sm">状态</label>
+        <label class="form-label mb-0 text-sm">{{ _("状态") }}</label>
         <select class="form-custom" id="orderStatusFilter" onchange="orderPage=1;refreshOrders()">
-            <option value="">全部订单</option>
-            <option value="paid">已付款</option>
-            <option value="refunded">已退款</option>
-            <option value="pending">待处理</option>
+            <option value="">{{ _("全部订单") }}</option>
+            <option value="paid">{{ _("已付款") }}</option>
+            <option value="refunded">{{ _("已退款") }}</option>
+            <option value="pending">{{ _("待处理") }}</option>
         </select>
     </div>
     <div class="flex items-center gap-2">
-        <label class="form-label mb-0 text-sm">搜索</label>
-        <input type="text" class="form-custom" id="orderSearch" placeholder="订单号 / 买家邮箱..." style="width:200px">
+        <label class="form-label mb-0 text-sm">{{ _("搜索") }}</label>
+        <input type="text" class="form-custom" id="orderSearch" placeholder="{{ _('订单号 / 买家邮箱...') }}" style="width:200px">
     </div>
     <button class="btn-custom btn-custom-primary" onclick="orderPage=1;refreshOrders()">
-        <i class="bi bi-search"></i>查询
+        <i class="bi bi-search"></i>{{ _("查询") }}
     </button>
     <button class="btn-custom btn-custom-outline ms-auto" onclick="refreshOrders()">
-        <i class="bi bi-arrow-clockwise"></i>刷新
+        <i class="bi bi-arrow-clockwise"></i>{{ _("刷新") }}
     </button>
 </div>
 
 <!-- Orders Table -->
 <div class="card-custom">
     <div class="card-header">
-        <span class="card-title"><i class="bi bi-receipt text-primary"></i>订单列表</span>
-        <span class="text-sm text-muted" id="pageInfo">加载中...</span>
+        <span class="card-title"><i class="bi bi-receipt text-primary"></i>{{ _("订单列表") }}</span>
+        <span class="text-sm text-muted" id="pageInfo">{{ _("加载中...") }}</span>
     </div>
     <div class="card-body p-0">
         <div class="table-container">
             <table class="table-custom">
                 <thead>
                     <tr>
-                        <th>订单号</th>
-                        <th>时间</th>
-                        <th>买家</th>
-                        <th style="width:60px">数量</th>
-                        <th style="width:110px">金额</th>
-                        <th style="width:80px">状态</th>
-                        <th style="width:80px">操作</th>
+                        <th>{{ _("订单号") }}</th>
+                        <th>{{ _("时间") }}</th>
+                        <th>{{ _("买家") }}</th>
+                        <th style="width:60px">{{ _("数量") }}</th>
+                        <th style="width:110px">{{ _("金额") }}</th>
+                        <th style="width:80px">{{ _("状态") }}</th>
+                        <th style="width:80px">{{ _("操作") }}</th>
                     </tr>
                 </thead>
                 <tbody id="ordersTableBody">
-                    <tr><td colspan="7"><div class="empty-state"><div class="empty-title">加载中...</div></div></td></tr>
+                    <tr><td colspan="7"><div class="empty-state"><div class="empty-title">{{ _("加载中...") }}</div></div></td></tr>
                 </tbody>
             </table>
         </div>
     </div>
-    {% raw %}
     <div class="card-footer flex items-center justify-between">
         <div class="pagination-custom">
-            <span class="page-info" id="pageInfo">共 0 条</span>
+            <span class="page-info" id="pageInfo">{{ _("共") }} 0 {{ _("条") }}</span>
             <div class="page-btns">
                 <button class="btn-custom btn-custom-outline btn-custom-sm" id="pagePrev" onclick="changePage(-1)" disabled>
-                    <i class="bi bi-chevron-left"></i> 上一页
+                    <i class="bi bi-chevron-left"></i> {{ _("上一页") }}
                 </button>
                 <button class="btn-custom btn-custom-outline btn-custom-sm" id="pageNext" onclick="changePage(1)">
-                    下一页 <i class="bi bi-chevron-right"></i>
+                    {{ _("下一页") }} <i class="bi bi-chevron-right"></i>
                 </button>
             </div>
         </div>
     </div>
-    {% endraw %}
 </div>
 {% endblock %}

@@ -65,6 +65,7 @@ def test_normalize_customer():
     assert customer.is_verified_email is True
 
 
+@pytest.mark.skip(reason="Integration test requiring real Shopify API connection")
 @pytest.mark.asyncio
 async def test_get_analytics_summary_with_empty_orders():
     """Test with no orders — should return zero metrics."""

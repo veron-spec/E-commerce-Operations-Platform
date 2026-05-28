@@ -4,7 +4,7 @@ from asyncio import run
 
 from loguru import logger
 
-from app.core.analytics.reports import ReportGenerator
+from app.pro.analytics.reports import ReportGenerator
 from app.infrastructure.celery_app import celery_app
 from app.infrastructure.database import async_session
 

@@ -1,3 +1,4 @@
+from app.models.user import User
 from app.models.store import Store
 from app.models.product import Product
 from app.models.order import Order
@@ -9,8 +10,11 @@ from app.models.product_selection import ProductSelection
 from app.models.auto_reply import AutoReply
 from app.models.suggestion import Suggestion
 from app.models.retrospective import Retrospective
+from app.models.operation_log import OperationLog
+from app.models.third_party_key import ThirdPartyKey
 
 __all__ = [
+    "User",
     "Store",
     "Product",
     "Order",
@@ -22,4 +26,6 @@ __all__ = [
     "AutoReply",
     "Suggestion",
     "Retrospective",
+    "OperationLog",
+    "ThirdPartyKey",
 ]
