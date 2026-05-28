@@ -5,10 +5,14 @@ from sqlalchemy import select, func
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.api.deps import get_current_user, get_db, verify_store_access
-from app.pro.analytics.sales import SalesAnalyzer
-from app.pro.analytics.inventory import InventoryAnalyzer
-from app.pro.analytics.trends import TrendAnalyzer
 from app.infrastructure.cache import cached
+
+try:
+    from app.pro.analytics.sales import SalesAnalyzer
+    from app.pro.analytics.inventory import InventoryAnalyzer
+    from app.pro.analytics.trends import TrendAnalyzer
+except ImportError:
+    SalesAnalyzer = InventoryAnalyzer = TrendAnalyzer = None
 from app.models.order import Order
 from app.models.user import User
 

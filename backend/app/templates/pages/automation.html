@@ -2,15 +2,16 @@
 {% block title %}{{ _("自动化规则") }} - {{ _("电商运营平台") }}{% endblock %}
 {% block page_title %}{{ _("自动化规则") }}{% endblock %}
 {% block breadcrumb %}
-<li class="breadcrumb-item"><a href="/">{{ _("首页") }}</a></li>
-<li class="breadcrumb-item active">{{ _("自动化规则") }}</li>
+<li><a href="/">{{ _("首页") }}</a></li>
+<span>—</span>
+<li class="active">{{ _("自动化规则") }}</li>
 {% endblock %}
 
 {% block content %}
 <body data-page="automation">
 <div class="stats-grid">
-    <div class="stat-card color-primary">
-        <div class="stat-header">
+    <div class="stat stat-primary">
+        <div class="stat-top">
             <div>
                 <div class="stat-label">{{ _("启用规则") }}</div>
                 <div class="stat-value" id="ruleActiveCount">--</div>
@@ -18,8 +19,8 @@
             <div class="stat-icon"><i class="bi bi-toggle-on"></i></div>
         </div>
     </div>
-    <div class="stat-card color-success">
-        <div class="stat-header">
+    <div class="stat stat-success">
+        <div class="stat-top">
             <div>
                 <div class="stat-label">{{ _("今日执行") }}</div>
                 <div class="stat-value" id="ruleExecCount">--</div>
@@ -39,7 +40,7 @@
 <!-- Rules List -->
 <div class="card-custom">
     <div class="card-header">
-        <span class="card-title"><i class="bi bi-lightning-charge text-warning"></i>{{ _("规则列表") }}</span>
+        <span class="card-title"><i class="bi bi-lightning-charge" style="color:var(--gold)"></i>{{ _("规则列表") }}</span>
         <span class="text-sm text-muted">{{ _("条件触发自动化任务") }}</span>
     </div>
     <div class="card-body p-0">
@@ -99,7 +100,7 @@
 <div class="modal-overlay" id="addRuleModal">
     <div class="modal-box">
         <div class="modal-header">
-            <h5><i class="bi bi-lightning-charge text-warning"></i> {{ _("创建自动化规则") }}</h5>
+            <h5><i class="bi bi-lightning-charge" style="color:var(--gold)"></i> {{ _("创建自动化规则") }}</h5>
             <button class="modal-close" onclick="closeModal('addRuleModal')">&times;</button>
         </div>
         <div class="modal-body">

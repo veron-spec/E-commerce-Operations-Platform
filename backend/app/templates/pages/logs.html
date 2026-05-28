@@ -2,15 +2,16 @@
 {% block title %}{{ _("操作日志") }} - {{ _("电商运营平台") }}{% endblock %}
 {% block page_title %}{{ _("操作日志") }}{% endblock %}
 {% block breadcrumb %}
-<li class="breadcrumb-item"><a href="/">{{ _("首页") }}</a></li>
-<li class="breadcrumb-item active">{{ _("操作日志") }}</li>
+<li><a href="/">{{ _("首页") }}</a></li>
+<span>—</span>
+<li class="active">{{ _("操作日志") }}</li>
 {% endblock %}
 
 {% block content %}
 <body data-page="logs">
 <div class="card-custom">
     <div class="card-header">
-        <span class="card-title"><i class="bi bi-journal-text text-primary"></i>{{ _("审计日志") }}</span>
+        <span class="card-title"><i class="bi bi-journal-text" style="color:var(--gold)"></i>{{ _("审计日志") }}</span>
         <div class="flex gap-2">
             <select class="form-custom" id="actionFilter" style="width:auto" onchange="loadLogs()">
                 <option value="">{{ _("所有操作") }}</option>
@@ -35,7 +36,7 @@
         </div>
     </div>
     <div class="card-body">
-        <div class="table-responsive">
+        <div class="table-container">
             <table class="table-custom">
                 <thead>
                     <tr>
@@ -90,10 +91,10 @@ async function loadLogs() {
                 const actionLabel = actionMap[log.action] || log.action;
                 const resourceLabel = resourceMap[log.resource_type] || log.resource_type;
                 const time = new Date(log.created_at).toLocaleString('zh-CN');
-                const badgeClass = {create: 'badge-create', update: 'badge-update', delete: 'badge-delete', login: 'badge-info', register: 'badge-info', export: 'badge-info'}[log.action] || 'badge-info';
+                const badgeClass = {create: 'tag-success', update: 'tag-info', delete: 'tag-danger', login: 'tag-neutral', register: 'tag-neutral', export: 'tag-neutral'}[log.action] || 'tag-neutral';
                 return `<tr>
                     <td class="text-xs text-muted">${time}</td>
-                    <td><span class="badge-custom ${badgeClass}">${actionLabel}</span></td>
+                    <td><span class="tag ${badgeClass}">${actionLabel}</span></td>
                     <td>${resourceLabel}${log.resource_id ? ` #${log.resource_id}` : ''}</td>
                     <td class="text-sm">${log.detail || '-'}</td>
                     <td class="text-xs text-muted">${log.ip_address || '-'}</td>

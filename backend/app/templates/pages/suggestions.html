@@ -2,15 +2,16 @@
 {% block title %}{{ _("运营建议") }} - {{ _("电商运营平台") }}{% endblock %}
 {% block page_title %}{{ _("运营建议") }}{% endblock %}
 {% block breadcrumb %}
-<li class="breadcrumb-item"><a href="/">{{ _("首页") }}</a></li>
-<li class="breadcrumb-item active">{{ _("运营建议") }}</li>
+<li><a href="/">{{ _("首页") }}</a></li>
+<span>—</span>
+<li class="active">{{ _("运营建议") }}</li>
 {% endblock %}
 
 {% block content %}
 <body data-page="suggestions">
 <div class="stats-grid">
-    <div class="stat-card color-primary">
-        <div class="stat-header">
+    <div class="stat stat-primary">
+        <div class="stat-top">
             <div>
                 <div class="stat-label">{{ _("总建议") }}</div>
                 <div class="stat-value" id="sgTotal">--</div>
@@ -18,8 +19,8 @@
             <div class="stat-icon"><i class="bi bi-lightbulb"></i></div>
         </div>
     </div>
-    <div class="stat-card color-success">
-        <div class="stat-header">
+    <div class="stat stat-success">
+        <div class="stat-top">
             <div>
                 <div class="stat-label">{{ _("采纳率") }}</div>
                 <div class="stat-value" id="sgRate">--</div>
@@ -27,8 +28,8 @@
             <div class="stat-icon"><i class="bi bi-check-circle"></i></div>
         </div>
     </div>
-    <div class="stat-card color-warning">
-        <div class="stat-header">
+    <div class="stat stat-warning">
+        <div class="stat-top">
             <div>
                 <div class="stat-label">{{ _("待处理") }}</div>
                 <div class="stat-value" id="sgPending">--</div>
@@ -36,8 +37,8 @@
             <div class="stat-icon"><i class="bi bi-hourglass"></i></div>
         </div>
     </div>
-    <div class="stat-card color-purple">
-        <div class="stat-header">
+    <div class="stat stat-default">
+        <div class="stat-top">
             <div>
                 <div class="stat-label">{{ _("类型") }}</div>
                 <div class="stat-value" id="sgTypes" style="font-size:14px;">--</div>
@@ -84,7 +85,7 @@
 
 <div class="card-custom">
     <div class="card-header">
-        <span class="card-title"><i class="bi bi-lightbulb text-warning"></i>{{ _("运营建议列表") }}</span>
+        <span class="card-title"><i class="bi bi-lightbulb" style="color:var(--gold)"></i>{{ _("运营建议列表") }}</span>
         <span class="text-sm text-muted" id="sgPageInfo">{{ _("加载中...") }}</span>
     </div>
     <div class="card-body">
@@ -152,7 +153,7 @@ async function refreshSuggestions() {
                 const t = SG_TYPE_MAP[s.suggestion_type] || { label: s.suggestion_type, color: 'tag-neutral', icon: 'bi-lightbulb' };
                 const p = SG_PRIORITY_MAP[s.priority] || { label: s.priority, color: 'tag-neutral' };
                 const st = SG_STATUS_MAP[s.status] || { label: s.status, color: 'tag-neutral' };
-                return `<div class="card-custom mb-3 suggestion-card" style="border-left: 3px solid var(--primary);">
+                return `<div class="card-custom mb-3 suggestion-card" style="border-left: 3px solid var(--gold);">
                     <div class="card-body">
                         <div class="flex items-center justify-between mb-2">
                             <div class="flex items-center gap-2">

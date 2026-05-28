@@ -23,6 +23,11 @@ class Store(Base):
     created_at: Mapped[datetime] = mapped_column(DateTime, server_default=func.now())
     updated_at: Mapped[datetime] = mapped_column(DateTime, server_default=func.now(), onupdate=func.now())
 
+    # Taobao OAuth tokens (encrypted via crypto.py)
+    session_key: Mapped[str | None] = mapped_column(Text, nullable=True, comment="Encrypted Taobao session_key (access_token)")
+    refresh_token: Mapped[str | None] = mapped_column(Text, nullable=True, comment="Encrypted Taobao refresh_token")
+    token_expires_at: Mapped[datetime | None] = mapped_column(DateTime, nullable=True, comment="Taobao access_token expiry")
+
     # relationships
     owner = relationship("User", backref="stores")
     products = relationship("Product", back_populates="store")

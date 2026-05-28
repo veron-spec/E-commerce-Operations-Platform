@@ -49,13 +49,11 @@ function updateThemeIcon(isDark) {
     if (icon) icon.className = isDark ? 'bi-sun' : 'bi-moon-stars';
 }
 
-// Restore theme
+// Always start in light mode (dark sidebar + light content).
+// The toggleDarkMode() respects saved preference for manual toggles.
 (function initTheme() {
-    const saved = localStorage.getItem('theme');
-    if (saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-        document.documentElement.setAttribute('data-theme', 'dark');
-        updateThemeIcon(true);
-    }
+    document.documentElement.setAttribute('data-theme', 'light');
+    updateThemeIcon(false);
 })();
 
 /* ===== Modal System ===== */
@@ -234,7 +232,7 @@ function renderDoughnut(canvasId, labels, data) {
         return;
     }
     const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-    const colors = ['#4f46e5','#8b5cf6','#10b981','#f59e0b','#ef4444','#3b82f6','#ec4899','#14b8a6','#f97316','#6366f1'];
+    const colors = ['#b8945a','#5a8a6a','#5a7a9a','#c45a5a','#b88a4a','#8f8068','#a9977a','#334155','#64748b','#7a8a7a'];
 
     chartInstances[canvasId] = new Chart(ctx.getContext('2d'), {
         type: 'doughnut',
@@ -309,7 +307,7 @@ async function refreshDashboard() {
         renderLineChart('salesChart', '销售额 (¥)',
             (sales.revenue_by_day || []).map(d => d.period ? d.period.substring(5, 10) : ''),
             (sales.revenue_by_day || []).map(d => d.revenue || 0),
-            '#4f46e5');
+            '#b8945a');
 
         // Category chart
         renderDoughnut('categoryChart',
@@ -389,7 +387,7 @@ async function refreshSales() {
         renderLineChart('salesTrendChart', '销售额 (¥)',
             (salesData.revenue_by_day || []).map(d => d.period ? d.period.substring(5, 10) : ''),
             (salesData.revenue_by_day || []).map(d => d.revenue || 0),
-            '#10b981');
+            '#5a8a6a');
 
         const total = (salesData.revenue_by_day || []).reduce((s, d) => s + (d.revenue || 0), 0);
         const count = (salesData.revenue_by_day || []).reduce((s, d) => s + (d.order_count || 0), 0);
@@ -483,6 +481,7 @@ async function refreshStores() {
             <td>
                 <div class="cell-actions">
                     <button class="btn-custom btn-custom-outline btn-custom-sm" onclick="syncStore(${s.id})"><i class="bi bi-arrow-repeat"></i></button>
+                    ${s.platform_type === 'taobao' ? `<button class="btn-custom btn-custom-outline btn-custom-sm text-primary" onclick="authorizeTaobao(${s.id})" title="淘宝授权">${_t('授权')}</button>` : ''}
                     <button class="btn-custom btn-custom-outline btn-custom-sm text-danger" onclick="showToast(_t('删除功能开发中'), 'info')"><i class="bi bi-trash"></i></button>
                 </div>
             </td>
@@ -501,6 +500,20 @@ async function syncStore(id) {
         showToast(_t('同步任务已触发'), 'success');
     } catch (e) {
         showToast(_t('同步失败') + ': ' + e.message, 'error');
+    }
+}
+
+async function authorizeTaobao(storeId) {
+    try {
+        const res = await fetch(`/api/v1/stores/${storeId}/taobao/auth-url`);
+        if (!res.ok) {
+            const body = await res.json();
+            throw new Error(body.detail || '获取授权链接失败');
+        }
+        const data = await res.json();
+        window.location.href = data.auth_url;
+    } catch (e) {
+        showToast(_t('授权失败') + ': ' + e.message, 'error');
     }
 }
 

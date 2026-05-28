@@ -2,51 +2,44 @@
 {% block title %}{{ _("数据看板") }} - {{ _("电商运营平台") }}{% endblock %}
 {% block page_title %}{{ _("数据看板") }}{% endblock %}
 {% block breadcrumb %}
-<li class="breadcrumb-item"><a href="/">{{ _("首页") }}</a></li>
-<li class="breadcrumb-item active">{{ _("数据看板") }}</li>
+<li><a href="/">{{ _("首页") }}</a></li>
+<span>—</span>
+<li class="active">{{ _("数据看板") }}</li>
 {% endblock %}
 
 {% block content %}
 <body data-page="dashboard">
 <!-- 核心指标 -->
 <div class="stats-grid">
-    <div class="stat-card color-primary">
-        <div class="stat-header">
-            <div>
-                <div class="stat-label">{{ _("总销售额") }}</div>
-                <div class="stat-value" id="totalSales">--</div>
-                <div class="stat-change up" id="salesGrowth">--</div>
-            </div>
+    <div class="stat stat-primary">
+        <div class="stat-top">
+            <div class="stat-label">{{ _("总销售额") }}</div>
             <div class="stat-icon"><i class="bi bi-currency-yen"></i></div>
         </div>
+        <div class="stat-value" id="totalSales">--</div>
+        <div class="stat-change up" id="salesGrowth">--</div>
     </div>
-    <div class="stat-card color-success">
-        <div class="stat-header">
-            <div>
-                <div class="stat-label">{{ _("订单数") }}</div>
-                <div class="stat-value" id="orderCount">--</div>
-                <div class="stat-change up">{{ _("近30天") }}</div>
-            </div>
+    <div class="stat stat-default">
+        <div class="stat-top">
+            <div class="stat-label">{{ _("订单数") }}</div>
             <div class="stat-icon"><i class="bi bi-receipt"></i></div>
         </div>
+        <div class="stat-value" id="orderCount">--</div>
+        <div class="stat-change up">{{ _("近30天") }}</div>
     </div>
-    <div class="stat-card color-warning">
-        <div class="stat-header">
-            <div>
-                <div class="stat-label">{{ _("平均客单价") }}</div>
-                <div class="stat-value" id="avgOrderValue">--</div>
-            </div>
+    <div class="stat stat-success">
+        <div class="stat-top">
+            <div class="stat-label">{{ _("平均客单价") }}</div>
             <div class="stat-icon"><i class="bi bi-cart3"></i></div>
         </div>
+        <div class="stat-value" id="avgOrderValue">--</div>
     </div>
-    <div class="stat-card color-purple">
-        <div class="stat-header">
-            <div>
-                <div class="stat-label">{{ _("商品总数") }}</div>
-                <div class="stat-value" id="totalProducts">--</div>
-            </div>
+    <div class="stat stat-info">
+        <div class="stat-top">
+            <div class="stat-label">{{ _("商品总数") }}</div>
             <div class="stat-icon"><i class="bi bi-box-seam"></i></div>
         </div>
+        <div class="stat-value" id="totalProducts">--</div>
     </div>
 </div>
 
@@ -54,7 +47,7 @@
 <div class="grid-2 mb-4">
     <div class="card-custom">
         <div class="card-header">
-            <span class="card-title"><i class="bi bi-graph-up text-primary"></i>{{ _("销售趋势（近30天）") }}</span>
+            <span class="card-title"><i class="bi bi-graph-up" style="color:var(--gold)"></i>{{ _("销售趋势（近30天）") }}</span>
         </div>
         <div class="card-body">
             <div class="chart-wrapper">
@@ -64,7 +57,7 @@
     </div>
     <div class="card-custom">
         <div class="card-header">
-            <span class="card-title"><i class="bi bi-pie-chart text-primary"></i>{{ _("品类分布") }}</span>
+            <span class="card-title"><i class="bi bi-pie-chart" style="color:var(--gold)"></i>{{ _("品类分布") }}</span>
         </div>
         <div class="card-body">
             <div class="chart-wrapper">
@@ -78,7 +71,7 @@
 <div class="grid-2">
     <div class="card-custom">
         <div class="card-header">
-            <span class="card-title"><i class="bi bi-trophy text-warning"></i>{{ _("畅销商品 Top 10") }}</span>
+            <span class="card-title"><i class="bi bi-trophy" style="color:var(--gold)"></i>{{ _("畅销商品 Top 10") }}</span>
         </div>
         <div class="card-body p-0">
             <div class="table-container">
@@ -100,7 +93,7 @@
     </div>
     <div class="card-custom">
         <div class="card-header">
-            <span class="card-title"><i class="bi bi-exclamation-triangle text-danger"></i>{{ _("库存预警") }}</span>
+            <span class="card-title"><i class="bi bi-exclamation-triangle" style="color:var(--coral)"></i>{{ _("库存预警") }}</span>
         </div>
         <div class="card-body p-0">
             <div class="table-container">

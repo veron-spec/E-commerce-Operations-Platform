@@ -2,15 +2,16 @@
 {% block title %}{{ _("捕获选品") }} - {{ _("电商运营平台") }}{% endblock %}
 {% block page_title %}{{ _("捕获选品") }}{% endblock %}
 {% block breadcrumb %}
-<li class="breadcrumb-item"><a href="/">{{ _("首页") }}</a></li>
-<li class="breadcrumb-item active">{{ _("捕获选品") }}</li>
+<li><a href="/">{{ _("首页") }}</a></li>
+<span>—</span>
+<li class="active">{{ _("捕获选品") }}</li>
 {% endblock %}
 
 {% block content %}
 <body data-page="product-selections">
 <div class="stats-grid">
-    <div class="stat-card color-primary">
-        <div class="stat-header">
+    <div class="stat stat-primary">
+        <div class="stat-top">
             <div>
                 <div class="stat-label">{{ _("总选品") }}</div>
                 <div class="stat-value" id="psTotal">--</div>
@@ -18,8 +19,8 @@
             <div class="stat-icon"><i class="bi bi-box"></i></div>
         </div>
     </div>
-    <div class="stat-card color-warning">
-        <div class="stat-header">
+    <div class="stat stat-warning">
+        <div class="stat-top">
             <div>
                 <div class="stat-label">{{ _("待审核") }}</div>
                 <div class="stat-value" id="psPending">--</div>
@@ -27,8 +28,8 @@
             <div class="stat-icon"><i class="bi bi-hourglass"></i></div>
         </div>
     </div>
-    <div class="stat-card color-success">
-        <div class="stat-header">
+    <div class="stat stat-success">
+        <div class="stat-top">
             <div>
                 <div class="stat-label">{{ _("已通过") }}</div>
                 <div class="stat-value" id="psApproved">--</div>
@@ -36,8 +37,8 @@
             <div class="stat-icon"><i class="bi bi-check-circle"></i></div>
         </div>
     </div>
-    <div class="stat-card color-info">
-        <div class="stat-header">
+    <div class="stat stat-info">
+        <div class="stat-top">
             <div>
                 <div class="stat-label">{{ _("平均评分") }}</div>
                 <div class="stat-value" id="psAvgScore">--</div>
@@ -81,7 +82,7 @@
 
 <div class="card-custom">
     <div class="card-header">
-        <span class="card-title"><i class="bi bi-star text-warning"></i>{{ _("选品列表") }}</span>
+        <span class="card-title"><i class="bi bi-star" style="color:var(--gold)"></i>{{ _("选品列表") }}</span>
         <span class="text-sm text-muted" id="psPageInfo">{{ _("加载中...") }}</span>
     </div>
     <div class="card-body p-0">
@@ -126,7 +127,7 @@
 <div class="modal-overlay" id="addSelectionModal">
     <div class="modal-box">
         <div class="modal-header">
-            <h5><i class="bi bi-plus-circle text-primary"></i> {{ _("手动添加选品") }}</h5>
+            <h5><i class="bi bi-plus-circle" style="color:var(--gold)"></i> {{ _("手动添加选品") }}</h5>
             <button class="modal-close" onclick="closeModal('addSelectionModal')">&times;</button>
         </div>
         <div class="modal-body">

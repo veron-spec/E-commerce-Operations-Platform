@@ -3,8 +3,12 @@ from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.api.deps import get_current_user, get_db, get_user_store_ids, verify_store_access
-from app.pro.retrospective.service import RetrospectiveService
 from app.models.user import User
+
+try:
+    from app.pro.retrospective.service import RetrospectiveService
+except ImportError:
+    RetrospectiveService = None
 
 router = APIRouter()
 

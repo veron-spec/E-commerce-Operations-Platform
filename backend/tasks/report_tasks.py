@@ -4,9 +4,13 @@ from asyncio import run
 
 from loguru import logger
 
-from app.pro.analytics.reports import ReportGenerator
 from app.infrastructure.celery_app import celery_app
 from app.infrastructure.database import async_session
+
+try:
+    from app.pro.analytics.reports import ReportGenerator
+except ImportError:
+    ReportGenerator = None
 
 
 async def _generate_and_cache_report(store_id: int, report_type: str, days: int = 30):
