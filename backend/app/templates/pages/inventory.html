@@ -1,11 +1,10 @@
-{% extends "base.html" %}
-{% block title %}{{ _("库存管理") }} - {{ _("电商运营平台") }}{% endblock %}
-{% block page_title %}{{ _("库存管理") }}{% endblock %}
+﻿{% extends "base.html" %}
+{% block title %}{{ _("搴撳瓨绠＄悊") }} - {{ _("鐢靛晢杩愯惀骞冲彴") }}{% endblock %}
+{% block page_title %}{{ _("搴撳瓨绠＄悊") }}{% endblock %}
 {% block breadcrumb %}
-<li><a href="/">{{ _("首页") }}</a></li>
-<span>—</span>
-<li class="active">{{ _("库存管理") }}</li>
-{% endblock %}
+<li><a href="/">{{ _("棣栭〉") }}</a></li>
+<span>鈥?/span>
+<li class="active">{{ _("搴撳瓨绠＄悊") }}</li>{% endblock %}
 
 {% block content %}
 <body data-page="inventory">
@@ -14,7 +13,7 @@
     <div class="stat stat-primary">
         <div class="stat-top">
             <div>
-                <div class="stat-label">{{ _("商品总数") }}</div>
+                <div class="stat-label">{{ _("鍟嗗搧鎬绘暟") }}</div>
                 <div class="stat-value" id="invTotal">--</div>
             </div>
             <div class="stat-icon"><i class="bi bi-box-seam"></i></div>
@@ -23,7 +22,7 @@
     <div class="stat stat-warning">
         <div class="stat-top">
             <div>
-                <div class="stat-label">{{ _("库存偏低") }}</div>
+                <div class="stat-label">{{ _("搴撳瓨鍋忎綆") }}</div>
                 <div class="stat-value" id="invLowStock">--</div>
             </div>
             <div class="stat-icon"><i class="bi bi-exclamation-triangle"></i></div>
@@ -32,7 +31,7 @@
     <div class="stat stat-default">
         <div class="stat-top">
             <div>
-                <div class="stat-label">{{ _("已缺货") }}</div>
+                <div class="stat-label">{{ _("宸茬己璐?) }}</div>
                 <div class="stat-value" id="invOutOfStock">--</div>
             </div>
             <div class="stat-icon"><i class="bi bi-x-circle"></i></div>
@@ -44,8 +43,7 @@
     <!-- Category Chart -->
     <div class="card-custom">
         <div class="card-header">
-            <span class="card-title"><i class="bi bi-pie-chart" style="color:var(--gold)"></i>{{ _("品类分布") }}</span>
-        </div>
+            <span class="card-title"><i class="bi bi-pie-chart" style="color:var(--gold)"></i>{{ _("鍝佺被鍒嗗竷") }}</span>        </div>
         <div class="card-body">
             <div class="chart-wrapper">
                 <canvas id="invCategoryChart" height="280"></canvas>
@@ -56,22 +54,21 @@
     <!-- Alert List -->
     <div class="card-custom">
         <div class="card-header">
-            <span class="card-title"><i class="bi bi-exclamation-triangle" style="color:var(--coral)"></i>{{ _("库存预警列表") }}</span>
-        </div>
+            <span class="card-title"><i class="bi bi-exclamation-triangle" style="color:var(--coral)"></i>{{ _("搴撳瓨棰勮鍒楄〃") }}</span>        </div>
         <div class="card-body p-0">
             <div class="table-container">
                 <table class="table-custom">
                     <thead>
                         <tr>
-                            <th>{{ _("商品名称") }}</th>
+                            <th>{{ _("鍟嗗搧鍚嶇О") }}</th>
                             <th>SKU</th>
-                            <th style="width:70px">{{ _("库存") }}</th>
-                            <th style="width:70px">{{ _("状态") }}</th>
-                            <th style="width:80px">{{ _("操作") }}</th>
+                            <th style="width:70px">{{ _("搴撳瓨") }}</th>
+                            <th style="width:70px">{{ _("鐘舵€?) }}</th>
+                            <th style="width:80px">{{ _("鎿嶄綔") }}</th>
                         </tr>
                     </thead>
                     <tbody id="invTableBody">
-                        <tr><td colspan="5"><div class="empty-state"><div class="empty-title">{{ _("加载中...") }}</div></div></td></tr>
+                        <tr><td colspan="5"><div class="empty-state"><div class="empty-title">{{ _("鍔犺浇涓?..") }}</div></div></td></tr>
                     </tbody>
                 </table>
             </div>

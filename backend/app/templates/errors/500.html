@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ _("服务器内部错误") }} - {{ _("电商运营平台") }}</title>
+    <title>{{ _("鏈嶅姟鍣ㄥ唴閮ㄩ敊璇?) }} - {{ _("鐢靛晢杩愯惀骞冲彴") }}</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="/static/style.css">
     <style>
         body { min-height: 100vh; display: flex; align-items: center; justify-content: center; background: var(--bg-body); margin: 0; padding: 24px; }
         .error-container { text-align: center; max-width: 480px; }
-        .error-code { font-size: 96px; font-weight: 800; background: linear-gradient(135deg, var(--coral), var(--amber)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; line-height: 1; margin-bottom: 8px; }
-        .error-icon { font-size: 48px; color: var(--text-muted); margin-bottom: 16px; }
+
+        .error-code { font-size: 96px; font-weight: 800; background: linear-gradient(135deg, var(--coral), var(--amber)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; line-height: 1; margin-bottom: 8px; }        .error-icon { font-size: 48px; color: var(--text-muted); margin-bottom: 16px; }
         .error-title { font-size: 20px; font-weight: 700; margin-bottom: 8px; color: var(--text-primary); }
         .error-desc { font-size: 14px; color: var(--text-secondary); margin-bottom: 24px; line-height: 1.6; }
         .error-actions { display: flex; gap: 12px; justify-content: center; }
@@ -20,11 +20,11 @@
     <div class="error-container">
         <div class="error-icon"><i class="bi bi-exclamation-triangle"></i></div>
         <div class="error-code">500</div>
-        <div class="error-title">{{ _("服务器内部错误") }}</div>
-        <div class="error-desc">{{ _("抱歉，服务器遇到了意外错误。") }}<br>{{ _("请稍后重试，如果问题持续请联系管理员。") }}</div>
+        <div class="error-title">{{ _("鏈嶅姟鍣ㄥ唴閮ㄩ敊璇?) }}</div>
+        <div class="error-desc">{{ _("鎶辨瓑锛屾湇鍔″櫒閬囧埌浜嗘剰澶栭敊璇€?) }}<br>{{ _("璇风◢鍚庨噸璇曪紝濡傛灉闂鎸佺画璇疯仈绯荤鐞嗗憳銆?) }}</div>
         <div class="error-actions">
-            <a href="/" class="btn-custom btn-custom-primary btn-custom-lg"><i class="bi bi-house"></i> {{ _("返回首页") }}</a>
-            <button class="btn-custom btn-custom-outline btn-custom-lg" onclick="location.reload()"><i class="bi bi-arrow-clockwise"></i> {{ _("重新加载") }}</button>
+            <a href="/" class="btn-custom btn-custom-primary btn-custom-lg"><i class="bi bi-house"></i> {{ _("杩斿洖棣栭〉") }}</a>
+            <button class="btn-custom btn-custom-outline btn-custom-lg" onclick="location.reload()"><i class="bi bi-arrow-clockwise"></i> {{ _("閲嶆柊鍔犺浇") }}</button>
         </div>
     </div>
 </body>

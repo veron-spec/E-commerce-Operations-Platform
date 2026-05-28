@@ -1,11 +1,10 @@
-{% extends "base.html" %}
-{% block title %}{{ _("自动化客服") }} - {{ _("电商运营平台") }}{% endblock %}
-{% block page_title %}{{ _("自动化客服") }}{% endblock %}
+﻿{% extends "base.html" %}
+{% block title %}{{ _("鑷姩鍖栧鏈?) }} - {{ _("鐢靛晢杩愯惀骞冲彴") }}{% endblock %}
+{% block page_title %}{{ _("鑷姩鍖栧鏈?) }}{% endblock %}
 {% block breadcrumb %}
-<li><a href="/">{{ _("首页") }}</a></li>
-<span>—</span>
-<li class="active">{{ _("自动化客服") }}</li>
-{% endblock %}
+<li><a href="/">{{ _("棣栭〉") }}</a></li>
+<span>鈥?/span>
+<li class="active">{{ _("鑷姩鍖栧鏈?) }}</li>{% endblock %}
 
 {% block content %}
 <body data-page="auto-reply">
@@ -13,7 +12,7 @@
     <div class="stat stat-primary">
         <div class="stat-top">
             <div>
-                <div class="stat-label">{{ _("规则总数") }}</div>
+                <div class="stat-label">{{ _("瑙勫垯鎬绘暟") }}</div>
                 <div class="stat-value" id="arTotal">--</div>
             </div>
             <div class="stat-icon"><i class="bi bi-chat-dots"></i></div>
@@ -22,7 +21,7 @@
     <div class="stat stat-success">
         <div class="stat-top">
             <div>
-                <div class="stat-label">{{ _("已启用") }}</div>
+                <div class="stat-label">{{ _("宸插惎鐢?) }}</div>
                 <div class="stat-value" id="arEnabled">--</div>
             </div>
             <div class="stat-icon"><i class="bi bi-toggle-on"></i></div>
@@ -31,7 +30,7 @@
     <div class="stat stat-info">
         <div class="stat-top">
             <div>
-                <div class="stat-label">{{ _("总匹配次数") }}</div>
+                <div class="stat-label">{{ _("鎬诲尮閰嶆鏁?) }}</div>
                 <div class="stat-value" id="arUsage">--</div>
             </div>
             <div class="stat-icon"><i class="bi bi-lightning-charge"></i></div>
@@ -41,34 +40,33 @@
 
 <div class="filter-bar">
     <button class="btn-custom btn-custom-primary" onclick="openModal('addAutoReplyModal')">
-        <i class="bi bi-plus-circle"></i>{{ _("创建规则") }}
+        <i class="bi bi-plus-circle"></i>{{ _("鍒涘缓瑙勫垯") }}
     </button>
     <button class="btn-custom btn-custom-outline" onclick="showTestModal()">
-        <i class="bi bi-chat-square-text"></i>{{ _("测试匹配") }}
+        <i class="bi bi-chat-square-text"></i>{{ _("娴嬭瘯鍖归厤") }}
     </button>
 </div>
 
 <div class="card-custom">
     <div class="card-header">
-        <span class="card-title"><i class="bi bi-chat-dots" style="color:var(--gold)"></i>{{ _("自动回复规则") }}</span>
-        <span class="text-sm text-muted" id="arPageInfo">{{ _("加载中...") }}</span>
+        <span class="card-title"><i class="bi bi-chat-dots" style="color:var(--gold)"></i>{{ _("鑷姩鍥炲瑙勫垯") }}</span>        <span class="text-sm text-muted" id="arPageInfo">{{ _("鍔犺浇涓?..") }}</span>
     </div>
     <div class="card-body p-0">
         <div class="table-container">
             <table class="table-custom">
                 <thead>
                     <tr>
-                        <th>{{ _("规则名称") }}</th>
-                        <th>{{ _("触发关键词") }}</th>
-                        <th>{{ _("匹配方式") }}</th>
-                        <th>{{ _("优先级") }}</th>
-                        <th>{{ _("使用次数") }}</th>
-                        <th style="width:80px">{{ _("状态") }}</th>
-                        <th style="width:120px">{{ _("操作") }}</th>
+                        <th>{{ _("瑙勫垯鍚嶇О") }}</th>
+                        <th>{{ _("瑙﹀彂鍏抽敭璇?) }}</th>
+                        <th>{{ _("鍖归厤鏂瑰紡") }}</th>
+                        <th>{{ _("浼樺厛绾?) }}</th>
+                        <th>{{ _("浣跨敤娆℃暟") }}</th>
+                        <th style="width:80px">{{ _("鐘舵€?) }}</th>
+                        <th style="width:120px">{{ _("鎿嶄綔") }}</th>
                     </tr>
                 </thead>
                 <tbody id="arTableBody">
-                    <tr><td colspan="7"><div class="empty-state"><div class="empty-icon"><i class="bi bi-chat-dots"></i></div><div class="empty-title">{{ _("暂无自动回复规则") }}</div><div class="empty-desc">{{ _("创建规则来自动回复客户消息") }}</div></div></td></tr>
+                    <tr><td colspan="7"><div class="empty-state"><div class="empty-icon"><i class="bi bi-chat-dots"></i></div><div class="empty-title">{{ _("鏆傛棤鑷姩鍥炲瑙勫垯") }}</div><div class="empty-desc">{{ _("鍒涘缓瑙勫垯鏉ヨ嚜鍔ㄥ洖澶嶅鎴锋秷鎭?) }}</div></div></td></tr>
                 </tbody>
             </table>
         </div>
@@ -78,42 +76,41 @@
 <div class="modal-overlay" id="addAutoReplyModal">
     <div class="modal-box">
         <div class="modal-header">
-            <h5><i class="bi bi-plus-circle" style="color:var(--gold)"></i> {{ _("创建自动回复规则") }}</h5>
-            <button class="modal-close" onclick="closeModal('addAutoReplyModal')">&times;</button>
+            <h5><i class="bi bi-plus-circle" style="color:var(--gold)"></i> {{ _("鍒涘缓鑷姩鍥炲瑙勫垯") }}</h5>            <button class="modal-close" onclick="closeModal('addAutoReplyModal')">&times;</button>
         </div>
         <div class="modal-body">
             <form id="addAutoReplyForm">
                 <div class="form-group">
-                    <label class="form-label">{{ _("规则名称") }}</label>
-                    <input type="text" class="form-custom" id="arName" placeholder="{{ _('如：发货咨询自动回复') }}">
+                    <label class="form-label">{{ _("瑙勫垯鍚嶇О") }}</label>
+                    <input type="text" class="form-custom" id="arName" placeholder="{{ _('濡傦細鍙戣揣鍜ㄨ鑷姩鍥炲') }}">
                 </div>
                 <div class="form-group">
-                    <label class="form-label">{{ _("触发关键词（逗号分隔）") }}</label>
-                    <input type="text" class="form-custom" id="arKeywords" placeholder="{{ _('如：发货,物流,快递') }}">
+                    <label class="form-label">{{ _("瑙﹀彂鍏抽敭璇嶏紙閫楀彿鍒嗛殧锛?) }}</label>
+                    <input type="text" class="form-custom" id="arKeywords" placeholder="{{ _('濡傦細鍙戣揣,鐗╂祦,蹇€?) }}">
                 </div>
                 <div class="grid-2" style="margin-bottom:0;">
                     <div class="form-group">
-                        <label class="form-label">{{ _("匹配方式") }}</label>
+                        <label class="form-label">{{ _("鍖归厤鏂瑰紡") }}</label>
                         <select class="form-custom" id="arMatchType">
-                            <option value="contains">{{ _("包含") }}</option>
-                            <option value="exact">{{ _("精确匹配") }}</option>
-                            <option value="regex">{{ _("正则表达式") }}</option>
+                            <option value="contains">{{ _("鍖呭惈") }}</option>
+                            <option value="exact">{{ _("绮剧‘鍖归厤") }}</option>
+                            <option value="regex">{{ _("姝ｅ垯琛ㄨ揪寮?) }}</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label class="form-label">{{ _("优先级") }}</label>
+                        <label class="form-label">{{ _("浼樺厛绾?) }}</label>
                         <input type="number" class="form-custom" id="arPriority" value="0" min="0">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="form-label">{{ _("回复模板") }}</label>
-                    <textarea class="form-custom" id="arReplyTemplate" rows="3" placeholder="{{ _('输入自动回复内容...') }}"></textarea>
+                    <label class="form-label">{{ _("鍥炲妯℃澘") }}</label>
+                    <textarea class="form-custom" id="arReplyTemplate" rows="3" placeholder="{{ _('杈撳叆鑷姩鍥炲鍐呭...') }}"></textarea>
                 </div>
             </form>
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn-custom btn-custom-outline" onclick="closeModal('addAutoReplyModal')">{{ _("取消") }}</button>
-            <button type="button" class="btn-custom btn-custom-primary" onclick="createAutoReply()">{{ _("创建") }}</button>
+            <button type="button" class="btn-custom btn-custom-outline" onclick="closeModal('addAutoReplyModal')">{{ _("鍙栨秷") }}</button>
+            <button type="button" class="btn-custom btn-custom-primary" onclick="createAutoReply()">{{ _("鍒涘缓") }}</button>
         </div>
     </div>
 </div>
@@ -121,23 +118,22 @@
 <div class="modal-overlay" id="testAutoReplyModal">
     <div class="modal-box">
         <div class="modal-header">
-            <h5><i class="bi bi-chat-square-text" style="color:var(--sapphire)"></i> {{ _("测试消息匹配") }}</h5>
-            <button class="modal-close" onclick="closeModal('testAutoReplyModal')">&times;</button>
+            <h5><i class="bi bi-chat-square-text" style="color:var(--sapphire)"></i> {{ _("娴嬭瘯娑堟伅鍖归厤") }}</h5>            <button class="modal-close" onclick="closeModal('testAutoReplyModal')">&times;</button>
         </div>
         <div class="modal-body">
             <div class="form-group">
-                <label class="form-label">{{ _("模拟客户消息") }}</label>
-                <textarea class="form-custom" id="arTestMessage" rows="3" placeholder="{{ _('输入测试消息...') }}"></textarea>
+                <label class="form-label">{{ _("妯℃嫙瀹㈡埛娑堟伅") }}</label>
+                <textarea class="form-custom" id="arTestMessage" rows="3" placeholder="{{ _('杈撳叆娴嬭瘯娑堟伅...') }}"></textarea>
             </div>
             <div id="arTestResult" style="display:none;">
                 <hr>
-                <div class="fw-medium mb-2">{{ _("匹配结果：") }}</div>
+                <div class="fw-medium mb-2">{{ _("鍖归厤缁撴灉锛?) }}</div>
                 <div id="arTestResultContent"></div>
             </div>
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn-custom btn-custom-outline" onclick="closeModal('testAutoReplyModal')">{{ _("关闭") }}</button>
-            <button type="button" class="btn-custom btn-custom-primary" onclick="testAutoReply()">{{ _("测试") }}</button>
+            <button type="button" class="btn-custom btn-custom-outline" onclick="closeModal('testAutoReplyModal')">{{ _("鍏抽棴") }}</button>
+            <button type="button" class="btn-custom btn-custom-primary" onclick="testAutoReply()">{{ _("娴嬭瘯") }}</button>
         </div>
     </div>
 </div>
@@ -154,10 +150,10 @@ async function refreshAutoReply() {
 
         const tbody = document.getElementById('arTableBody');
         if (!items.length) {
-            tbody.innerHTML = '<tr><td colspan="7"><div class="empty-state"><div class="empty-icon"><i class="bi bi-chat-dots"></i></div><div class="empty-title">' + _t('暂无自动回复规则') + '</div><div class="empty-desc">' + _t('创建规则来自动回复客户消息') + '</div></div></td></tr>';
+            tbody.innerHTML = '<tr><td colspan="7"><div class="empty-state"><div class="empty-icon"><i class="bi bi-chat-dots"></i></div><div class="empty-title">' + _t('鏆傛棤鑷姩鍥炲瑙勫垯') + '</div><div class="empty-desc">' + _t('鍒涘缓瑙勫垯鏉ヨ嚜鍔ㄥ洖澶嶅鎴锋秷鎭?) + '</div></div></td></tr>';
         } else {
             tbody.innerHTML = items.map(r => {
-                const mtText = r.match_type === 'exact' ? _t('精确') : r.match_type === 'regex' ? _t('正则') : _t('包含');
+                const mtText = r.match_type === 'exact' ? _t('绮剧‘') : r.match_type === 'regex' ? _t('姝ｅ垯') : _t('鍖呭惈');
                 const kwText = (r.trigger_keywords || []).slice(0, 3).join(', ') + ((r.trigger_keywords || []).length > 3 ? '...' : '');
                 return `<tr>
                     <td class="fw-medium">${r.name}</td>
@@ -165,7 +161,7 @@ async function refreshAutoReply() {
                     <td><span class="tag tag-info">${mtText}</span></td>
                     <td>${r.priority}</td>
                     <td>${r.usage_count}</td>
-                    <td><span class="tag ${r.is_enabled ? 'tag-success' : 'tag-neutral'}">${r.is_enabled ? _t('启用') : _t('停用')}</span></td>
+                    <td><span class="tag ${r.is_enabled ? 'tag-success' : 'tag-neutral'}">${r.is_enabled ? _t('鍚敤') : _t('鍋滅敤')}</span></td>
                     <td>
                         <div class="cell-actions">
                             <button class="btn-custom btn-custom-outline btn-custom-sm" onclick="toggleAutoReply(${r.id})">
@@ -181,10 +177,10 @@ async function refreshAutoReply() {
         }
 
         const el = document.getElementById('arPageInfo');
-        if (el) el.textContent = _t('共') + ' ' + data.total + _t('条');
+        if (el) el.textContent = _t('鍏?) + ' ' + data.total + _t('鏉?);
     } catch (e) {
-        console.error('自动回复加载失败:', e);
-        showToast(_t('自动回复数据加载失败'), 'error');
+        console.error('鑷姩鍥炲鍔犺浇澶辫触:', e);
+        showToast(_t('鑷姩鍥炲鏁版嵁鍔犺浇澶辫触'), 'error');
     }
 }
 
@@ -192,7 +188,7 @@ async function createAutoReply() {
     const name = document.getElementById('arName').value;
     const keywords = document.getElementById('arKeywords').value;
     const reply = document.getElementById('arReplyTemplate').value;
-    if (!name || !keywords || !reply) { showToast(_t('请填写完整信息'), 'warning'); return; }
+    if (!name || !keywords || !reply) { showToast(_t('璇峰～鍐欏畬鏁翠俊鎭?), 'warning'); return; }
     try {
         const res = await fetch('/api/v1/auto-reply', {
             method: 'POST',
@@ -206,13 +202,13 @@ async function createAutoReply() {
             }),
         });
         if (!res.ok) throw new Error(await res.text());
-        showToast(_t('规则创建成功！'), 'success');
+        showToast(_t('瑙勫垯鍒涘缓鎴愬姛锛?), 'success');
         closeModal('addAutoReplyModal');
         document.getElementById('addAutoReplyForm').reset();
         refreshAutoReply();
         loadArStats();
     } catch (e) {
-        showToast(_t('创建失败') + ': ' + e.message, 'error');
+        showToast(_t('鍒涘缓澶辫触') + ': ' + e.message, 'error');
     }
 }
 
@@ -220,24 +216,24 @@ async function toggleAutoReply(id) {
     try {
         const res = await fetch(`/api/v1/auto-reply/${id}/toggle`, { method: 'POST' });
         if (!res.ok) throw new Error(await res.text());
-        showToast(_t('规则状态已更新'), 'success');
+        showToast(_t('瑙勫垯鐘舵€佸凡鏇存柊'), 'success');
         refreshAutoReply();
         loadArStats();
     } catch (e) {
-        showToast(_t('操作失败') + ': ' + e.message, 'error');
+        showToast(_t('鎿嶄綔澶辫触') + ': ' + e.message, 'error');
     }
 }
 
 async function deleteAutoReply(id) {
-    if (!confirm(_t('确定删除此规则？'))) return;
+    if (!confirm(_t('纭畾鍒犻櫎姝よ鍒欙紵'))) return;
     try {
         const res = await fetch(`/api/v1/auto-reply/${id}`, { method: 'DELETE' });
         if (!res.ok) throw new Error(await res.text());
-        showToast(_t('规则已删除'), 'success');
+        showToast(_t('瑙勫垯宸插垹闄?), 'success');
         refreshAutoReply();
         loadArStats();
     } catch (e) {
-        showToast(_t('删除失败') + ': ' + e.message, 'error');
+        showToast(_t('鍒犻櫎澶辫触') + ': ' + e.message, 'error');
     }
 }
 
@@ -249,7 +245,7 @@ function showTestModal() {
 
 async function testAutoReply() {
     const message = document.getElementById('arTestMessage').value;
-    if (!message) { showToast(_t('请输入测试消息'), 'warning'); return; }
+    if (!message) { showToast(_t('璇疯緭鍏ユ祴璇曟秷鎭?), 'warning'); return; }
     try {
         const res = await fetch('/api/v1/auto-reply/test', {
             method: 'POST',
@@ -261,14 +257,14 @@ async function testAutoReply() {
         const content = document.getElementById('arTestResultContent');
         container.style.display = 'block';
         if (data.matched) {
-            content.innerHTML = `<div class="tag tag-success mb-2">${_t('匹配成功')}</div>
-                <div class="mb-1"><strong>${_t('匹配规则：')}</strong>${data.rule?.name || '--'}</div>
-                <div><strong>${_t('回复内容：')}</strong><br>${data.reply || '--'}</div>`;
+            content.innerHTML = `<div class="tag tag-success mb-2">${_t('鍖归厤鎴愬姛')}</div>
+                <div class="mb-1"><strong>${_t('鍖归厤瑙勫垯锛?)}</strong>${data.rule?.name || '--'}</div>
+                <div><strong>${_t('鍥炲鍐呭锛?)}</strong><br>${data.reply || '--'}</div>`;
         } else {
-            content.innerHTML = '<div class="tag tag-warning">' + _t('未匹配到任何规则') + '</div>';
+            content.innerHTML = '<div class="tag tag-warning">' + _t('鏈尮閰嶅埌浠讳綍瑙勫垯') + '</div>';
         }
     } catch (e) {
-        showToast(_t('测试失败') + ': ' + e.message, 'error');
+        showToast(_t('娴嬭瘯澶辫触') + ': ' + e.message, 'error');
     }
 }
 
@@ -277,7 +273,7 @@ async function loadArStats() {
         const res = await fetch('/api/v1/auto-reply/stats');
         const data = await res.json();
         document.getElementById('arTotal').textContent = data.total_rules;
-        document.getElementById('arEnabled').textContent = data.enabled;
+        document.getElementById('arEnabled').content = data.enabled;
         document.getElementById('arUsage').textContent = data.total_usage;
     } catch (e) { console.error(e); }
 }

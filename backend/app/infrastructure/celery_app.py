@@ -1,4 +1,4 @@
-from celery import Celery
+﻿from celery import Celery
 
 from app.config import settings
 
@@ -8,7 +8,7 @@ celery_app = Celery(
     backend=settings.celery_result_backend,
 )
 
-# ── Pro tasks beat schedule (only when pro/ package is available) ──
+# 鈹€鈹€ Pro tasks beat schedule (only when pro/ package is available) 鈹€鈹€
 _beat_schedule = {}
 
 try:
@@ -32,8 +32,7 @@ celery_app.conf.update(
     result_serializer="json",
     timezone="Asia/Shanghai",
     enable_utc=True,
-    beat_schedule=_beat_schedule,
-    imports=(
+    beat_schedule=_beat_schedule,    imports=(
         "tasks.sync_tasks",
         "tasks.product_selection_tasks",
         "tasks.report_tasks",
