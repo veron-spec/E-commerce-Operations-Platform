@@ -103,7 +103,7 @@ async def logout():
 async def dashboard_page(request: Request, db: AsyncSession = Depends(get_db)):
     user = await _require_user(request, db)
     if not user:
-        return RedirectResponse(url="/login", status_code=303)
+        return RedirectResponse(url=f"{settings.root_path}/login", status_code=303)
     return templates.TemplateResponse(request, "pages/dashboard.html", _build_context(request, user_name=user.name))
 
 
@@ -111,7 +111,7 @@ async def dashboard_page(request: Request, db: AsyncSession = Depends(get_db)):
 async def orders_page(request: Request, db: AsyncSession = Depends(get_db)):
     user = await _require_user(request, db)
     if not user:
-        return RedirectResponse(url="/login", status_code=303)
+        return RedirectResponse(url=f"{settings.root_path}/login", status_code=303)
     return templates.TemplateResponse(request, "pages/orders.html", _build_context(request, user_name=user.name))
 
 
@@ -119,7 +119,7 @@ async def orders_page(request: Request, db: AsyncSession = Depends(get_db)):
 async def sales_page(request: Request, db: AsyncSession = Depends(get_db)):
     user = await _require_user(request, db)
     if not user:
-        return RedirectResponse(url="/login", status_code=303)
+        return RedirectResponse(url=f"{settings.root_path}/login", status_code=303)
     return templates.TemplateResponse(request, "pages/sales.html", _build_context(request, user_name=user.name))
 
 
@@ -127,7 +127,7 @@ async def sales_page(request: Request, db: AsyncSession = Depends(get_db)):
 async def inventory_page(request: Request, db: AsyncSession = Depends(get_db)):
     user = await _require_user(request, db)
     if not user:
-        return RedirectResponse(url="/login", status_code=303)
+        return RedirectResponse(url=f"{settings.root_path}/login", status_code=303)
     return templates.TemplateResponse(request, "pages/inventory.html", _build_context(request, user_name=user.name))
 
 
@@ -135,7 +135,7 @@ async def inventory_page(request: Request, db: AsyncSession = Depends(get_db)):
 async def stores_page(request: Request, db: AsyncSession = Depends(get_db)):
     user = await _require_user(request, db)
     if not user:
-        return RedirectResponse(url="/login", status_code=303)
+        return RedirectResponse(url=f"{settings.root_path}/login", status_code=303)
     return templates.TemplateResponse(request, "pages/stores.html", _build_context(request, user_name=user.name))
 
 
@@ -143,7 +143,7 @@ async def stores_page(request: Request, db: AsyncSession = Depends(get_db)):
 async def automation_page(request: Request, db: AsyncSession = Depends(get_db)):
     user = await _require_user(request, db)
     if not user:
-        return RedirectResponse(url="/login", status_code=303)
+        return RedirectResponse(url=f"{settings.root_path}/login", status_code=303)
     return templates.TemplateResponse(request, "pages/automation.html", _build_context(request, user_name=user.name))
 
 
@@ -151,7 +151,7 @@ async def automation_page(request: Request, db: AsyncSession = Depends(get_db)):
 async def product_selections_page(request: Request, db: AsyncSession = Depends(get_db)):
     user = await _require_user(request, db)
     if not user:
-        return RedirectResponse(url="/login", status_code=303)
+        return RedirectResponse(url=f"{settings.root_path}/login", status_code=303)
     return templates.TemplateResponse(request, "pages/product_selections.html", _build_context(request, user_name=user.name))
 
 
@@ -159,7 +159,7 @@ async def product_selections_page(request: Request, db: AsyncSession = Depends(g
 async def auto_reply_page(request: Request, db: AsyncSession = Depends(get_db)):
     user = await _require_user(request, db)
     if not user:
-        return RedirectResponse(url="/login", status_code=303)
+        return RedirectResponse(url=f"{settings.root_path}/login", status_code=303)
     return templates.TemplateResponse(request, "pages/auto_reply.html", _build_context(request, user_name=user.name))
 
 
@@ -167,7 +167,7 @@ async def auto_reply_page(request: Request, db: AsyncSession = Depends(get_db)):
 async def suggestions_page(request: Request, db: AsyncSession = Depends(get_db)):
     user = await _require_user(request, db)
     if not user:
-        return RedirectResponse(url="/login", status_code=303)
+        return RedirectResponse(url=f"{settings.root_path}/login", status_code=303)
     return templates.TemplateResponse(request, "pages/suggestions.html", _build_context(request, user_name=user.name))
 
 
@@ -175,7 +175,7 @@ async def suggestions_page(request: Request, db: AsyncSession = Depends(get_db))
 async def retrospectives_page(request: Request, db: AsyncSession = Depends(get_db)):
     user = await _require_user(request, db)
     if not user:
-        return RedirectResponse(url="/login", status_code=303)
+        return RedirectResponse(url=f"{settings.root_path}/login", status_code=303)
     return templates.TemplateResponse(request, "pages/retrospectives.html", _build_context(request, user_name=user.name))
 
 
@@ -183,7 +183,7 @@ async def retrospectives_page(request: Request, db: AsyncSession = Depends(get_d
 async def logs_page(request: Request, db: AsyncSession = Depends(get_db)):
     user = await _require_user(request, db)
     if not user:
-        return RedirectResponse(url="/login", status_code=303)
+        return RedirectResponse(url=f"{settings.root_path}/login", status_code=303)
     return templates.TemplateResponse(request, "pages/logs.html", _build_context(request, user_name=user.name))
 
 
@@ -191,5 +191,5 @@ async def logs_page(request: Request, db: AsyncSession = Depends(get_db)):
 async def settings_page(request: Request, db: AsyncSession = Depends(get_db)):
     user = await _require_user(request, db)
     if not user:
-        return RedirectResponse(url="/login", status_code=303)
+        return RedirectResponse(url=f"{settings.root_path}/login", status_code=303)
     return templates.TemplateResponse(request, "pages/settings.html", _build_context(request, user_name=user.name))
