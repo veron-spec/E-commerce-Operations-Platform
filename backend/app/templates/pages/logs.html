@@ -1,38 +1,38 @@
-{% extends "base.html" %}
-{% block title %}{{ _("操作日志") }} - {{ _("电商运营平台") }}{% endblock %}
-{% block page_title %}{{ _("操作日志") }}{% endblock %}
+﻿{% extends "base.html" %}
+{% block title %}{{ _("鎿嶄綔鏃ュ織") }} - {{ _("鐢靛晢杩愯惀骞冲彴") }}{% endblock %}
+{% block page_title %}{{ _("鎿嶄綔鏃ュ織") }}{% endblock %}
 {% block breadcrumb %}
-<li><a href="/">{{ _("首页") }}</a></li>
-<span>—</span>
-<li class="active">{{ _("操作日志") }}</li>
+<li><a href="/">{{ _("棣栭〉") }}</a></li>
+<span>鈥?/span>
+<li class="active">{{ _("鎿嶄綔鏃ュ織") }}</li>
 {% endblock %}
 
 {% block content %}
 <body data-page="logs">
 <div class="card-custom">
     <div class="card-header">
-        <span class="card-title"><i class="bi bi-journal-text" style="color:var(--gold)"></i>{{ _("审计日志") }}</span>
+        <span class="card-title"><i class="bi bi-journal-text" style="color:var(--gold)"></i>{{ _("瀹¤鏃ュ織") }}</span>
         <div class="flex gap-2">
             <select class="form-custom" id="actionFilter" style="width:auto" onchange="loadLogs()">
-                <option value="">{{ _("所有操作") }}</option>
-                <option value="create">{{ _("创建") }}</option>
-                <option value="update">{{ _("更新") }}</option>
-                <option value="delete">{{ _("删除") }}</option>
-                <option value="login">{{ _("登录") }}</option>
-                <option value="register">{{ _("注册") }}</option>
-                <option value="export">{{ _("导出") }}</option>
+                <option value="">{{ _("鎵€鏈夋搷浣?) }}</option>
+                <option value="create">{{ _("鍒涘缓") }}</option>
+                <option value="update">{{ _("鏇存柊") }}</option>
+                <option value="delete">{{ _("鍒犻櫎") }}</option>
+                <option value="login">{{ _("鐧诲綍") }}</option>
+                <option value="register">{{ _("娉ㄥ唽") }}</option>
+                <option value="export">{{ _("瀵煎嚭") }}</option>
             </select>
             <select class="form-custom" id="resourceFilter" style="width:auto" onchange="loadLogs()">
-                <option value="">{{ _("所有资源") }}</option>
-                <option value="store">{{ _("店铺") }}</option>
-                <option value="order">{{ _("订单") }}</option>
-                <option value="automation_rule">{{ _("自动化规则") }}</option>
-                <option value="auto_reply">{{ _("自动回复") }}</option>
-                <option value="product_selection">{{ _("选品") }}</option>
-                <option value="suggestion">{{ _("建议") }}</option>
-                <option value="retrospective">{{ _("复盘") }}</option>
+                <option value="">{{ _("鎵€鏈夎祫婧?) }}</option>
+                <option value="store">{{ _("搴楅摵") }}</option>
+                <option value="order">{{ _("璁㈠崟") }}</option>
+                <option value="automation_rule">{{ _("鑷姩鍖栬鍒?) }}</option>
+                <option value="auto_reply">{{ _("鑷姩鍥炲") }}</option>
+                <option value="product_selection">{{ _("閫夊搧") }}</option>
+                <option value="suggestion">{{ _("寤鸿") }}</option>
+                <option value="retrospective">{{ _("澶嶇洏") }}</option>
             </select>
-            <button class="btn-custom btn-custom-outline" onclick="loadLogs()"><i class="bi bi-arrow-clockwise"></i>{{ _("刷新") }}</button>
+            <button class="btn-custom btn-custom-outline" onclick="loadLogs()"><i class="bi bi-arrow-clockwise"></i>{{ _("鍒锋柊") }}</button>
         </div>
     </div>
     <div class="card-body">
@@ -40,24 +40,24 @@
             <table class="table-custom">
                 <thead>
                     <tr>
-                        <th>{{ _("时间") }}</th>
-                        <th>{{ _("操作") }}</th>
-                        <th>{{ _("资源") }}</th>
-                        <th>{{ _("详情") }}</th>
+                        <th>{{ _("鏃堕棿") }}</th>
+                        <th>{{ _("鎿嶄綔") }}</th>
+                        <th>{{ _("璧勬簮") }}</th>
+                        <th>{{ _("璇︽儏") }}</th>
                         <th>IP</th>
                     </tr>
                 </thead>
                 <tbody id="logTableBody">
-                    <tr><td colspan="5" class="text-center text-muted py-4">{{ _("加载中...") }}</td></tr>
+                    <tr><td colspan="5" class="text-center text-muted py-4">{{ _("鍔犺浇涓?..") }}</td></tr>
                 </tbody>
             </table>
         </div>
         <div class="flex justify-between items-center mt-3" id="pagination">
-            <div class="text-sm text-muted" id="logCount">{{ _("共") }} 0 {{ _("条") }}</div>
+            <div class="text-sm text-muted" id="logCount">{{ _("鍏?) }} 0 {{ _("鏉?) }}</div>
             <div class="flex gap-2">
-                <button class="btn-custom btn-custom-outline btn-sm" id="prevPage" onclick="changePage(-1)" disabled>{{ _("上一页") }}</button>
-                <span class="text-sm text-muted px-2" id="pageInfo">{{ _("第") }} 1 / 1 {{ _("页") }}</span>
-                <button class="btn-custom btn-custom-outline btn-sm" id="nextPage" onclick="changePage(1)">{{ _("下一页") }}</button>
+                <button class="btn-custom btn-custom-outline btn-sm" id="prevPage" onclick="changePage(-1)" disabled>{{ _("涓婁竴椤?) }}</button>
+                <span class="text-sm text-muted px-2" id="pageInfo">{{ _("绗?) }} 1 / 1 {{ _("椤?) }}</span>
+                <button class="btn-custom btn-custom-outline btn-sm" id="nextPage" onclick="changePage(1)">{{ _("涓嬩竴椤?) }}</button>
             </div>
         </div>
     </div>
@@ -83,11 +83,11 @@ async function loadLogs() {
         totalPages = data.total_pages || 1;
 
         if (data.items.length === 0) {
-            tbody.innerHTML = '<tr><td colspan="5" class="text-center text-muted py-4">' + _t('暂无操作记录') + '</td></tr>';
+            tbody.innerHTML = '<tr><td colspan="5" class="text-center text-muted py-4">' + _t('鏆傛棤鎿嶄綔璁板綍') + '</td></tr>';
         } else {
             tbody.innerHTML = data.items.map(log => {
-                const actionMap = {create: _t('创建'), update: _t('更新'), delete: _t('删除'), login: _t('登录'), register: _t('注册'), export: _t('导出')};
-                const resourceMap = {store: _t('店铺'), order: _t('订单'), automation_rule: _t('自动化规则'), auto_reply: _t('自动回复'), product_selection: _t('选品'), suggestion: _t('建议'), retrospective: _t('复盘')};
+                const actionMap = {create: _t('鍒涘缓'), update: _t('鏇存柊'), delete: _t('鍒犻櫎'), login: _t('鐧诲綍'), register: _t('娉ㄥ唽'), export: _t('瀵煎嚭')};
+                const resourceMap = {store: _t('搴楅摵'), order: _t('璁㈠崟'), automation_rule: _t('鑷姩鍖栬鍒?), auto_reply: _t('鑷姩鍥炲'), product_selection: _t('閫夊搧'), suggestion: _t('寤鸿'), retrospective: _t('澶嶇洏')};
                 const actionLabel = actionMap[log.action] || log.action;
                 const resourceLabel = resourceMap[log.resource_type] || log.resource_type;
                 const time = new Date(log.created_at).toLocaleString('zh-CN');
@@ -102,12 +102,12 @@ async function loadLogs() {
             }).join('');
         }
 
-        document.getElementById('logCount').textContent = _t('共') + ' ' + data.total + _t('条');
-        document.getElementById('pageInfo').textContent = _t('第') + ' ' + data.page + ' / ' + totalPages + _t('页');
+        document.getElementById('logCount').textContent = _t('鍏?) + ' ' + data.total + _t('鏉?);
+        document.getElementById('pageInfo').textContent = _t('绗?) + ' ' + data.page + ' / ' + totalPages + _t('椤?);
         document.getElementById('prevPage').disabled = currentPage <= 1;
         document.getElementById('nextPage').disabled = currentPage >= totalPages;
     } catch (e) {
-        document.getElementById('logTableBody').innerHTML = '<tr><td colspan="5" class="text-center text-danger py-4">' + _t('加载失败') + '</td></tr>';
+        document.getElementById('logTableBody').innerHTML = '<tr><td colspan="5" class="text-center text-danger py-4">' + _t('鍔犺浇澶辫触') + '</td></tr>';
     }
 }
 

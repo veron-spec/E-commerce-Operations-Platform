@@ -4,10 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}{{ _("电商运营平台") }}{% endblock %}</title>
+    <link rel="icon" href="{{ root_path }}/static/cello_favicon.svg" type="image/svg+xml">
+    <link rel="alternate icon" href="{{ root_path }}/static/cello_favicon_dark.svg" type="image/svg+xml" media="(prefers-color-scheme: dark)">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Noto+Serif+SC:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="/static/style.css?v=2">
+    <link rel="stylesheet" href="{{ root_path }}/static/style.css?v=3">
+    <script>
+    /* ── sub-path support: ROOT_PATH + fetch auto-prefix ── */
+    window.ROOT_PATH = '{{ root_path }}';
+    if (window.ROOT_PATH) {
+        var _origFetch = window.fetch;
+        window.fetch = function(input, init) {
+            if (typeof input === 'string' && input.charAt(0) === '/') {
+                input = window.ROOT_PATH + input;
+            }
+            return _origFetch.call(this, input, init);
+        };
+    }
+    </script>
     {% block head %}{% endblock %}
 </head>
 <body>
@@ -21,67 +36,63 @@
         <!-- ===== Sidebar ===== -->
         <aside class="sidebar" id="sidebar">
             <div class="sidebar-brand">
-                <div class="brand-icon"><i class="bi bi-shop"></i></div>
-                <div>
-                    <div class="brand-text">{{ _("商枢") }}</div>
-                    <div class="brand-sub">E-Commerce Ops</div>
-                </div>
+                <img src="/static/cello_logo.svg" alt="cello" class="brand-logo">
             </div>
 
             <nav class="sidebar-nav">
                 <div class="sidebar-label">{{ _("概览") }}</div>
-                <a href="/" class="nav-link" data-page="dashboard">
+                <a href="{{ root_path }}/" class="nav-link" data-page="dashboard">
                     <i class="bi bi-grid-1x2"></i>
                     <span class="nav-text">{{ _("数据看板") }}</span>
                 </a>
-                <a href="/orders" class="nav-link" data-page="orders">
+                <a href="{{ root_path }}/orders" class="nav-link" data-page="orders">
                     <i class="bi bi-receipt"></i>
                     <span class="nav-text">{{ _("订单管理") }}</span>
                     <span class="nav-badge" id="orderBadge">0</span>
                 </a>
 
                 <div class="sidebar-label">{{ _("分析") }}</div>
-                <a href="/sales" class="nav-link" data-page="sales">
+                <a href="{{ root_path }}/sales" class="nav-link" data-page="sales">
                     <i class="bi bi-graph-up-arrow"></i>
                     <span class="nav-text">{{ _("销售分析") }}</span>
                 </a>
-                <a href="/inventory" class="nav-link" data-page="inventory">
+                <a href="{{ root_path }}/inventory" class="nav-link" data-page="inventory">
                     <i class="bi bi-box-seam"></i>
                     <span class="nav-text">{{ _("库存管理") }}</span>
                 </a>
 
                 <div class="sidebar-label">{{ _("管理") }}</div>
-                <a href="/stores" class="nav-link" data-page="stores">
+                <a href="{{ root_path }}/stores" class="nav-link" data-page="stores">
                     <i class="bi bi-shop-window"></i>
                     <span class="nav-text">{{ _("店铺管理") }}</span>
                 </a>
-                <a href="/automation" class="nav-link" data-page="automation">
+                <a href="{{ root_path }}/automation" class="nav-link" data-page="automation">
                     <i class="bi bi-lightning-charge"></i>
                     <span class="nav-text">{{ _("自动化规则") }}</span>
                 </a>
-                <a href="/product-selections" class="nav-link" data-page="product-selections">
+                <a href="{{ root_path }}/product-selections" class="nav-link" data-page="product-selections">
                     <i class="bi bi-star"></i>
                     <span class="nav-text">{{ _("捕获选品") }}</span>
                 </a>
-                <a href="/auto-reply" class="nav-link" data-page="auto-reply">
+                <a href="{{ root_path }}/auto-reply" class="nav-link" data-page="auto-reply">
                     <i class="bi bi-chat-dots"></i>
                     <span class="nav-text">{{ _("自动化客服") }}</span>
                 </a>
-                <a href="/suggestions" class="nav-link" data-page="suggestions">
+                <a href="{{ root_path }}/suggestions" class="nav-link" data-page="suggestions">
                     <i class="bi bi-lightbulb"></i>
                     <span class="nav-text">{{ _("运营建议") }}</span>
                 </a>
-                <a href="/retrospectives" class="nav-link" data-page="retrospectives">
+                <a href="{{ root_path }}/retrospectives" class="nav-link" data-page="retrospectives">
                     <i class="bi bi-clock-history"></i>
                     <span class="nav-text">{{ _("复盘分析") }}</span>
                 </a>
 
                 <div class="sidebar-label">{{ _("系统") }}</div>
-                <a href="/logs" class="nav-link" data-page="logs">
+                <a href="{{ root_path }}/logs" class="nav-link" data-page="logs">
                     <i class="bi bi-journal-text"></i>
                     <span class="nav-text">{{ _("操作日志") }}</span>
                 </a>
-                <a href="/settings" class="nav-link" data-page="settings">
+                <a href="{{ root_path }}/settings" class="nav-link" data-page="settings">
                     <i class="bi bi-gear"></i>
                     <span class="nav-text">{{ _("系统设置") }}</span>
                 </a>
@@ -108,7 +119,7 @@
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb">
                                 {% block breadcrumb %}
-                                <li><a href="/">{{ _("首页") }}</a></li>
+                                <li><a href="{{ root_path }}/">{{ _("首页") }}</a></li>
                                 <span>—</span>
                                 <li class="active">{{ _("数据看板") }}</li>
                                 {% endblock %}
@@ -131,7 +142,7 @@
                         </button>
                         <div class="user-menu-dropdown" id="userMenuDropdown">
                             <div class="user-menu-header">{{ user_name }}</div>
-                            <a class="user-menu-item" href="/logout"><i class="bi bi-box-arrow-right"></i> {{ _("退出登录") }}</a>
+                            <a class="user-menu-item" href="{{ root_path }}/logout"><i class="bi bi-box-arrow-right"></i> {{ _("退出登录") }}</a>
                         </div>
                     </div>
                     {% endif %}
@@ -310,11 +321,12 @@
         return m[key] !== undefined ? m[key] : key;
     };
     </script>
-    <script src="/static/app.js?v=3"></script>
+    <script src="{{ root_path }}/static/app.js?v=3"></script>
     <script>
         // Highlight active menu
-        document.querySelectorAll('.nav-link[data-page]').forEach(el => {
-            if (el.getAttribute('href') === location.pathname) {
+        document.querySelectorAll('.nav-link[data-page]').forEach(function(el) {
+            var normalizedPath = location.pathname.replace(window.ROOT_PATH || '', '') || '/';
+            if (el.getAttribute('href') === normalizedPath) {
                 el.classList.add('active');
             }
         });

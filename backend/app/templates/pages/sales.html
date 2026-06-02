@@ -1,10 +1,10 @@
-{% extends "base.html" %}
-{% block title %}{{ _("销售分析") }} - {{ _("电商运营平台") }}{% endblock %}
-{% block page_title %}{{ _("销售分析") }}{% endblock %}
+﻿{% extends "base.html" %}
+{% block title %}{{ _("閿€鍞垎鏋?) }} - {{ _("鐢靛晢杩愯惀骞冲彴") }}{% endblock %}
+{% block page_title %}{{ _("閿€鍞垎鏋?) }}{% endblock %}
 {% block breadcrumb %}
-<li><a href="/">{{ _("首页") }}</a></li>
-<span>—</span>
-<li class="active">{{ _("销售分析") }}</li>
+<li><a href="/">{{ _("棣栭〉") }}</a></li>
+<span>鈥?/span>
+<li class="active">{{ _("閿€鍞垎鏋?) }}</li>
 {% endblock %}
 
 {% block content %}
@@ -13,28 +13,28 @@
 <div class="stats-grid">
     <div class="stat stat-primary">
         <div class="stat-top">
-            <div class="stat-label">{{ _("总销售额") }}</div>
+            <div class="stat-label">{{ _("鎬婚攢鍞") }}</div>
             <div class="stat-icon"><i class="bi bi-currency-yen"></i></div>
         </div>
         <div class="stat-value" id="salesTotalRevenue">--</div>
     </div>
     <div class="stat stat-default">
         <div class="stat-top">
-            <div class="stat-label">{{ _("总订单数") }}</div>
+            <div class="stat-label">{{ _("鎬昏鍗曟暟") }}</div>
             <div class="stat-icon"><i class="bi bi-receipt"></i></div>
         </div>
         <div class="stat-value" id="salesTotalOrders">--</div>
     </div>
     <div class="stat stat-success">
         <div class="stat-top">
-            <div class="stat-label">{{ _("平均客单价") }}</div>
+            <div class="stat-label">{{ _("骞冲潎瀹㈠崟浠?) }}</div>
             <div class="stat-icon"><i class="bi bi-cart3"></i></div>
         </div>
         <div class="stat-value" id="salesAvgOrder">--</div>
     </div>
     <div class="stat stat-info">
         <div class="stat-top">
-            <div class="stat-label">{{ _("环比增长") }}</div>
+            <div class="stat-label">{{ _("鐜瘮澧為暱") }}</div>
             <div class="stat-icon"><i class="bi bi-graph-up-arrow"></i></div>
         </div>
         <div class="stat-value" id="salesRevenueGrowth">--</div>
@@ -43,18 +43,18 @@
 
 <!-- Filter -->
 <div class="filter-bar">
-    <label class="form-label mb-0 text-sm">{{ _("统计周期") }}</label>
+    <label class="form-label mb-0 text-sm">{{ _("缁熻鍛ㄦ湡") }}</label>
     <select class="form-custom" id="salesDays" onchange="refreshSales()">
-        <option value="7">{{ _("最近 7 天") }}</option>
-        <option value="30" selected>{{ _("最近 30 天") }}</option>
-        <option value="90">{{ _("最近 90 天") }}</option>
+        <option value="7">{{ _("鏈€杩?7 澶?) }}</option>
+        <option value="30" selected>{{ _("鏈€杩?30 澶?) }}</option>
+        <option value="90">{{ _("鏈€杩?90 澶?) }}</option>
     </select>
 </div>
 
 <!-- Chart -->
 <div class="card-custom mb-4">
     <div class="card-header">
-        <span class="card-title"><i class="bi bi-graph-up-arrow" style="color:var(--emerald)"></i>{{ _("销售趋势") }}</span>
+        <span class="card-title"><i class="bi bi-graph-up-arrow" style="color:var(--emerald)"></i>{{ _("閿€鍞秼鍔?) }}</span>
     </div>
     <div class="card-body">
         <div class="chart-wrapper">
@@ -66,21 +66,21 @@
 <!-- Table -->
 <div class="card-custom">
     <div class="card-header">
-        <span class="card-title"><i class="bi bi-table" style="color:var(--gold)"></i>{{ _("每日明细") }}</span>
+        <span class="card-title"><i class="bi bi-table" style="color:var(--gold)"></i>{{ _("姣忔棩鏄庣粏") }}</span>
     </div>
     <div class="card-body p-0">
         <div class="table-container">
             <table class="table-custom">
                 <thead>
                     <tr>
-                        <th>{{ _("日期") }}</th>
-                        <th>{{ _("销售额") }}</th>
-                        <th>{{ _("订单数") }}</th>
-                        <th>{{ _("折扣金额") }}</th>
+                        <th>{{ _("鏃ユ湡") }}</th>
+                        <th>{{ _("閿€鍞") }}</th>
+                        <th>{{ _("璁㈠崟鏁?) }}</th>
+                        <th>{{ _("鎶樻墸閲戦") }}</th>
                     </tr>
                 </thead>
                 <tbody id="salesTableBody">
-                    <tr><td colspan="4"><div class="empty-state"><div class="empty-title">{{ _("加载中...") }}</div></div></td></tr>
+                    <tr><td colspan="4"><div class="empty-state"><div class="empty-title">{{ _("鍔犺浇涓?..") }}</div></div></td></tr>
                 </tbody>
             </table>
         </div>

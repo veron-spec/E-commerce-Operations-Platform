@@ -27,7 +27,7 @@
 
   <div class="auth-card">
     <div class="auth-card-inner">
-      <div class="auth-logo"><i class="bi bi-shop"></i></div>
+      <img src="{{ root_path }}/static/cello_logo.svg" alt="cello" class="auth-logo-img">
       <h1 class="auth-title">{{ _("电商运营自动化平台") }}</h1>
       <p class="auth-subtitle">{{ _("创建新账户") }}</p>
 
@@ -93,7 +93,7 @@
 
       <div style="text-align:center;margin-top:20px">
         <span class="text-muted text-sm">{{ _("已有账户？") }}</span>
-        <a href="/login" class="fw-medium" style="color:var(--primary);text-decoration:none;font-size:14px">{{ _("登录") }}</a>
+        <a href="{{ root_path }}/login" class="fw-medium" style="color:var(--primary);text-decoration:none;font-size:14px">{{ _("登录") }}</a>
       </div>
     </div>
   </div>
@@ -217,8 +217,9 @@ document.getElementById('registerForm').addEventListener('submit', async (e) => 
 
     if (res.ok) {
       const data = await res.json();
-      document.cookie = `token=${data.access_token}; path=/; max-age=604800; SameSite=Lax`;
-      window.location.href = '/';
+      var cookiePath = window.ROOT_PATH || '/';
+      document.cookie = 'token=' + data.access_token + '; path=' + cookiePath + '; max-age=604800; SameSite=Lax';
+      window.location.href = (window.ROOT_PATH || '') + '/';
     } else {
       const err = await res.json();
       if (err.detail && err.detail.includes('{{ _("邮箱") }}')) {

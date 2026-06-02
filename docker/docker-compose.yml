@@ -13,8 +13,8 @@ services:
     deploy:
       resources:
         limits:
-          cpus: "0.5"
-          memory: "128M"
+          cpus: "0.25"
+          memory: "64M"
 
   api:
     build:
@@ -27,50 +27,7 @@ services:
       - DATABASE_URL=postgresql+asyncpg://postgres:postgres@db:5432/ecommerce_ops
       - CELERY_BROKER_URL=redis://redis:6379/0
       - CELERY_RESULT_BACKEND=redis://redis:6379/0
-    depends_on:
-      db:
-        condition: service_healthy
-      redis:
-        condition: service_started
-    restart: unless-stopped
-    deploy:
-      resources:
-        limits:
-          cpus: "1"
-          memory: "512M"
-
-  celery-worker:
-    build:
-      context: ..
-      dockerfile: docker/Dockerfile
-    command: celery -A tasks.sync_tasks worker --loglevel=info
-    env_file: ../backend/.env
-    environment:
-      - DATABASE_URL=postgresql+asyncpg://postgres:postgres@db:5432/ecommerce_ops
-      - CELERY_BROKER_URL=redis://redis:6379/0
-      - CELERY_RESULT_BACKEND=redis://redis:6379/0
-    depends_on:
-      db:
-        condition: service_healthy
-      redis:
-        condition: service_started
-    restart: unless-stopped
-    deploy:
-      resources:
-        limits:
-          cpus: "1"
-          memory: "512M"
-
-  celery-beat:
-    build:
-      context: ..
-      dockerfile: docker/Dockerfile
-    command: celery -A tasks.sync_tasks beat --loglevel=info
-    env_file: ../backend/.env
-    environment:
-      - DATABASE_URL=postgresql+asyncpg://postgres:postgres@db:5432/ecommerce_ops
-      - CELERY_BROKER_URL=redis://redis:6379/0
-      - CELERY_RESULT_BACKEND=redis://redis:6379/0
+      - ROOT_PATH=/cello
     depends_on:
       db:
         condition: service_healthy
@@ -83,8 +40,61 @@ services:
           cpus: "0.5"
           memory: "256M"
 
+  celery-worker:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    command: celery -A tasks.sync_tasks worker --loglevel=info
+    env_file: ../backend/.env
+    environment:
+      - DATABASE_URL=postgresql+asyncpg://postgres:postgres@db:5432/ecommerce_ops
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis:6379/0
+      - ROOT_PATH=/cello
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: "256M"
+
+  celery-beat:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    command: celery -A tasks.sync_tasks beat --loglevel=info
+    env_file: ../backend/.env
+    environment:
+      - DATABASE_URL=postgresql+asyncpg://postgres:postgres@db:5432/ecommerce_ops
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis:6379/0
+      - ROOT_PATH=/cello
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: "0.25"
+          memory: "64M"
+
   db:
     image: postgres:16-alpine
+    command:
+      - "postgres"
+      - "-c shared_buffers=128MB"
+      - "-c effective_cache_size=384MB"
+      - "-c work_mem=2MB"
+      - "-c maintenance_work_mem=32MB"
+      - "-c random_page_cost=1.1"
     environment:
       POSTGRES_DB: ecommerce_ops
       POSTGRES_USER: postgres
@@ -97,10 +107,20 @@ services:
       timeout: 5s
       retries: 5
     restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: "384M"
 
   redis:
     image: redis:7-alpine
     restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: "0.25"
+          memory: "64M"
 
 volumes:
   pgdata:

@@ -1,10 +1,10 @@
-{% extends "base.html" %}
-{% block title %}{{ _("自动化规则") }} - {{ _("电商运营平台") }}{% endblock %}
-{% block page_title %}{{ _("自动化规则") }}{% endblock %}
+﻿{% extends "base.html" %}
+{% block title %}{{ _("鑷姩鍖栬鍒?) }} - {{ _("鐢靛晢杩愯惀骞冲彴") }}{% endblock %}
+{% block page_title %}{{ _("鑷姩鍖栬鍒?) }}{% endblock %}
 {% block breadcrumb %}
-<li><a href="/">{{ _("首页") }}</a></li>
-<span>—</span>
-<li class="active">{{ _("自动化规则") }}</li>
+<li><a href="/">{{ _("棣栭〉") }}</a></li>
+<span>鈥?/span>
+<li class="active">{{ _("鑷姩鍖栬鍒?) }}</li>
 {% endblock %}
 
 {% block content %}
@@ -13,7 +13,7 @@
     <div class="stat stat-primary">
         <div class="stat-top">
             <div>
-                <div class="stat-label">{{ _("启用规则") }}</div>
+                <div class="stat-label">{{ _("鍚敤瑙勫垯") }}</div>
                 <div class="stat-value" id="ruleActiveCount">--</div>
             </div>
             <div class="stat-icon"><i class="bi bi-toggle-on"></i></div>
@@ -22,7 +22,7 @@
     <div class="stat stat-success">
         <div class="stat-top">
             <div>
-                <div class="stat-label">{{ _("今日执行") }}</div>
+                <div class="stat-label">{{ _("浠婃棩鎵ц") }}</div>
                 <div class="stat-value" id="ruleExecCount">--</div>
             </div>
             <div class="stat-icon"><i class="bi bi-lightning-charge"></i></div>
@@ -33,30 +33,30 @@
 <!-- Actions -->
 <div class="mb-4">
     <button class="btn-custom btn-custom-primary" onclick="openModal('addRuleModal')">
-        <i class="bi bi-plus-circle"></i>{{ _("创建规则") }}
+        <i class="bi bi-plus-circle"></i>{{ _("鍒涘缓瑙勫垯") }}
     </button>
 </div>
 
 <!-- Rules List -->
 <div class="card-custom">
     <div class="card-header">
-        <span class="card-title"><i class="bi bi-lightning-charge" style="color:var(--gold)"></i>{{ _("规则列表") }}</span>
-        <span class="text-sm text-muted">{{ _("条件触发自动化任务") }}</span>
+        <span class="card-title"><i class="bi bi-lightning-charge" style="color:var(--gold)"></i>{{ _("瑙勫垯鍒楄〃") }}</span>
+        <span class="text-sm text-muted">{{ _("鏉′欢瑙﹀彂鑷姩鍖栦换鍔?) }}</span>
     </div>
     <div class="card-body p-0">
         <div class="table-container">
             <table class="table-custom">
                 <thead>
                     <tr>
-                        <th>{{ _("规则名称") }}</th>
-                        <th>{{ _("触发方式") }}</th>
-                        <th>{{ _("条件") }}</th>
-                        <th style="width:80px">{{ _("状态") }}</th>
-                        <th style="width:100px">{{ _("操作") }}</th>
+                        <th>{{ _("瑙勫垯鍚嶇О") }}</th>
+                        <th>{{ _("瑙﹀彂鏂瑰紡") }}</th>
+                        <th>{{ _("鏉′欢") }}</th>
+                        <th style="width:80px">{{ _("鐘舵€?) }}</th>
+                        <th style="width:100px">{{ _("鎿嶄綔") }}</th>
                     </tr>
                 </thead>
                 <tbody id="rulesTableBody">
-                    <tr><td colspan="5"><div class="empty-state"><div class="empty-icon"><i class="bi bi-lightning-charge"></i></div><div class="empty-title">{{ _("暂无自动化规则") }}</div><div class="empty-desc">{{ _("创建规则来自动处理库存预警、价格调整等操作") }}</div></div></td></tr>
+                    <tr><td colspan="5"><div class="empty-state"><div class="empty-icon"><i class="bi bi-lightning-charge"></i></div><div class="empty-title">{{ _("鏆傛棤鑷姩鍖栬鍒?) }}</div><div class="empty-desc">{{ _("鍒涘缓瑙勫垯鏉ヨ嚜鍔ㄥ鐞嗗簱瀛橀璀︺€佷环鏍艰皟鏁寸瓑鎿嶄綔") }}</div></div></td></tr>
                 </tbody>
             </table>
         </div>
@@ -66,30 +66,30 @@
 <!-- Template Rules -->
 <div class="card-custom mt-4">
     <div class="card-header">
-        <span class="card-title"><i class="bi bi-files text-muted"></i>{{ _("规则模板") }}</span>
-        <span class="text-sm text-muted">{{ _("快速创建常用规则") }}</span>
+        <span class="card-title"><i class="bi bi-files text-muted"></i>{{ _("瑙勫垯妯℃澘") }}</span>
+        <span class="text-sm text-muted">{{ _("蹇€熷垱寤哄父鐢ㄨ鍒?) }}</span>
     </div>
     <div class="card-body">
         <div class="grid-3">
             <div class="card-custom" style="cursor:pointer;" onclick="useTemplate('low_stock')">
                 <div class="card-body text-center" style="padding:24px;">
-                    <div style="font-size:32px;margin-bottom:8px;">📦</div>
-                    <div class="fw-medium">{{ _("库存预警") }}</div>
-                    <div class="text-sm text-muted mt-2">{{ _("库存低于 10 件时发送通知") }}</div>
+                    <div style="font-size:32px;margin-bottom:8px;">馃摝</div>
+                    <div class="fw-medium">{{ _("搴撳瓨棰勮") }}</div>
+                    <div class="text-sm text-muted mt-2">{{ _("搴撳瓨浣庝簬 10 浠舵椂鍙戦€侀€氱煡") }}</div>
                 </div>
             </div>
             <div class="card-custom" style="cursor:pointer;" onclick="useTemplate('high_sales')">
                 <div class="card-body text-center" style="padding:24px;">
-                    <div style="font-size:32px;margin-bottom:8px;">📈</div>
-                    <div class="fw-medium">{{ _("销售暴涨提醒") }}</div>
-                    <div class="text-sm text-muted mt-2">{{ _("日销售额超过 ¥10,000 时通知") }}</div>
+                    <div style="font-size:32px;margin-bottom:8px;">馃搱</div>
+                    <div class="fw-medium">{{ _("閿€鍞毚娑ㄦ彁閱?) }}</div>
+                    <div class="text-sm text-muted mt-2">{{ _("鏃ラ攢鍞瓒呰繃 楼10,000 鏃堕€氱煡") }}</div>
                 </div>
             </div>
-            <div class="card-custom" style="cursor:pointer;" onclick="showToast('{{ _("更多模板开发中") }}', 'info')">
+            <div class="card-custom" style="cursor:pointer;" onclick="showToast('{{ _("鏇村妯℃澘寮€鍙戜腑") }}', 'info')">
                 <div class="card-body text-center" style="padding:24px;">
-                    <div style="font-size:32px;margin-bottom:8px;">🔧</div>
-                    <div class="fw-medium">{{ _("自定义规则") }}</div>
-                    <div class="text-sm text-muted mt-2">{{ _("自由组合条件和动作") }}</div>
+                    <div style="font-size:32px;margin-bottom:8px;">馃敡</div>
+                    <div class="fw-medium">{{ _("鑷畾涔夎鍒?) }}</div>
+                    <div class="text-sm text-muted mt-2">{{ _("鑷敱缁勫悎鏉′欢鍜屽姩浣?) }}</div>
                 </div>
             </div>
         </div>
@@ -100,44 +100,44 @@
 <div class="modal-overlay" id="addRuleModal">
     <div class="modal-box">
         <div class="modal-header">
-            <h5><i class="bi bi-lightning-charge" style="color:var(--gold)"></i> {{ _("创建自动化规则") }}</h5>
+            <h5><i class="bi bi-lightning-charge" style="color:var(--gold)"></i> {{ _("鍒涘缓鑷姩鍖栬鍒?) }}</h5>
             <button class="modal-close" onclick="closeModal('addRuleModal')">&times;</button>
         </div>
         <div class="modal-body">
             <form id="addRuleForm">
                 <div class="form-group">
-                    <label class="form-label">{{ _("规则名称") }}</label>
-                    <input type="text" class="form-custom" id="ruleName" placeholder="{{ _('如：库存预警 - 蓝牙耳机') }}">
+                    <label class="form-label">{{ _("瑙勫垯鍚嶇О") }}</label>
+                    <input type="text" class="form-custom" id="ruleName" placeholder="{{ _('濡傦細搴撳瓨棰勮 - 钃濈墮鑰虫満') }}">
                 </div>
                 <div class="form-group">
-                    <label class="form-label">{{ _("触发条件") }}</label>
+                    <label class="form-label">{{ _("瑙﹀彂鏉′欢") }}</label>
                     <select class="form-custom" id="ruleField">
-                        <option value="inventory_quantity">{{ _("库存数量") }}</option>
-                        <option value="daily_revenue">{{ _("日销售额") }}</option>
-                        <option value="order_count">{{ _("订单数") }}</option>
+                        <option value="inventory_quantity">{{ _("搴撳瓨鏁伴噺") }}</option>
+                        <option value="daily_revenue">{{ _("鏃ラ攢鍞") }}</option>
+                        <option value="order_count">{{ _("璁㈠崟鏁?) }}</option>
                     </select>
                 </div>
                 <div class="grid-2" style="margin-bottom:0;">
                     <div class="form-group">
-                        <label class="form-label">{{ _("运算符") }}</label>
+                        <label class="form-label">{{ _("杩愮畻绗?) }}</label>
                         <select class="form-custom" id="ruleOperator">
-                            <option value="lt">{{ _("小于") }} (&lt;)</option>
-                            <option value="lte">{{ _("小于等于") }} (&le;)</option>
-                            <option value="gt">{{ _("大于") }} (&gt;)</option>
-                            <option value="gte">{{ _("大于等于") }} (&ge;)</option>
-                            <option value="eq">{{ _("等于") }} (=)</option>
+                            <option value="lt">{{ _("灏忎簬") }} (&lt;)</option>
+                            <option value="lte">{{ _("灏忎簬绛変簬") }} (&le;)</option>
+                            <option value="gt">{{ _("澶т簬") }} (&gt;)</option>
+                            <option value="gte">{{ _("澶т簬绛変簬") }} (&ge;)</option>
+                            <option value="eq">{{ _("绛変簬") }} (=)</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label class="form-label">{{ _("阈值") }}</label>
-                        <input type="text" class="form-custom" id="ruleValue" placeholder="{{ _('如：10') }}">
+                        <label class="form-label">{{ _("闃堝€?) }}</label>
+                        <input type="text" class="form-custom" id="ruleValue" placeholder="{{ _('濡傦細10') }}">
                     </div>
                 </div>
             </form>
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn-custom btn-custom-outline" onclick="closeModal('addRuleModal')">{{ _("取消") }}</button>
-            <button type="button" class="btn-custom btn-custom-primary" onclick="createRule()">{{ _("创建规则") }}</button>
+            <button type="button" class="btn-custom btn-custom-outline" onclick="closeModal('addRuleModal')">{{ _("鍙栨秷") }}</button>
+            <button type="button" class="btn-custom btn-custom-primary" onclick="createRule()">{{ _("鍒涘缓瑙勫垯") }}</button>
         </div>
     </div>
 </div>
@@ -146,12 +146,12 @@
 function useTemplate(type) {
     openModal('addRuleModal');
     if (type === 'low_stock') {
-        document.getElementById('ruleName').value = '{{ _("库存预警") }}';
+        document.getElementById('ruleName').value = '{{ _("搴撳瓨棰勮") }}';
         document.getElementById('ruleField').value = 'inventory_quantity';
         document.getElementById('ruleOperator').value = 'lt';
         document.getElementById('ruleValue').value = '10';
     } else if (type === 'high_sales') {
-        document.getElementById('ruleName').value = '{{ _("销售暴涨提醒") }}';
+        document.getElementById('ruleName').value = '{{ _("閿€鍞毚娑ㄦ彁閱?) }}';
         document.getElementById('ruleField').value = 'daily_revenue';
         document.getElementById('ruleOperator').value = 'gt';
         document.getElementById('ruleValue').value = '10000';

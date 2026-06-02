@@ -22,6 +22,9 @@ class Settings(BaseSettings):
     rate_limit_enabled: bool = True
     max_request_size_mb: int = 5
 
+    # 部署子路径（空字符串=根路径，例如 "/cello"= https://domain/cello/）
+    root_path: str = ""
+
     # Taobao OAuth
     taobao_redirect_uri: str = "http://localhost:17452/api/v1/auth/taobao/callback"
 

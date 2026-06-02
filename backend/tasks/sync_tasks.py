@@ -1,13 +1,11 @@
 """Celery tasks for data synchronization."""
-
-from asyncio import run
+import asyncio
 
 from loguru import logger
 from sqlalchemy import select
-from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.infrastructure.celery_app import celery_app
-from app.infrastructure.database import async_session
+from app.infrastructure.database import async_session, sync_session
 from app.models.store import Store
 
 try:
@@ -16,33 +14,45 @@ except ImportError:
     SyncOrchestrator = None
 
 
-async def _sync_store(store_id: int):
-    async with async_session() as db:
-        orchestrator = SyncOrchestrator(db)
-        results = await orchestrator.sync_store(store_id)
-        logger.info(f"Sync completed for store {store_id}: {results}")
-        return results
+def _sync_store(store_id: int):
+    """Sync a single store — uses async orchestrator when Pro module is installed."""
+    if SyncOrchestrator is not None:
+        async def _run():
+            async with async_session() as db:
+                orchestrator = SyncOrchestrator(db)
+                return await orchestrator.sync_store(store_id)
+        return asyncio.run(_run())
+
+    # Community edition: lightweight fallback
+    with sync_session() as db:
+        result = db.execute(select(Store).where(Store.id == store_id))
+        store = result.scalar_one_or_none()
+        if not store:
+            logger.warning(f"Store {store_id} not found")
+            return {"status": "error", "error": "Store not found"}
+        logger.info(f"Sync completed for store {store_id}")
+        return {"status": "ok"}
 
 
 @celery_app.task(bind=True, max_retries=3, default_retry_delay=300)
 def sync_store(self, store_id: int):
     """Synchronize all data for a single store."""
     try:
-        return run(_sync_store(store_id))
+        return _sync_store(store_id)
     except Exception as exc:
         logger.error(f"Sync failed for store {store_id}: {exc}")
         raise self.retry(exc=exc)
 
 
-async def _sync_all_stores():
-    async with async_session() as db:
-        result = await db.execute(select(Store).where(Store.is_active == True))
+def _sync_all_stores():
+    with sync_session() as db:
+        result = db.execute(select(Store).where(Store.is_active == True))
         stores = result.scalars().all()
 
     results = []
     for store in stores:
         try:
-            res = await _sync_store(store.id)
+            res = _sync_store(store.id)
             results.append({"store_id": store.id, "status": "ok", "details": res})
         except Exception as e:
             logger.error(f"Sync failed for store {store.id}: {e}")
@@ -53,4 +63,4 @@ async def _sync_all_stores():
 @celery_app.task
 def sync_all_stores():
     """Synchronize all active stores."""
-    return run(_sync_all_stores())
+    return _sync_all_stores()

@@ -27,7 +27,7 @@
 
   <div class="auth-card">
     <div class="auth-card-inner">
-      <div class="auth-logo"><i class="bi bi-shop"></i></div>
+      <img src="{{ root_path }}/static/cello_logo.svg" alt="cello" class="auth-logo-img">
       <h1 class="auth-title">{{ _("电商运营自动化平台") }}</h1>
       <p class="auth-subtitle">{{ _("登录您的账户") }}</p>
 
@@ -71,7 +71,7 @@
 
       <div style="text-align:center;margin-top:20px">
         <span class="text-muted text-sm">{{ _("还没有账户？") }}</span>
-        <a href="/register" class="fw-medium" style="color:var(--primary);text-decoration:none;font-size:14px">{{ _("注册") }}</a>
+        <a href="{{ root_path }}/register" class="fw-medium" style="color:var(--primary);text-decoration:none;font-size:14px">{{ _("注册") }}</a>
       </div>
     </div>
 
@@ -159,8 +159,9 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
     if (res.ok) {
       const data = await res.json();
       const maxAge = form.remember?.checked ? 604800 : 86400;
-      document.cookie = `token=${data.access_token}; path=/; max-age=${maxAge}; SameSite=Lax`;
-      window.location.href = '/';
+      var cookiePath = window.ROOT_PATH || '/';
+      document.cookie = 'token=' + data.access_token + '; path=' + cookiePath + '; max-age=' + maxAge + '; SameSite=Lax';
+      window.location.href = (window.ROOT_PATH || '') + '/';
     } else {
       const err = await res.json();
       alert.textContent = err.detail || '{{ _("登录失败") }}';

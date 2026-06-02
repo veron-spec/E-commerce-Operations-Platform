@@ -51,6 +51,7 @@ app = FastAPI(
     description="多平台电商数据同步、分析报表与自动化运营管理接口",
     version="1.0.0",
     lifespan=lifespan,
+    root_path=settings.root_path,
 )
 
 
@@ -88,7 +89,7 @@ def _i18n_context(request: Request) -> dict:
     cookie_lang = request.cookies.get("lang", "")
     accept_lang = request.headers.get("accept-language", "")
     lang = detect_lang(accept_lang, cookie_lang)
-    return {"_": get_translator(lang), "current_lang": lang}
+    return {"_": get_translator(lang), "current_lang": lang, "root_path": settings.root_path}
 
 
 @app.exception_handler(StarletteHTTPException)

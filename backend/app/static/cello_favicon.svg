@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <defs>
+    <linearGradient id="gOuter" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0F172A"/>
+      <stop offset="100%" stop-color="#1E3A5F"/>
+    </linearGradient>
+    <linearGradient id="gMid" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1E3A5F"/>
+      <stop offset="100%" stop-color="#2563EB"/>
+    </linearGradient>
+    <linearGradient id="gInner" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2563EB"/>
+      <stop offset="100%" stop-color="#3B82F6"/>
+    </linearGradient>
+    <linearGradient id="gFrag" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#60A5FA"/>
+      <stop offset="100%" stop-color="#3B82F6"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Outer growth ring — single gap, organic break -->
+  <circle cx="100" cy="100" r="68" fill="none" stroke="url(#gOuter)" stroke-width="6"
+          stroke-dasharray="390 37" stroke-dashoffset="0" stroke-linecap="round"/>
+
+  <!-- Middle growth ring — gap at different rotation -->
+  <circle cx="100" cy="100" r="52" fill="none" stroke="url(#gMid)" stroke-width="5"
+          stroke-dasharray="307 30" stroke-dashoffset="-85" stroke-linecap="round"/>
+
+  <!-- Inner growth ring — gap at third position -->
+  <circle cx="100" cy="100" r="34" fill="none" stroke="url(#gInner)" stroke-width="4"
+          stroke-dasharray="204 20" stroke-dashoffset="-40" stroke-linecap="round"/>
+
+  <!-- Center seed -->
+  <circle cx="100" cy="100" r="4" fill="url(#gInner)"/>
+
+  <!-- Broken fragment — a displaced piece from the outer ring -->
+  <path d="M 172 46 A 72 72 0 0 1 188 76"
+        fill="none" stroke="url(#gFrag)" stroke-width="5.5" stroke-linecap="round"
+        transform="translate(6, -12) rotate(10, 180, 61)"/>
+</svg>

@@ -1,10 +1,10 @@
-{% extends "base.html" %}
-{% block title %}{{ _("运营建议") }} - {{ _("电商运营平台") }}{% endblock %}
-{% block page_title %}{{ _("运营建议") }}{% endblock %}
+﻿{% extends "base.html" %}
+{% block title %}{{ _("杩愯惀寤鸿") }} - {{ _("鐢靛晢杩愯惀骞冲彴") }}{% endblock %}
+{% block page_title %}{{ _("杩愯惀寤鸿") }}{% endblock %}
 {% block breadcrumb %}
-<li><a href="/">{{ _("首页") }}</a></li>
-<span>—</span>
-<li class="active">{{ _("运营建议") }}</li>
+<li><a href="/">{{ _("棣栭〉") }}</a></li>
+<span>鈥?/span>
+<li class="active">{{ _("杩愯惀寤鸿") }}</li>
 {% endblock %}
 
 {% block content %}
@@ -13,7 +13,7 @@
     <div class="stat stat-primary">
         <div class="stat-top">
             <div>
-                <div class="stat-label">{{ _("总建议") }}</div>
+                <div class="stat-label">{{ _("鎬诲缓璁?) }}</div>
                 <div class="stat-value" id="sgTotal">--</div>
             </div>
             <div class="stat-icon"><i class="bi bi-lightbulb"></i></div>
@@ -22,7 +22,7 @@
     <div class="stat stat-success">
         <div class="stat-top">
             <div>
-                <div class="stat-label">{{ _("采纳率") }}</div>
+                <div class="stat-label">{{ _("閲囩撼鐜?) }}</div>
                 <div class="stat-value" id="sgRate">--</div>
             </div>
             <div class="stat-icon"><i class="bi bi-check-circle"></i></div>
@@ -31,7 +31,7 @@
     <div class="stat stat-warning">
         <div class="stat-top">
             <div>
-                <div class="stat-label">{{ _("待处理") }}</div>
+                <div class="stat-label">{{ _("寰呭鐞?) }}</div>
                 <div class="stat-value" id="sgPending">--</div>
             </div>
             <div class="stat-icon"><i class="bi bi-hourglass"></i></div>
@@ -40,7 +40,7 @@
     <div class="stat stat-default">
         <div class="stat-top">
             <div>
-                <div class="stat-label">{{ _("类型") }}</div>
+                <div class="stat-label">{{ _("绫诲瀷") }}</div>
                 <div class="stat-value" id="sgTypes" style="font-size:14px;">--</div>
             </div>
             <div class="stat-icon"><i class="bi bi-pie-chart"></i></div>
@@ -50,58 +50,58 @@
 
 <div class="filter-bar">
     <div class="flex items-center gap-2">
-        <label class="form-label mb-0 text-sm">{{ _("类型") }}</label>
+        <label class="form-label mb-0 text-sm">{{ _("绫诲瀷") }}</label>
         <select class="form-custom" id="sgTypeFilter" onchange="sgPage=1;refreshSuggestions()">
-            <option value="">{{ _("全部") }}</option>
-            <option value="restock">{{ _("补货提醒") }}</option>
-            <option value="price_adjustment">{{ _("价格调整") }}</option>
-            <option value="marketing_campaign">{{ _("营销活动") }}</option>
-            <option value="inventory_optimization">{{ _("库存优化") }}</option>
+            <option value="">{{ _("鍏ㄩ儴") }}</option>
+            <option value="restock">{{ _("琛ヨ揣鎻愰啋") }}</option>
+            <option value="price_adjustment">{{ _("浠锋牸璋冩暣") }}</option>
+            <option value="marketing_campaign">{{ _("钀ラ攢娲诲姩") }}</option>
+            <option value="inventory_optimization">{{ _("搴撳瓨浼樺寲") }}</option>
         </select>
     </div>
     <div class="flex items-center gap-2">
-        <label class="form-label mb-0 text-sm">{{ _("状态") }}</label>
+        <label class="form-label mb-0 text-sm">{{ _("鐘舵€?) }}</label>
         <select class="form-custom" id="sgStatusFilter" onchange="sgPage=1;refreshSuggestions()">
-            <option value="">{{ _("全部") }}</option>
-            <option value="pending">{{ _("待处理") }}</option>
-            <option value="applied">{{ _("已采纳") }}</option>
-            <option value="dismissed">{{ _("已忽略") }}</option>
+            <option value="">{{ _("鍏ㄩ儴") }}</option>
+            <option value="pending">{{ _("寰呭鐞?) }}</option>
+            <option value="applied">{{ _("宸查噰绾?) }}</option>
+            <option value="dismissed">{{ _("宸插拷鐣?) }}</option>
         </select>
     </div>
     <div class="flex items-center gap-2">
-        <label class="form-label mb-0 text-sm">{{ _("优先级") }}</label>
+        <label class="form-label mb-0 text-sm">{{ _("浼樺厛绾?) }}</label>
         <select class="form-custom" id="sgPriorityFilter" onchange="sgPage=1;refreshSuggestions()">
-            <option value="">{{ _("全部") }}</option>
-            <option value="high">{{ _("高") }}</option>
-            <option value="medium">{{ _("中") }}</option>
-            <option value="low">{{ _("低") }}</option>
+            <option value="">{{ _("鍏ㄩ儴") }}</option>
+            <option value="high">{{ _("楂?) }}</option>
+            <option value="medium">{{ _("涓?) }}</option>
+            <option value="low">{{ _("浣?) }}</option>
         </select>
     </div>
     <div class="ms-auto"></div>
     <button class="btn-custom btn-custom-primary" onclick="generateSuggestions()">
-        <i class="bi bi-magic"></i>{{ _("生成建议") }}
+        <i class="bi bi-magic"></i>{{ _("鐢熸垚寤鸿") }}
     </button>
 </div>
 
 <div class="card-custom">
     <div class="card-header">
-        <span class="card-title"><i class="bi bi-lightbulb" style="color:var(--gold)"></i>{{ _("运营建议列表") }}</span>
-        <span class="text-sm text-muted" id="sgPageInfo">{{ _("加载中...") }}</span>
+        <span class="card-title"><i class="bi bi-lightbulb" style="color:var(--gold)"></i>{{ _("杩愯惀寤鸿鍒楄〃") }}</span>
+        <span class="text-sm text-muted" id="sgPageInfo">{{ _("鍔犺浇涓?..") }}</span>
     </div>
     <div class="card-body">
         <div id="sgCardContainer">
-            <div class="empty-state"><div class="empty-icon"><i class="bi bi-lightbulb"></i></div><div class="empty-title">{{ _("暂无建议") }}</div><div class="empty-desc">{{ _("点击「生成建议」基于数据分析生成运营建议") }}</div></div>
+            <div class="empty-state"><div class="empty-icon"><i class="bi bi-lightbulb"></i></div><div class="empty-title">{{ _("鏆傛棤寤鸿") }}</div><div class="empty-desc">{{ _("鐐瑰嚮銆岀敓鎴愬缓璁€嶅熀浜庢暟鎹垎鏋愮敓鎴愯繍钀ュ缓璁?) }}</div></div>
         </div>
     </div>
     <div class="card-footer">
         <div class="pagination-custom">
-            <span class="page-info" id="sgPageInfoBottom">{{ _("共") }} 0 {{ _("条") }}</span>
+            <span class="page-info" id="sgPageInfoBottom">{{ _("鍏?) }} 0 {{ _("鏉?) }}</span>
             <div class="page-btns">
                 <button class="btn-custom btn-custom-outline btn-custom-sm" id="sgPagePrev" onclick="sgChangePage(-1)" disabled>
-                    <i class="bi bi-chevron-left"></i> {{ _("上一页") }}
+                    <i class="bi bi-chevron-left"></i> {{ _("涓婁竴椤?) }}
                 </button>
                 <button class="btn-custom btn-custom-outline btn-custom-sm" id="sgPageNext" onclick="sgChangePage(1)">
-                    {{ _("下一页") }} <i class="bi bi-chevron-right"></i>
+                    {{ _("涓嬩竴椤?) }} <i class="bi bi-chevron-right"></i>
                 </button>
             </div>
         </div>
@@ -113,22 +113,22 @@ let sgPage = 1;
 const sgPageSize = 10;
 
 const SG_TYPE_MAP = {
-    restock: { label: _t('补货提醒'), color: 'tag-warning', icon: 'bi-box-seam' },
-    price_adjustment: { label: _t('价格调整'), color: 'tag-info', icon: 'bi-currency-yen' },
-    marketing_campaign: { label: _t('营销活动'), color: 'tag-purple', icon: 'bi-megaphone' },
-    inventory_optimization: { label: _t('库存优化'), color: 'tag-success', icon: 'bi-archive' },
+    restock: { label: _t('琛ヨ揣鎻愰啋'), color: 'tag-warning', icon: 'bi-box-seam' },
+    price_adjustment: { label: _t('浠锋牸璋冩暣'), color: 'tag-info', icon: 'bi-currency-yen' },
+    marketing_campaign: { label: _t('钀ラ攢娲诲姩'), color: 'tag-purple', icon: 'bi-megaphone' },
+    inventory_optimization: { label: _t('搴撳瓨浼樺寲'), color: 'tag-success', icon: 'bi-archive' },
 };
 
 const SG_PRIORITY_MAP = {
-    high: { label: _t('高'), color: 'tag-danger' },
-    medium: { label: _t('中'), color: 'tag-warning' },
-    low: { label: _t('低'), color: 'tag-info' },
+    high: { label: _t('楂?), color: 'tag-danger' },
+    medium: { label: _t('涓?), color: 'tag-warning' },
+    low: { label: _t('浣?), color: 'tag-info' },
 };
 
 const SG_STATUS_MAP = {
-    pending: { label: _t('待处理'), color: 'tag-warning' },
-    applied: { label: _t('已采纳'), color: 'tag-success' },
-    dismissed: { label: _t('已忽略'), color: 'tag-neutral' },
+    pending: { label: _t('寰呭鐞?), color: 'tag-warning' },
+    applied: { label: _t('宸查噰绾?), color: 'tag-success' },
+    dismissed: { label: _t('宸插拷鐣?), color: 'tag-neutral' },
 };
 
 async function refreshSuggestions() {
@@ -147,7 +147,7 @@ async function refreshSuggestions() {
 
         const container = document.getElementById('sgCardContainer');
         if (!items.length) {
-            container.innerHTML = '<div class="empty-state"><div class="empty-icon"><i class="bi bi-lightbulb"></i></div><div class="empty-title">' + _t('暂无建议') + '</div><div class="empty-desc">' + _t('点击「生成建议」基于数据分析生成运营建议') + '</div></div>';
+            container.innerHTML = '<div class="empty-state"><div class="empty-icon"><i class="bi bi-lightbulb"></i></div><div class="empty-title">' + _t('鏆傛棤寤鸿') + '</div><div class="empty-desc">' + _t('鐐瑰嚮銆岀敓鎴愬缓璁€嶅熀浜庢暟鎹垎鏋愮敓鎴愯繍钀ュ缓璁?) + '</div></div>';
         } else {
             container.innerHTML = items.map(s => {
                 const t = SG_TYPE_MAP[s.suggestion_type] || { label: s.suggestion_type, color: 'tag-neutral', icon: 'bi-lightbulb' };
@@ -158,7 +158,7 @@ async function refreshSuggestions() {
                         <div class="flex items-center justify-between mb-2">
                             <div class="flex items-center gap-2">
                                 <span class="tag ${t.color}"><i class="bi ${t.icon} me-1"></i>${t.label}</span>
-                                <span class="tag ${p.color}">${p.label}${_t('优先级')}</span>
+                                <span class="tag ${p.color}">${p.label}${_t('浼樺厛绾?)}</span>
                                 <span class="tag ${st.color}">${st.label}</span>
                             </div>
                             <div class="text-xs text-muted">${s.created_at ? new Date(s.created_at).toLocaleDateString('zh-CN') : '--'}</div>
@@ -168,14 +168,14 @@ async function refreshSuggestions() {
                         <div class="flex items-center gap-2">
                             ${s.status === 'pending' ? `
                                 <button class="btn-custom btn-custom-success btn-custom-sm" onclick="applySuggestion(${s.id})">
-                                    <i class="bi bi-check-lg"></i>${_t('采纳')}
+                                    <i class="bi bi-check-lg"></i>${_t('閲囩撼')}
                                 </button>
                                 <button class="btn-custom btn-custom-outline btn-custom-sm" onclick="dismissSuggestion(${s.id})">
-                                    <i class="bi bi-x-lg"></i>${_t('忽略')}
+                                    <i class="bi bi-x-lg"></i>${_t('蹇界暐')}
                                 </button>
                             ` : ''}
                             ${Object.keys(s.related_metrics || {}).length ? `
-                                <span class="text-xs text-muted ms-auto">${_t('数据来源:')} ${s.data_source || '--'}</span>
+                                <span class="text-xs text-muted ms-auto">${_t('鏁版嵁鏉ユ簮:')} ${s.data_source || '--'}</span>
                             ` : ''}
                         </div>
                     </div>
@@ -185,26 +185,26 @@ async function refreshSuggestions() {
 
         for (const id of ['sgPageInfo', 'sgPageInfoBottom']) {
             const el = document.getElementById(id);
-            if (el) el.textContent = _t('共') + ' ' + data.total + _t('条，第') + ' ' + data.page + '/' + data.total_pages + _t('页');
+            if (el) el.textContent = _t('鍏?) + ' ' + data.total + _t('鏉★紝绗?) + ' ' + data.page + '/' + data.total_pages + _t('椤?);
         }
         document.getElementById('sgPagePrev').disabled = data.page <= 1;
         document.getElementById('sgPageNext').disabled = data.page >= data.total_pages;
     } catch (e) {
-        console.error('建议加载失败:', e);
-        showToast(_t('建议数据加载失败'), 'error');
+        console.error('寤鸿鍔犺浇澶辫触:', e);
+        showToast(_t('寤鸿鏁版嵁鍔犺浇澶辫触'), 'error');
     }
 }
 
 async function generateSuggestions() {
     try {
-        showToast(_t('正在分析数据生成建议...'), 'info');
+        showToast(_t('姝ｅ湪鍒嗘瀽鏁版嵁鐢熸垚寤鸿...'), 'info');
         const res = await fetch('/api/v1/suggestions/generate?store_id=1', { method: 'POST' });
         const data = await res.json();
-        showToast(_t('已生成') + ' ' + data.generated + _t('条建议'), 'success');
+        showToast(_t('宸茬敓鎴?) + ' ' + data.generated + _t('鏉″缓璁?), 'success');
         refreshSuggestions();
         loadSgStats();
     } catch (e) {
-        showToast(_t('生成失败') + ': ' + e.message, 'error');
+        showToast(_t('鐢熸垚澶辫触') + ': ' + e.message, 'error');
     }
 }
 
@@ -212,11 +212,11 @@ async function applySuggestion(id) {
     try {
         const res = await fetch(`/api/v1/suggestions/${id}/apply`, { method: 'POST' });
         if (!res.ok) throw new Error(await res.text());
-        showToast(_t('建议已标记为已采纳'), 'success');
+        showToast(_t('寤鸿宸叉爣璁颁负宸查噰绾?), 'success');
         refreshSuggestions();
         loadSgStats();
     } catch (e) {
-        showToast(_t('操作失败') + ': ' + e.message, 'error');
+        showToast(_t('鎿嶄綔澶辫触') + ': ' + e.message, 'error');
     }
 }
 
@@ -224,11 +224,11 @@ async function dismissSuggestion(id) {
     try {
         const res = await fetch(`/api/v1/suggestions/${id}/dismiss`, { method: 'POST' });
         if (!res.ok) throw new Error(await res.text());
-        showToast(_t('建议已忽略'), 'info');
+        showToast(_t('寤鸿宸插拷鐣?), 'info');
         refreshSuggestions();
         loadSgStats();
     } catch (e) {
-        showToast(_t('操作失败') + ': ' + e.message, 'error');
+        showToast(_t('鎿嶄綔澶辫触') + ': ' + e.message, 'error');
     }
 }
 
@@ -245,7 +245,7 @@ async function loadSgStats() {
         document.getElementById('sgRate').textContent = data.applied_rate + '%';
         document.getElementById('sgPending').textContent = (data.by_status?.pending || 0);
         const types = Object.entries(data.by_type || {}).map(([k, v]) => {
-            const names = { restock: _t('补货'), price_adjustment: _t('价格'), marketing_campaign: _t('营销'), inventory_optimization: _t('库存') };
+            const names = { restock: _t('琛ヨ揣'), price_adjustment: _t('浠锋牸'), marketing_campaign: _t('钀ラ攢'), inventory_optimization: _t('搴撳瓨') };
             return (names[k] || k) + ':' + v;
         }).join(' | ');
         document.getElementById('sgTypes').textContent = types || '--';

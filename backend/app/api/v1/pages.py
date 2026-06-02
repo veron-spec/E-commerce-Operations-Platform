@@ -7,6 +7,7 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.api.deps import get_db
+from app.config import settings
 from app.core.auth import decode_access_token
 from app.core.i18n import detect_lang, get_translator
 from app.models.user import User
@@ -31,6 +32,7 @@ def _build_context(request: Request, **extra) -> dict:
     return {
         "_": _,
         "current_lang": lang,
+        "root_path": settings.root_path,
         **extra,
     }
 
@@ -64,7 +66,7 @@ def _protected(handler):
     async def wrapper(request: Request, db: AsyncSession = Depends(get_db), **kwargs):
         user = await _require_user(request, db)
         if not user:
-            return RedirectResponse(url="/login", status_code=303)
+            return RedirectResponse(url=f"{settings.root_path}/login", status_code=303)
         return await handler(request)
     return wrapper
 
@@ -75,7 +77,7 @@ def _protected(handler):
 async def login_page(request: Request):
     token = _get_token(request)
     if token and decode_access_token(token):
-        return RedirectResponse(url="/", status_code=303)
+        return RedirectResponse(url=f"{settings.root_path}/", status_code=303)
     return templates.TemplateResponse(request, "pages/login.html", _build_context(request))
 
 
@@ -83,14 +85,15 @@ async def login_page(request: Request):
 async def register_page(request: Request):
     token = _get_token(request)
     if token and decode_access_token(token):
-        return RedirectResponse(url="/", status_code=303)
+        return RedirectResponse(url=f"{settings.root_path}/", status_code=303)
     return templates.TemplateResponse(request, "pages/register.html", _build_context(request))
 
 
 @router.get("/logout", include_in_schema=False)
 async def logout():
-    resp = RedirectResponse(url="/login", status_code=303)
-    resp.delete_cookie("token", path="/")
+    cookie_path = f"{settings.root_path}/" if settings.root_path else "/"
+    resp = RedirectResponse(url=f"{settings.root_path}/login", status_code=303)
+    resp.delete_cookie("token", path=cookie_path)
     return resp
 
 
