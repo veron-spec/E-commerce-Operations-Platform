@@ -83,11 +83,20 @@ class RateLimiter:
         if not settings.rate_limit_enabled:
             return True
 
+        # Use X-Forwarded-For or X-Real-IP when behind a proxy (Cloudflare Tunnel, nginx)
+        client_ip = request.client.host if request.client else None
+        forwarded = request.headers.get("x-forwarded-for", "")
+        real_ip = request.headers.get("x-real-ip", "")
+        if forwarded:
+            client_ip = forwarded.split(",")[0].strip()
+        elif real_ip:
+            client_ip = real_ip
+
         if self.key_source == "user":
             user = getattr(request.state, "user", None) or getattr(request, "user", None)
-            key = f"user:{user.id}" if user else (request.client.host if request.client else "unknown")
+            key = f"user:{user.id}" if user else f"ip:{client_ip or 'unknown'}"
         else:
-            key = request.client.host if request.client else "unknown"
+            key = f"ip:{client_ip or 'unknown'}"
 
         if not check_rate_limit(key, self.max_requests, self.window_seconds):
             raise HTTPException(

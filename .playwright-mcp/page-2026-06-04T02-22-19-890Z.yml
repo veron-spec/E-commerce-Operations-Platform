@@ -1,0 +1,144 @@
+- generic [ref=e2]:
+  - complementary [ref=e3]:
+    - generic [ref=e4]:
+      - img "cello" [ref=e5]
+      - generic [ref=e6]:
+        - generic [ref=e7]: cello
+        - generic [ref=e8]: E-Commerce Ops
+    - navigation [ref=e9]:
+      - generic [ref=e10]: Overview
+      - link " Dashboard" [ref=e11] [cursor=pointer]:
+        - /url: /cello/
+        - generic [ref=e12]: 
+        - generic [ref=e13]: Dashboard
+      - link " Orders 0" [ref=e14] [cursor=pointer]:
+        - /url: /cello/orders
+        - generic [ref=e15]: 
+        - generic [ref=e16]: Orders
+        - generic [ref=e17]: "0"
+      - generic [ref=e18]: Analytics
+      - link " Sales Analytics" [ref=e19] [cursor=pointer]:
+        - /url: /cello/sales
+        - generic [ref=e20]: 
+        - generic [ref=e21]: Sales Analytics
+      - link " Inventory" [ref=e22] [cursor=pointer]:
+        - /url: /cello/inventory
+        - generic [ref=e23]: 
+        - generic [ref=e24]: Inventory
+      - generic [ref=e25]: Management
+      - link " Stores" [ref=e26] [cursor=pointer]:
+        - /url: /cello/stores
+        - generic [ref=e27]: 
+        - generic [ref=e28]: Stores
+      - link " Automation" [ref=e29] [cursor=pointer]:
+        - /url: /cello/automation
+        - generic [ref=e30]: 
+        - generic [ref=e31]: Automation
+      - link " Product Selections" [ref=e32] [cursor=pointer]:
+        - /url: /cello/product-selections
+        - generic [ref=e33]: 
+        - generic [ref=e34]: Product Selections
+      - link " Auto Reply" [ref=e35] [cursor=pointer]:
+        - /url: /cello/auto-reply
+        - generic [ref=e36]: 
+        - generic [ref=e37]: Auto Reply
+      - link " Suggestions" [ref=e38] [cursor=pointer]:
+        - /url: /cello/suggestions
+        - generic [ref=e39]: 
+        - generic [ref=e40]: Suggestions
+      - link " Retrospectives" [ref=e41] [cursor=pointer]:
+        - /url: /cello/retrospectives
+        - generic [ref=e42]: 
+        - generic [ref=e43]: Retrospectives
+      - generic [ref=e44]: System
+      - link " Operation Logs" [ref=e45] [cursor=pointer]:
+        - /url: /cello/logs
+        - generic [ref=e46]: 
+        - generic [ref=e47]: Operation Logs
+      - link " Settings" [ref=e48] [cursor=pointer]:
+        - /url: /cello/settings
+        - generic [ref=e49]: 
+        - generic [ref=e50]: Settings
+    - generic [ref=e52] [cursor=pointer]:
+      - generic [ref=e53]: 
+      - generic [ref=e54]: Collapse Sidebar
+  - generic [ref=e55]:
+    - banner [ref=e56]:
+      - generic [ref=e57]:
+        - button "" [ref=e58] [cursor=pointer]:
+          - generic [ref=e59]: 
+        - generic [ref=e60]:
+          - heading "Dashboard" [level=1] [ref=e61]
+          - navigation "breadcrumb"
+      - generic [ref=e62]:
+        - button " 中文" [ref=e63] [cursor=pointer]:
+          - generic [ref=e64]: 
+          - generic [ref=e65]: 中文
+        - button "" [ref=e66] [cursor=pointer]:
+          - generic [ref=e67]: 
+        - generic [ref=e68]:
+          - button "" [ref=e69] [cursor=pointer]:
+            - generic [ref=e70]: 
+          - text: 
+    - main [ref=e71]:
+      - generic [ref=e72]:
+        - generic [ref=e73]:
+          - generic [ref=e74]:
+            - generic [ref=e75]: Total Sales
+            - generic [ref=e77]: 
+          - generic [ref=e78]: "--"
+          - generic [ref=e79]: "--"
+        - generic [ref=e80]:
+          - generic [ref=e81]:
+            - generic [ref=e82]: Orders
+            - generic [ref=e84]: 
+          - generic [ref=e85]: "--"
+          - generic [ref=e86]: Last 30 days
+        - generic [ref=e87]:
+          - generic [ref=e88]:
+            - generic [ref=e89]: Avg. Order Value
+            - generic [ref=e91]: 
+          - generic [ref=e92]: "--"
+        - generic [ref=e93]:
+          - generic [ref=e94]:
+            - generic [ref=e95]: Total Products
+            - generic [ref=e97]: 
+          - generic [ref=e98]: "--"
+      - generic [ref=e99]:
+        - generic [ref=e102]:
+          - generic [ref=e103]: 
+          - text: Sales Trend (Last 30 Days)
+        - generic [ref=e109]:
+          - generic [ref=e110]: 
+          - text: Category Distribution
+      - generic [ref=e114]:
+        - generic [ref=e115]:
+          - generic [ref=e117]:
+            - generic [ref=e118]: 
+            - text: Top 10 Products
+          - table [ref=e121]:
+            - rowgroup [ref=e122]:
+              - row "Rank Product Name Sales Revenue" [ref=e123]:
+                - columnheader "Rank" [ref=e124]
+                - columnheader "Product Name" [ref=e125]
+                - columnheader "Sales" [ref=e126]
+                - columnheader "Revenue" [ref=e127]
+            - rowgroup [ref=e128]:
+              - row "Loading..." [ref=e129]:
+                - cell "Loading..." [ref=e130]:
+                  - generic [ref=e132]: Loading...
+        - generic [ref=e133]:
+          - generic [ref=e135]:
+            - generic [ref=e136]: 
+            - text: Stock Alert
+          - table [ref=e139]:
+            - rowgroup [ref=e140]:
+              - row "Product SKU Inventory Status" [ref=e141]:
+                - columnheader "Product" [ref=e142]
+                - columnheader "SKU" [ref=e143]
+                - columnheader "Inventory" [ref=e144]
+                - columnheader "Status" [ref=e145]
+            - rowgroup [ref=e146]:
+              - row "Loading..." [ref=e147]:
+                - cell "Loading..." [ref=e148]:
+                  - generic [ref=e150]: Loading...

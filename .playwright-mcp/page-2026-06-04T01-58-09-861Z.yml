@@ -1,0 +1,212 @@
+- generic [ref=e2]:
+  - complementary [ref=e3]:
+    - generic [ref=e4]:
+      - img "cello" [ref=e5]
+      - generic [ref=e6]:
+        - generic [ref=e7]: cello
+        - generic [ref=e8]: E-Commerce Ops
+    - navigation [ref=e9]:
+      - generic [ref=e10]: Overview
+      - link " Dashboard" [ref=e11] [cursor=pointer]:
+        - /url: /cello/
+        - generic [ref=e12]: 
+        - generic [ref=e13]: Dashboard
+      - link " Orders 0" [ref=e14] [cursor=pointer]:
+        - /url: /cello/orders
+        - generic [ref=e15]: 
+        - generic [ref=e16]: Orders
+        - generic [ref=e17]: "0"
+      - generic [ref=e18]: Analytics
+      - link " Sales Analytics" [ref=e19] [cursor=pointer]:
+        - /url: /cello/sales
+        - generic [ref=e20]: 
+        - generic [ref=e21]: Sales Analytics
+      - link " Inventory" [ref=e22] [cursor=pointer]:
+        - /url: /cello/inventory
+        - generic [ref=e23]: 
+        - generic [ref=e24]: Inventory
+      - generic [ref=e25]: Management
+      - link " Stores" [ref=e26] [cursor=pointer]:
+        - /url: /cello/stores
+        - generic [ref=e27]: 
+        - generic [ref=e28]: Stores
+      - link " Automation" [ref=e29] [cursor=pointer]:
+        - /url: /cello/automation
+        - generic [ref=e30]: 
+        - generic [ref=e31]: Automation
+      - link " Product Selections" [ref=e32] [cursor=pointer]:
+        - /url: /cello/product-selections
+        - generic [ref=e33]: 
+        - generic [ref=e34]: Product Selections
+      - link " Auto Reply" [ref=e35] [cursor=pointer]:
+        - /url: /cello/auto-reply
+        - generic [ref=e36]: 
+        - generic [ref=e37]: Auto Reply
+      - link " Suggestions" [ref=e38] [cursor=pointer]:
+        - /url: /cello/suggestions
+        - generic [ref=e39]: 
+        - generic [ref=e40]: Suggestions
+      - link " Retrospectives" [ref=e41] [cursor=pointer]:
+        - /url: /cello/retrospectives
+        - generic [ref=e42]: 
+        - generic [ref=e43]: Retrospectives
+      - generic [ref=e44]: System
+      - link " Operation Logs" [ref=e45] [cursor=pointer]:
+        - /url: /cello/logs
+        - generic [ref=e46]: 
+        - generic [ref=e47]: Operation Logs
+      - link " Settings" [ref=e48] [cursor=pointer]:
+        - /url: /cello/settings
+        - generic [ref=e49]: 
+        - generic [ref=e50]: Settings
+    - generic [ref=e52] [cursor=pointer]:
+      - generic [ref=e53]: 
+      - generic [ref=e54]: Collapse Sidebar
+  - generic [ref=e55]:
+    - banner [ref=e56]:
+      - generic [ref=e57]:
+        - button "" [ref=e58] [cursor=pointer]:
+          - generic [ref=e59]: 
+        - generic [ref=e60]:
+          - heading "Dashboard" [level=1] [ref=e61]
+          - navigation "breadcrumb" [ref=e62]:
+            - list [ref=e63]:
+              - listitem [ref=e64]:
+                - link "Home" [ref=e65] [cursor=pointer]:
+                  - /url: /
+              - generic [ref=e66]: —
+              - listitem [ref=e67]: Dashboard
+      - generic [ref=e68]:
+        - button " 中文" [ref=e69] [cursor=pointer]:
+          - generic [ref=e70]: 
+          - generic [ref=e71]: 中文
+        - button "" [ref=e72] [cursor=pointer]:
+          - generic [ref=e73]: 
+        - generic [ref=e74]: 2026/6/4 09:58:09
+        - generic [ref=e75]:
+          - button "" [ref=e76] [cursor=pointer]:
+            - generic [ref=e77]: 
+          - text: 
+    - main [ref=e78]:
+      - generic [ref=e79]:
+        - generic [ref=e80]:
+          - generic [ref=e81]:
+            - generic [ref=e82]: Total Sales
+            - generic [ref=e84]: 
+          - generic [ref=e85]: ¥118,050.03
+          - generic [ref=e86]: "--"
+        - generic [ref=e87]:
+          - generic [ref=e88]:
+            - generic [ref=e89]: Orders
+            - generic [ref=e91]: 
+          - generic [ref=e92]: "129"
+          - generic [ref=e93]: Last 30 days
+        - generic [ref=e94]:
+          - generic [ref=e95]:
+            - generic [ref=e96]: Avg. Order Value
+            - generic [ref=e98]: 
+          - generic [ref=e99]: ¥915.12
+        - generic [ref=e100]:
+          - generic [ref=e101]:
+            - generic [ref=e102]: Total Products
+            - generic [ref=e104]: 
+          - generic [ref=e105]: "15"
+      - generic [ref=e106]:
+        - generic [ref=e109]:
+          - generic [ref=e110]: 
+          - text: Sales Trend (Last 30 Days)
+        - generic [ref=e114]:
+          - generic [ref=e116]:
+            - generic [ref=e117]: 
+            - text: Category Distribution
+          - generic [ref=e120]:
+            - generic [ref=e122]: 
+            - generic [ref=e123]: No Data
+      - generic [ref=e124]:
+        - generic [ref=e125]:
+          - generic [ref=e127]:
+            - generic [ref=e128]: 
+            - text: Top 10 Products
+          - table [ref=e131]:
+            - rowgroup [ref=e132]:
+              - row "Rank Product Name Sales Revenue" [ref=e133]:
+                - columnheader "Rank" [ref=e134]
+                - columnheader "Product Name" [ref=e135]
+                - columnheader "Sales" [ref=e136]
+                - columnheader "Revenue" [ref=e137]
+            - rowgroup [ref=e138]:
+              - row "1 智能手表 S3 29 ¥26,071.00" [ref=e139]:
+                - cell "1" [ref=e140]
+                - cell "智能手表 S3" [ref=e141]:
+                  - generic [ref=e142]: 智能手表 S3
+                - cell "29" [ref=e143]
+                - cell "¥26,071.00" [ref=e144]
+              - row "2 无线蓝牙耳机 Pro 53 ¥15,847.00" [ref=e145]:
+                - cell "2" [ref=e146]
+                - cell "无线蓝牙耳机 Pro" [ref=e147]:
+                  - generic [ref=e148]: 无线蓝牙耳机 Pro
+                - cell "53" [ref=e149]
+                - cell "¥15,847.00" [ref=e150]
+              - row "3 护肤礼盒 保湿套装 37 ¥12,173.00" [ref=e151]:
+                - cell "3" [ref=e152]
+                - cell "护肤礼盒 保湿套装" [ref=e153]:
+                  - generic [ref=e154]: 护肤礼盒 保湿套装
+                - cell "37" [ref=e155]
+                - cell "¥12,173.00" [ref=e156]
+              - row "4 运动跑鞋 透气款 25 ¥11,475.00" [ref=e157]:
+                - cell "4" [ref=e158]
+                - cell "运动跑鞋 透气款" [ref=e159]:
+                  - generic [ref=e160]: 运动跑鞋 透气款
+                - cell "25" [ref=e161]
+                - cell "¥11,475.00" [ref=e162]
+              - row "5 机械键盘 青轴 28 ¥11,172.00" [ref=e163]:
+                - cell "5" [ref=e164]
+                - cell "机械键盘 青轴" [ref=e165]:
+                  - generic [ref=e166]: 机械键盘 青轴
+                - cell "28" [ref=e167]
+                - cell "¥11,172.00" [ref=e168]
+              - row "6 牛仔夹克 经典款 42 ¥10,878.00" [ref=e169]:
+                - cell "6" [ref=e170]
+                - cell "牛仔夹克 经典款" [ref=e171]:
+                  - generic [ref=e172]: 牛仔夹克 经典款
+                - cell "42" [ref=e173]
+                - cell "¥10,878.00" [ref=e174]
+              - row "7 双肩背包 防水 34 ¥6,766.00" [ref=e175]:
+                - cell "7" [ref=e176]
+                - cell "双肩背包 防水" [ref=e177]:
+                  - generic [ref=e178]: 双肩背包 防水
+                - cell "34" [ref=e179]
+                - cell "¥6,766.00" [ref=e180]
+              - row "8 便携充电宝 20000mAh 37 ¥5,883.00" [ref=e181]:
+                - cell "8" [ref=e182]
+                - cell "便携充电宝 20000mAh" [ref=e183]:
+                  - generic [ref=e184]: 便携充电宝 20000mAh
+                - cell "37" [ref=e185]
+                - cell "¥5,883.00" [ref=e186]
+              - row "9 瑜伽垫加厚防滑 53 ¥4,717.00" [ref=e187]:
+                - cell "9" [ref=e188]
+                - cell "瑜伽垫加厚防滑" [ref=e189]:
+                  - generic [ref=e190]: 瑜伽垫加厚防滑
+                - cell "53" [ref=e191]
+                - cell "¥4,717.00" [ref=e192]
+              - row "10 坚果礼盒 混合装 34 ¥4,352.00" [ref=e193]:
+                - cell "10" [ref=e194]
+                - cell "坚果礼盒 混合装" [ref=e195]:
+                  - generic [ref=e196]: 坚果礼盒 混合装
+                - cell "34" [ref=e197]
+                - cell "¥4,352.00" [ref=e198]
+        - generic [ref=e199]:
+          - generic [ref=e201]:
+            - generic [ref=e202]: 
+            - text: Stock Alert
+          - table [ref=e205]:
+            - rowgroup [ref=e206]:
+              - row "Product SKU Inventory Status" [ref=e207]:
+                - columnheader "Product" [ref=e208]
+                - columnheader "SKU" [ref=e209]
+                - columnheader "Inventory" [ref=e210]
+                - columnheader "Status" [ref=e211]
+            - rowgroup [ref=e212]:
+              - row "No alerts — stock is healthy" [ref=e213]:
+                - cell "No alerts — stock is healthy" [ref=e214]:
+                  - generic [ref=e216]: No alerts — stock is healthy

@@ -1,0 +1,43 @@
+- generic [ref=e2]:
+  - text:             
+  - generic [ref=e3]:
+    - text:   
+    - main [ref=e4]:
+      - generic [ref=e6]:
+        - generic [ref=e7]:
+          - generic [ref=e8]:
+            - button "EN" [ref=e9] [cursor=pointer]
+            - generic [ref=e10]: "|"
+            - button "中文" [ref=e11] [cursor=pointer]
+            - generic [ref=e12]: Switch Language
+          - img "cello" [ref=e13]
+          - heading "E-Commerce Automation Platform" [level=1] [ref=e14]
+          - paragraph [ref=e15]: Sign in to your account
+          - generic [ref=e16]:
+            - generic [ref=e17]:
+              - generic [ref=e18]: Email
+              - generic [ref=e19]:
+                - generic: 
+                - textbox "Enter your email address" [active] [ref=e20]
+            - generic [ref=e21]:
+              - generic [ref=e22]: Password
+              - generic [ref=e23]:
+                - generic: 
+                - textbox "Enter your password" [ref=e24]
+                - button "" [ref=e25] [cursor=pointer]:
+                  - generic [ref=e26]: 
+            - generic [ref=e28] [cursor=pointer]:
+              - checkbox "Remember Me" [checked] [ref=e29]
+              - text: Remember Me
+            - button "Login" [ref=e30] [cursor=pointer]
+          - generic [ref=e31]: Demo Account
+          - button " Fill Demo Account" [ref=e32] [cursor=pointer]:
+            - generic [ref=e33]: 
+            - text: Fill Demo Account
+          - generic [ref=e34]:
+            - text: Don't have an account?
+            - link "Register" [ref=e35] [cursor=pointer]:
+              - /url: /register
+        - generic [ref=e36]:
+          - generic [ref=e37]: 
+          - text: First time? Please register an account

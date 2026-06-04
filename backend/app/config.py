@@ -1,4 +1,11 @@
+import secrets
+
 from pydantic_settings import BaseSettings
+
+
+def _default_key() -> str:
+    """Generate a random 32-byte hex key as fallback when env var is not set."""
+    return secrets.token_hex(32)
 
 
 class Settings(BaseSettings):
@@ -7,8 +14,8 @@ class Settings(BaseSettings):
     # Edition: "enterprise" (full features) or "community" (open-source)
     edition: str = "community"
     debug: bool = False
-    secret_key: str = "change-me"
-    encryption_key: str = "change-me"
+    secret_key: str = _default_key()
+    encryption_key: str = _default_key()
 
     database_url: str = "postgresql+asyncpg://postgres:postgres@localhost:5432/ecommerce_ops"
     celery_broker_url: str = "redis://localhost:6379/0"

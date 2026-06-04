@@ -1,0 +1,114 @@
+- generic [ref=e2]:
+  - complementary [ref=e3]:
+    - generic [ref=e5]:
+      - generic [ref=e6]: cello
+      - generic [ref=e7]: E-Commerce Ops
+    - navigation [ref=e8]:
+      - generic [ref=e9]: 概览
+      - link " 数据看板" [ref=e10] [cursor=pointer]:
+        - /url: /
+        - generic [ref=e11]: 
+        - generic [ref=e12]: 数据看板
+      - link " 订单管理 0" [ref=e13] [cursor=pointer]:
+        - /url: /orders
+        - generic [ref=e14]: 
+        - generic [ref=e15]: 订单管理
+        - generic [ref=e16]: "0"
+      - generic [ref=e17]: 分析
+      - link " 销售分析" [ref=e18] [cursor=pointer]:
+        - /url: /sales
+        - generic [ref=e19]: 
+        - generic [ref=e20]: 销售分析
+      - link " 库存管理" [ref=e21] [cursor=pointer]:
+        - /url: /inventory
+        - generic [ref=e22]: 
+        - generic [ref=e23]: 库存管理
+      - generic [ref=e24]: 管理
+      - link " 店铺管理" [ref=e25] [cursor=pointer]:
+        - /url: /stores
+        - generic [ref=e26]: 
+        - generic [ref=e27]: 店铺管理
+      - link " 自动化规则" [ref=e28] [cursor=pointer]:
+        - /url: /automation
+        - generic [ref=e29]: 
+        - generic [ref=e30]: 自动化规则
+      - link " 捕获选品" [ref=e31] [cursor=pointer]:
+        - /url: /product-selections
+        - generic [ref=e32]: 
+        - generic [ref=e33]: 捕获选品
+      - link " 自动化客服" [ref=e34] [cursor=pointer]:
+        - /url: /auto-reply
+        - generic [ref=e35]: 
+        - generic [ref=e36]: 自动化客服
+      - link " 运营建议" [ref=e37] [cursor=pointer]:
+        - /url: /suggestions
+        - generic [ref=e38]: 
+        - generic [ref=e39]: 运营建议
+      - link " 复盘分析" [ref=e40] [cursor=pointer]:
+        - /url: /retrospectives
+        - generic [ref=e41]: 
+        - generic [ref=e42]: 复盘分析
+      - generic [ref=e43]: 系统
+      - link " 操作日志" [ref=e44] [cursor=pointer]:
+        - /url: /logs
+        - generic [ref=e45]: 
+        - generic [ref=e46]: 操作日志
+      - link " 系统设置" [ref=e47] [cursor=pointer]:
+        - /url: /settings
+        - generic [ref=e48]: 
+        - generic [ref=e49]: 系统设置
+    - generic [ref=e51] [cursor=pointer]:
+      - generic [ref=e52]: 
+      - generic [ref=e53]: 收起侧栏
+  - generic [ref=e54]:
+    - banner [ref=e55]:
+      - generic [ref=e56]:
+        - button "" [ref=e57] [cursor=pointer]:
+          - generic [ref=e58]: 
+        - generic [ref=e59]:
+          - heading "数据看板" [level=1] [ref=e60]
+          - navigation "breadcrumb":
+            - list
+      - generic [ref=e61]:
+        - button "" [ref=e62] [cursor=pointer]:
+          - generic [ref=e63]: 
+        - button "" [ref=e64] [cursor=pointer]:
+          - generic [ref=e65]: 
+        - generic [ref=e66]: 2026/6/2 14:55:35
+    - main [ref=e67]:
+      - generic [ref=e68]:
+        - button "" [ref=e70] [cursor=pointer]:
+          - generic [ref=e71]: 
+        - generic [ref=e72]:
+          - generic [ref=e73]:
+            - generic [ref=e75]: 
+            - heading "电商运营自动化平台" [level=1] [ref=e76]
+            - paragraph [ref=e77]: 登录您的账户
+            - generic [ref=e78]:
+              - generic [ref=e79]:
+                - generic [ref=e80]: 邮箱
+                - generic [ref=e81]:
+                  - generic: 
+                  - textbox "请输入邮箱地址" [active] [ref=e82]
+              - generic [ref=e83]:
+                - generic [ref=e84]: 密码
+                - generic [ref=e85]:
+                  - generic: 
+                  - textbox "请输入密码" [ref=e86]
+                  - button "" [ref=e87] [cursor=pointer]:
+                    - generic [ref=e88]: 
+              - generic [ref=e90] [cursor=pointer]:
+                - checkbox "记住我" [checked] [ref=e91]
+                - text: 记住我
+              - button "登录" [ref=e92] [cursor=pointer]
+            - generic [ref=e93]: 演示账户
+            - button " 一键填入演示账号" [ref=e94] [cursor=pointer]:
+              - generic [ref=e95]: 
+              - text: 一键填入演示账号
+            - generic [ref=e96]:
+              - text: 还没有账户？
+              - link "注册" [ref=e97] [cursor=pointer]:
+                - /url: /register
+          - generic [ref=e98]:
+            - generic [ref=e99]: 
+            - text: 首次使用请先注册一个账户

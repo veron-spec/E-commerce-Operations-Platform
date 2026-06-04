@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block title %}{{ _("捕获选品") }} - {{ _("电商运营平台") }}{% endblock %}
+{% block page_title %}{{ _("捕获选品") }}{% endblock %}
+{% block breadcrumb %}
+<li><a href="/">{{ _("首页") }}</a></li>
+<span>—</span>
+<li class="active">{{ _("捕获选品") }}</li>
+{% endblock %}
+
+{% block content %}
+<body data-page="product-selections">
+<div class="pro-placeholder">
+    <div class="pro-placeholder-icon"><i class="bi bi-star"></i></div>
+    <h2 class="pro-placeholder-title">{{ _("捕获选品") }}</h2>
+    <p class="pro-placeholder-desc">{{ _("智能扫描电商平台，自动发现潜力商品，支持关键词筛选、销量预测、竞争分析。") }}</p>
+    <div class="pro-placeholder-badge">{{ _("Pro 版本功能") }}</div>
+    <p class="pro-placeholder-hint">{{ _("请安装专业版模块以使用此功能") }}</p>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<style>
+.pro-placeholder {
+    text-align: center;
+    padding: 80px 20px;
+    max-width: 500px;
+    margin: 40px auto;
+}
+.pro-placeholder-icon {
+    font-size: 48px;
+    color: var(--gold);
+    margin-bottom: 16px;
+}
+.pro-placeholder-title {
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--slate-800);
+}
+.pro-placeholder-desc {
+    font-size: 14px;
+    color: var(--sand-500);
+    margin-bottom: 20px;
+    line-height: 1.6;
+}
+.pro-placeholder-badge {
+    display: inline-block;
+    padding: 4px 14px;
+    border-radius: 20px;
+    background: linear-gradient(135deg, var(--gold), #d4a854);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+}
+.pro-placeholder-hint {
+    font-size: 13px;
+    color: var(--sand-400);
+}
+</style>
+{% endblock %}

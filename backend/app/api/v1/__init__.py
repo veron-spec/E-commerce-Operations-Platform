@@ -39,6 +39,10 @@ if _HAS_PRO:
     protected.include_router(suggestions.router, prefix="/suggestions", tags=["运营建议"])
     protected.include_router(retrospectives.router, prefix="/retrospectives", tags=["复盘分析"])
     protected.include_router(taobao_oauth.auth_protected_router, prefix="/stores", tags=["店铺管理"])
+else:
+    # Community Edition — provide empty-data fallbacks so UI doesn't show 404s
+    from app.api.v1 import community_analytics
+    protected.include_router(community_analytics.router, prefix="/analytics", tags=["数据分析（社区版）"])
 
 # Mount protected routes under the main router
 router.include_router(protected)

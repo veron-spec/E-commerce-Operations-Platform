@@ -1,0 +1,231 @@
+- generic [ref=e2]:
+  - complementary [ref=e3]:
+    - img "cello" [ref=e5]
+    - navigation [ref=e6]:
+      - generic [ref=e7]: 概览
+      - link " 数据看板" [ref=e8] [cursor=pointer]:
+        - /url: /
+        - generic [ref=e9]: 
+        - generic [ref=e10]: 数据看板
+      - link " 订单管理 0" [ref=e11] [cursor=pointer]:
+        - /url: /orders
+        - generic [ref=e12]: 
+        - generic [ref=e13]: 订单管理
+        - generic [ref=e14]: "0"
+      - generic [ref=e15]: 分析
+      - link " 销售分析" [ref=e16] [cursor=pointer]:
+        - /url: /sales
+        - generic [ref=e17]: 
+        - generic [ref=e18]: 销售分析
+      - link " 库存管理" [ref=e19] [cursor=pointer]:
+        - /url: /inventory
+        - generic [ref=e20]: 
+        - generic [ref=e21]: 库存管理
+      - generic [ref=e22]: 管理
+      - link " 店铺管理" [ref=e23] [cursor=pointer]:
+        - /url: /stores
+        - generic [ref=e24]: 
+        - generic [ref=e25]: 店铺管理
+      - link " 自动化规则" [ref=e26] [cursor=pointer]:
+        - /url: /automation
+        - generic [ref=e27]: 
+        - generic [ref=e28]: 自动化规则
+      - link " 捕获选品" [ref=e29] [cursor=pointer]:
+        - /url: /product-selections
+        - generic [ref=e30]: 
+        - generic [ref=e31]: 捕获选品
+      - link " 自动化客服" [ref=e32] [cursor=pointer]:
+        - /url: /auto-reply
+        - generic [ref=e33]: 
+        - generic [ref=e34]: 自动化客服
+      - link " 运营建议" [ref=e35] [cursor=pointer]:
+        - /url: /suggestions
+        - generic [ref=e36]: 
+        - generic [ref=e37]: 运营建议
+      - link " 复盘分析" [ref=e38] [cursor=pointer]:
+        - /url: /retrospectives
+        - generic [ref=e39]: 
+        - generic [ref=e40]: 复盘分析
+      - generic [ref=e41]: 系统
+      - link " 操作日志" [ref=e42] [cursor=pointer]:
+        - /url: /logs
+        - generic [ref=e43]: 
+        - generic [ref=e44]: 操作日志
+      - link " 系统设置" [ref=e45] [cursor=pointer]:
+        - /url: /settings
+        - generic [ref=e46]: 
+        - generic [ref=e47]: 系统设置
+    - generic [ref=e49] [cursor=pointer]:
+      - generic [ref=e50]: 
+      - generic [ref=e51]: 收起侧栏
+  - generic [ref=e52]:
+    - banner [ref=e53]:
+      - generic [ref=e54]:
+        - button "" [ref=e55] [cursor=pointer]:
+          - generic [ref=e56]: 
+        - generic [ref=e57]:
+          - heading "数据看板" [level=1] [ref=e58]
+          - navigation "breadcrumb" [ref=e59]:
+            - list [ref=e60]:
+              - listitem [ref=e61]:
+                - link "首页" [ref=e62] [cursor=pointer]:
+                  - /url: /
+              - generic [ref=e63]: —
+              - listitem [ref=e64]: 数据看板
+      - generic [ref=e65]:
+        - button " EN" [ref=e66] [cursor=pointer]:
+          - generic [ref=e67]: 
+          - generic [ref=e68]: EN
+        - button "" [ref=e69] [cursor=pointer]:
+          - generic [ref=e70]: 
+        - generic [ref=e71]: 2026/6/4 08:59:50
+        - generic [ref=e72]:
+          - button "" [ref=e73] [cursor=pointer]:
+            - generic [ref=e74]: 
+          - text: 
+    - main [ref=e75]:
+      - generic [ref=e76]:
+        - generic [ref=e77]:
+          - generic [ref=e78]:
+            - generic [ref=e79]: 总销售额
+            - generic [ref=e81]: 
+          - generic [ref=e82]: ¥146,554.71
+          - generic [ref=e83]: "--"
+        - generic [ref=e84]:
+          - generic [ref=e85]:
+            - generic [ref=e86]: 订单数
+            - generic [ref=e88]: 
+          - generic [ref=e89]: "148"
+          - generic [ref=e90]: 近30天
+        - generic [ref=e91]:
+          - generic [ref=e92]:
+            - generic [ref=e93]: 平均客单价
+            - generic [ref=e95]: 
+          - generic [ref=e96]: ¥990.23
+        - generic [ref=e97]:
+          - generic [ref=e98]:
+            - generic [ref=e99]: 商品总数
+            - generic [ref=e101]: 
+          - generic [ref=e102]: "15"
+      - generic [ref=e103]:
+        - generic [ref=e106]:
+          - generic [ref=e107]: 
+          - text: 销售趋势（近30天）
+        - generic [ref=e113]:
+          - generic [ref=e114]: 
+          - text: 品类分布
+      - generic [ref=e118]:
+        - generic [ref=e119]:
+          - generic [ref=e121]:
+            - generic [ref=e122]: 
+            - text: 畅销商品 Top 10
+          - table [ref=e125]:
+            - rowgroup [ref=e126]:
+              - row "排名 商品名称 销量 销售额" [ref=e127]:
+                - columnheader "排名" [ref=e128]
+                - columnheader "商品名称" [ref=e129]
+                - columnheader "销量" [ref=e130]
+                - columnheader "销售额" [ref=e131]
+            - rowgroup [ref=e132]:
+              - row "1 智能手表 S3 52 ¥46,748.00" [ref=e133]:
+                - cell "1" [ref=e134]
+                - cell "智能手表 S3" [ref=e135]:
+                  - generic [ref=e136]: 智能手表 S3
+                - cell "52" [ref=e137]
+                - cell "¥46,748.00" [ref=e138]
+              - row "2 机械键盘 青轴 58 ¥23,142.00" [ref=e139]:
+                - cell "2" [ref=e140]
+                - cell "机械键盘 青轴" [ref=e141]:
+                  - generic [ref=e142]: 机械键盘 青轴
+                - cell "58" [ref=e143]
+                - cell "¥23,142.00" [ref=e144]
+              - row "3 运动跑鞋 透气款 34 ¥15,606.00" [ref=e145]:
+                - cell "3" [ref=e146]
+                - cell "运动跑鞋 透气款" [ref=e147]:
+                  - generic [ref=e148]: 运动跑鞋 透气款
+                - cell "34" [ref=e149]
+                - cell "¥15,606.00" [ref=e150]
+              - row "4 无线蓝牙耳机 Pro 37 ¥11,063.00" [ref=e151]:
+                - cell "4" [ref=e152]
+                - cell "无线蓝牙耳机 Pro" [ref=e153]:
+                  - generic [ref=e154]: 无线蓝牙耳机 Pro
+                - cell "37" [ref=e155]
+                - cell "¥11,063.00" [ref=e156]
+              - row "5 护肤礼盒 保湿套装 31 ¥10,199.00" [ref=e157]:
+                - cell "5" [ref=e158]
+                - cell "护肤礼盒 保湿套装" [ref=e159]:
+                  - generic [ref=e160]: 护肤礼盒 保湿套装
+                - cell "31" [ref=e161]
+                - cell "¥10,199.00" [ref=e162]
+              - row "6 双肩背包 防水 36 ¥7,164.00" [ref=e163]:
+                - cell "6" [ref=e164]
+                - cell "双肩背包 防水" [ref=e165]:
+                  - generic [ref=e166]: 双肩背包 防水
+                - cell "36" [ref=e167]
+                - cell "¥7,164.00" [ref=e168]
+              - row "7 坚果礼盒 混合装 52 ¥6,656.00" [ref=e169]:
+                - cell "7" [ref=e170]
+                - cell "坚果礼盒 混合装" [ref=e171]:
+                  - generic [ref=e172]: 坚果礼盒 混合装
+                - cell "52" [ref=e173]
+                - cell "¥6,656.00" [ref=e174]
+              - row "8 牛仔夹克 经典款 25 ¥6,475.00" [ref=e175]:
+                - cell "8" [ref=e176]
+                - cell "牛仔夹克 经典款" [ref=e177]:
+                  - generic [ref=e178]: 牛仔夹克 经典款
+                - cell "25" [ref=e179]
+                - cell "¥6,475.00" [ref=e180]
+              - row "9 护眼台灯 LED 44 ¥5,676.00" [ref=e181]:
+                - cell "9" [ref=e182]
+                - cell "护眼台灯 LED" [ref=e183]:
+                  - generic [ref=e184]: 护眼台灯 LED
+                - cell "44" [ref=e185]
+                - cell "¥5,676.00" [ref=e186]
+              - row "10 便携充电宝 20000mAh 33 ¥5,247.00" [ref=e187]:
+                - cell "10" [ref=e188]
+                - cell "便携充电宝 20000mAh" [ref=e189]:
+                  - generic [ref=e190]: 便携充电宝 20000mAh
+                - cell "33" [ref=e191]
+                - cell "¥5,247.00" [ref=e192]
+        - generic [ref=e193]:
+          - generic [ref=e195]:
+            - generic [ref=e196]: 
+            - text: 库存预警
+          - table [ref=e199]:
+            - rowgroup [ref=e200]:
+              - row "商品 SKU 库存 状态" [ref=e201]:
+                - columnheader "商品" [ref=e202]
+                - columnheader "SKU" [ref=e203]
+                - columnheader "库存" [ref=e204]
+                - columnheader "状态" [ref=e205]
+            - rowgroup [ref=e206]:
+              - row "运动跑鞋 透气款 SN-001 3 偏低" [ref=e207]:
+                - cell "运动跑鞋 透气款" [ref=e208]
+                - cell "SN-001" [ref=e209]
+                - cell "3" [ref=e210]
+                - cell "偏低" [ref=e211]:
+                  - generic [ref=e212]: 偏低
+              - row "护眼台灯 LED LA-001 0 缺货" [ref=e213]:
+                - cell "护眼台灯 LED" [ref=e214]
+                - cell "LA-001" [ref=e215]
+                - cell "0" [ref=e216]
+                - cell "缺货" [ref=e217]:
+                  - generic [ref=e218]: 缺货
+              - row "纯棉T恤 简约白 TS-001 8 偏低" [ref=e219]:
+                - cell "纯棉T恤 简约白" [ref=e220]
+                - cell "TS-001" [ref=e221]
+                - cell "8" [ref=e222]
+                - cell "偏低" [ref=e223]:
+                  - generic [ref=e224]: 偏低
+              - row "坚果礼盒 混合装 NU-001 6 偏低" [ref=e225]:
+                - cell "坚果礼盒 混合装" [ref=e226]
+                - cell "NU-001" [ref=e227]
+                - cell "6" [ref=e228]
+                - cell "偏低" [ref=e229]:
+                  - generic [ref=e230]: 偏低
+              - row "双肩背包 防水 BP-001 0 缺货" [ref=e231]:
+                - cell "双肩背包 防水" [ref=e232]
+                - cell "BP-001" [ref=e233]
+                - cell "0" [ref=e234]
+                - cell "缺货" [ref=e235]:
+                  - generic [ref=e236]: 缺货

@@ -135,6 +135,14 @@ function formatPercent(v) { return (v || 0) + '%'; }
 function formatDate(d) { if (!d) return '--'; const dt = new Date(d); return isNaN(dt) ? d : dt.toLocaleDateString('zh-CN'); }
 function formatDateTime(d) { if (!d) return '--'; const dt = new Date(d); return isNaN(dt) ? d : dt.toLocaleString('zh-CN'); }
 
+/* ===== Pro-version placeholder ===== */
+function showProOnly() {
+    const container = document.querySelector('.content-area > div, .stats-grid')?.parentElement;
+    if (!container) return;
+    if (container.querySelector('.pro-placeholder')) return;
+    container.insertAdjacentHTML('afterbegin', '<div class="pro-placeholder" style="margin-bottom:24px"><div class="pro-placeholder-icon"><i class="bi bi-stars"></i></div><div class="pro-placeholder-badge">Pro 版本功能</div><p style="font-size:13px;color:var(--sand-400);margin:0">请安装专业版模块以使用此功能</p></div>');
+}
+
 /* ===== Generic Refresh Trigger ===== */
 const _pageRefreshMap = {
     dashboard: 'refreshDashboard',
@@ -379,10 +387,16 @@ function renderInventoryAlerts(items) {
 async function refreshSales() {
     try {
         const days = document.getElementById('salesDays')?.value || 30;
-        const [salesData, trendsData] = await Promise.all([
-            fetch(`/api/v1/analytics/sales?days=${days}&granularity=day`).then(r => r.json()),
-            fetch(`/api/v1/analytics/trends?days=${days * 2}`).then(r => r.json()),
+        const [salesRes, trendsRes] = await Promise.all([
+            fetch(`/api/v1/analytics/sales?days=${days}&granularity=day`),
+            fetch(`/api/v1/analytics/trends?days=${days * 2}`),
         ]);
+        if (!salesRes.ok || !trendsRes.ok) {
+            showProOnly();
+            return;
+        }
+        const salesData = await salesRes.json();
+        const trendsData = await trendsRes.json();
 
         renderLineChart('salesTrendChart', '销售额 (¥)',
             (salesData.revenue_by_day || []).map(d => d.period ? d.period.substring(5, 10) : ''),
@@ -425,6 +439,7 @@ async function refreshSales() {
 async function refreshInventoryPage() {
     try {
         const res = await fetch('/api/v1/analytics/inventory');
+        if (!res.ok) { showProOnly(); return; }
         const data = await res.json();
 
         setStat('invTotal', formatNum(data.total_products));
@@ -602,6 +617,9 @@ function changePage(delta) {
     orderPage = Math.max(1, orderPage + delta);
     refreshOrders();
 }
+
+/* ===== Product Selections Page (Pro) ===== */
+function refreshProductSelections() {} /* no-op — handled by template */
 
 /* ===== Automation Page ===== */
 async function refreshAutomation() {

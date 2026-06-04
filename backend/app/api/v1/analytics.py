@@ -69,7 +69,7 @@ async def top_products(
     db: AsyncSession = Depends(get_db),
 ):
     store_ids = await verify_store_access(store_id, user, db)
-    since = datetime.now(UTC) - timedelta(days=days)
+    since = (datetime.now(UTC) - timedelta(days=days)).replace(tzinfo=None)
 
     stmt = select(Order.line_items).where(
         Order.created_at >= since, Order.store_id.in_(store_ids)

@@ -9,7 +9,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.api.deps import get_db
 from app.config import settings
 from app.core.auth import decode_access_token
-from app.core.i18n import detect_lang, get_translator
+from app.core.i18n import DEFAULT_LANG, detect_lang, get_translator
 from app.models.user import User
 
 router = APIRouter()
@@ -71,14 +71,28 @@ def _protected(handler):
     return wrapper
 
 
-# === Auth pages (no auth required) ===
+# === Auth pages (always default to English; use ?lang=zh for Chinese) ===
 
 @router.get("/login", response_class=HTMLResponse, include_in_schema=False)
-async def login_page(request: Request):
+async def login_page(request: Request, db: AsyncSession = Depends(get_db)):
     token = _get_token(request)
     if token and decode_access_token(token):
-        return RedirectResponse(url=f"{settings.root_path}/", status_code=303)
-    return templates.TemplateResponse(request, "pages/login.html", _build_context(request))
+        user = await _require_user(request, db)
+        if user:
+            return RedirectResponse(url=f"{settings.root_path}/", status_code=303)
+        # Token valid but user gone (DB rebuilt) — clear stale cookie
+        cookie_path = settings.root_path if settings.root_path else "/"
+        resp = RedirectResponse(url=f"{settings.root_path}/login", status_code=303)
+        resp.delete_cookie("token", path=cookie_path)
+        return resp
+    # Auth pages ignore the lang cookie — always show English by default.
+    # URL parameter ?lang=zh overrides this.
+    lang = request.query_params.get("lang", DEFAULT_LANG)
+    if lang not in ("en", "zh"):
+        lang = DEFAULT_LANG
+    _ = get_translator(lang)
+    ctx = _build_context(request, _=_, current_lang=lang)
+    return templates.TemplateResponse(request, "pages/login.html", ctx)
 
 
 @router.get("/register", response_class=HTMLResponse, include_in_schema=False)
@@ -86,12 +100,17 @@ async def register_page(request: Request):
     token = _get_token(request)
     if token and decode_access_token(token):
         return RedirectResponse(url=f"{settings.root_path}/", status_code=303)
-    return templates.TemplateResponse(request, "pages/register.html", _build_context(request))
+    lang = request.query_params.get("lang", DEFAULT_LANG)
+    if lang not in ("en", "zh"):
+        lang = DEFAULT_LANG
+    _ = get_translator(lang)
+    ctx = _build_context(request, _=_, current_lang=lang)
+    return templates.TemplateResponse(request, "pages/register.html", ctx)
 
 
 @router.get("/logout", include_in_schema=False)
 async def logout():
-    cookie_path = f"{settings.root_path}/" if settings.root_path else "/"
+    cookie_path = settings.root_path if settings.root_path else "/"
     resp = RedirectResponse(url=f"{settings.root_path}/login", status_code=303)
     resp.delete_cookie("token", path=cookie_path)
     return resp

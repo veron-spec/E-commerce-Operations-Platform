@@ -1,0 +1,15 @@
+- generic [ref=e2]:
+  - generic [ref=e4]: 
+  - generic [ref=e5]: "404"
+  - generic [ref=e6]: 页面未找到
+  - generic [ref=e7]:
+    - text: 抱歉，您访问的页面不存在或已被移除。
+    - text: 请检查网址是否正确，或返回首页。
+  - generic [ref=e8]:
+    - link " 返回首页" [ref=e9] [cursor=pointer]:
+      - /url: /
+      - generic [ref=e10]: 
+      - text: 返回首页
+    - button " 返回上页" [ref=e11] [cursor=pointer]:
+      - generic [ref=e12]: 
+      - text: 返回上页

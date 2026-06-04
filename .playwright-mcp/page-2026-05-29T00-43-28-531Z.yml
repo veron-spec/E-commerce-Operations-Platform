@@ -1,0 +1,15 @@
+- generic [ref=e2]:
+  - generic [ref=e4]: 
+  - generic [ref=e5]: "404"
+  - generic [ref=e6]: Page Not Found
+  - generic [ref=e7]:
+    - text: Sorry, the page you requested does not exist or has been removed.
+    - text: Please check the URL or go back to the homepage.
+  - generic [ref=e8]:
+    - link " Go Home" [ref=e9] [cursor=pointer]:
+      - /url: /
+      - generic [ref=e10]: 
+      - text: Go Home
+    - button " Go Back" [ref=e11] [cursor=pointer]:
+      - generic [ref=e12]: 
+      - text: Go Back

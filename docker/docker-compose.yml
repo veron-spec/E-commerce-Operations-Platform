@@ -5,6 +5,7 @@ services:
       - "17452:17452"
     volumes:
       - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - ../backend/app/static:/static:ro
     depends_on:
       - api
     restart: unless-stopped

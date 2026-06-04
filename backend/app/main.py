@@ -139,10 +139,12 @@ async def i18n_middleware(request: Request, call_next):
 async def translate_api_response(request: Request, call_next):
     response = await call_next(request)
 
-    # 只翻译 API 的 JSON 成功响应
+    # 只翻译 API 的 JSON 成功响应（跳过 auth 和 analytics 端点）
     if (request.url.path.startswith("/api/v1/")
             and response.status_code == 200
-            and "application/json" in response.headers.get("content-type", "")):
+            and "application/json" in response.headers.get("content-type", "")
+            and not request.url.path.startswith("/api/v1/auth/")
+            and not request.url.path.startswith("/api/v1/analytics/")):
 
         _ = getattr(request.state, '_', None)
         if _ is None:

@@ -1,0 +1,168 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - generic [ref=e3]: 
+    - generic [ref=e4]: Retrospective data load failed
+    - button "×" [ref=e5] [cursor=pointer]
+  - generic [ref=e6]:
+    - complementary [ref=e7]:
+      - generic [ref=e8]:
+        - generic [ref=e10]: 
+        - generic [ref=e11]:
+          - generic [ref=e12]: 商枢
+          - generic [ref=e13]: E-Commerce Ops
+      - navigation [ref=e14]:
+        - generic [ref=e15]: Overview
+        - link " Dashboard" [ref=e16] [cursor=pointer]:
+          - /url: /
+          - generic [ref=e17]: 
+          - generic [ref=e18]: Dashboard
+        - link " Orders 0" [ref=e19] [cursor=pointer]:
+          - /url: /orders
+          - generic [ref=e20]: 
+          - generic [ref=e21]: Orders
+          - generic [ref=e22]: "0"
+        - generic [ref=e23]: Analytics
+        - link " Sales Analytics" [ref=e24] [cursor=pointer]:
+          - /url: /sales
+          - generic [ref=e25]: 
+          - generic [ref=e26]: Sales Analytics
+        - link " Inventory" [ref=e27] [cursor=pointer]:
+          - /url: /inventory
+          - generic [ref=e28]: 
+          - generic [ref=e29]: Inventory
+        - generic [ref=e30]: Management
+        - link " Stores" [ref=e31] [cursor=pointer]:
+          - /url: /stores
+          - generic [ref=e32]: 
+          - generic [ref=e33]: Stores
+        - link " Automation" [ref=e34] [cursor=pointer]:
+          - /url: /automation
+          - generic [ref=e35]: 
+          - generic [ref=e36]: Automation
+        - link " Product Selections" [ref=e37] [cursor=pointer]:
+          - /url: /product-selections
+          - generic [ref=e38]: 
+          - generic [ref=e39]: Product Selections
+        - link " Auto Reply" [ref=e40] [cursor=pointer]:
+          - /url: /auto-reply
+          - generic [ref=e41]: 
+          - generic [ref=e42]: Auto Reply
+        - link " Suggestions" [ref=e43] [cursor=pointer]:
+          - /url: /suggestions
+          - generic [ref=e44]: 
+          - generic [ref=e45]: Suggestions
+        - link " Retrospectives" [ref=e46] [cursor=pointer]:
+          - /url: /retrospectives
+          - generic [ref=e47]: 
+          - generic [ref=e48]: Retrospectives
+        - generic [ref=e49]: System
+        - link " Operation Logs" [ref=e50] [cursor=pointer]:
+          - /url: /logs
+          - generic [ref=e51]: 
+          - generic [ref=e52]: Operation Logs
+        - link " Settings" [ref=e53] [cursor=pointer]:
+          - /url: /settings
+          - generic [ref=e54]: 
+          - generic [ref=e55]: Settings
+      - generic [ref=e57] [cursor=pointer]:
+        - generic [ref=e58]: 
+        - generic [ref=e59]: Collapse Sidebar
+    - generic [ref=e60]:
+      - banner [ref=e61]:
+        - generic [ref=e62]:
+          - button "" [ref=e63] [cursor=pointer]:
+            - generic [ref=e64]: 
+          - generic [ref=e65]:
+            - heading "Retrospectives" [level=1] [ref=e66]
+            - navigation "breadcrumb" [ref=e67]:
+              - list [ref=e68]:
+                - listitem [ref=e69]:
+                  - link "Home" [ref=e70] [cursor=pointer]:
+                    - /url: /
+                - generic [ref=e71]: —
+                - listitem [ref=e72]: Retrospectives
+        - generic [ref=e73]:
+          - button "" [ref=e74] [cursor=pointer]:
+            - generic [ref=e75]: 
+          - button "" [ref=e76] [cursor=pointer]:
+            - generic [ref=e77]: 
+          - generic [ref=e78]: 2026/5/29 08:47:02
+          - generic [ref=e79]:
+            - button "" [ref=e80] [cursor=pointer]:
+              - generic [ref=e81]: 
+            - text: 
+      - main [ref=e82]:
+        - generic [ref=e83]:
+          - generic [ref=e85]:
+            - generic [ref=e86]:
+              - generic [ref=e87]: Total Retrospectives
+              - generic [ref=e88]: "--"
+            - generic [ref=e90]: 
+          - generic [ref=e92]:
+            - generic [ref=e93]:
+              - generic [ref=e94]: Weekly
+              - generic [ref=e95]: "--"
+            - generic [ref=e97]: 
+          - generic [ref=e99]:
+            - generic [ref=e100]:
+              - generic [ref=e101]: Monthly
+              - generic [ref=e102]: "--"
+            - generic [ref=e104]: 
+          - generic [ref=e106]:
+            - generic [ref=e107]:
+              - generic [ref=e108]: Latest Retro
+              - generic [ref=e109]: "--"
+            - generic [ref=e111]: 
+        - generic [ref=e112]:
+          - generic [ref=e113]:
+            - generic [ref=e114]: Period
+            - combobox [ref=e115] [cursor=pointer]:
+              - option "All" [selected]
+              - option "Weekly"
+              - option "Monthly"
+              - option "Quarterly"
+          - generic [ref=e116]:
+            - generic [ref=e117]: Status
+            - combobox [ref=e118] [cursor=pointer]:
+              - option "All" [selected]
+              - option "Draft"
+              - option "已发布"
+              - option "Archived"
+          - button " Generate Retrospective" [ref=e119] [cursor=pointer]:
+            - generic [ref=e120]: 
+            - text: Generate Retrospective
+        - generic [ref=e121]:
+          - generic [ref=e122]:
+            - generic [ref=e123]:
+              - generic [ref=e124]: 
+              - text: Retrospectives List
+            - generic [ref=e125]: Loading...
+          - table [ref=e128]:
+            - rowgroup [ref=e129]:
+              - row "Period Type Revenue Orders 客单价 Refund Rate Period Change Status Actions" [ref=e130]:
+                - columnheader "Period" [ref=e131]
+                - columnheader "Type" [ref=e132]
+                - columnheader "Revenue" [ref=e133]
+                - columnheader "Orders" [ref=e134]
+                - columnheader "客单价" [ref=e135]
+                - columnheader "Refund Rate" [ref=e136]
+                - columnheader "Period Change" [ref=e137]
+                - columnheader "Status" [ref=e138]
+                - columnheader "Actions" [ref=e139]
+            - rowgroup [ref=e140]:
+              - row " No retrospective records Click 'Generate' to start analysis" [ref=e141]:
+                - cell " No retrospective records Click 'Generate' to start analysis" [ref=e142]:
+                  - generic [ref=e143]:
+                    - generic [ref=e145]: 
+                    - generic [ref=e146]: No retrospective records
+                    - generic [ref=e147]: Click 'Generate' to start analysis
+          - generic [ref=e149]:
+            - generic [ref=e150]: "0"
+            - generic [ref=e151]:
+              - button " Previous" [disabled] [ref=e152]:
+                - generic [ref=e153]: 
+                - text: Previous
+              - button "Next " [ref=e154] [cursor=pointer]:
+                - text: Next
+                - generic [ref=e155]: 
+        - text:   

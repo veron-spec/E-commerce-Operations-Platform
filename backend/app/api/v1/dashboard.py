@@ -27,7 +27,7 @@ async def dashboard_summary(
 ):
     store_ids = await verify_store_access(store_id, user, db)
 
-    since = datetime.now(UTC) - timedelta(days=days)
+    since = (datetime.now(UTC) - timedelta(days=days)).replace(tzinfo=None)
 
     # Total sales
     query = select(func.coalesce(func.sum(Order.total_price), 0)).where(

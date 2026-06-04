@@ -1,0 +1,15 @@
+- generic [ref=e2]:
+  - generic [ref=e4]: 
+  - generic [ref=e5]: "500"
+  - generic [ref=e6]: Internal Server Error
+  - generic [ref=e7]:
+    - text: Sorry, the server encountered an unexpected error.
+    - text: Please retry later. If the problem persists, contact the administrator.
+  - generic [ref=e8]:
+    - link " Go Home" [ref=e9] [cursor=pointer]:
+      - /url: /
+      - generic [ref=e10]: 
+      - text: Go Home
+    - button " Reload" [ref=e11]:
+      - generic [ref=e12]: 
+      - text: Reload

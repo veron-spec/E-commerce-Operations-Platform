@@ -10,7 +10,7 @@ from app.models.user import User
 router = APIRouter()
 
 
-@router.get("/operation-logs", summary="操作日志", description="查询当前用户的操作日志")
+@router.get("/", summary="操作日志", description="查询当前用户的操作日志")
 async def list_operation_logs(
     action: str | None = Query(None, description="按操作类型筛选（create/update/delete/login）"),
     resource_type: str | None = Query(None, description="按资源类型筛选"),
@@ -54,7 +54,7 @@ async def list_operation_logs(
     }
 
 
-@router.get("/operation-logs/latest", summary="最近操作", description="当前用户最近的 10 条操作")
+@router.get("/latest", summary="最近操作", description="当前用户最近的 10 条操作")
 async def latest_operations(
     user: User = Depends(get_current_user),
     db: AsyncSession = Depends(get_db),

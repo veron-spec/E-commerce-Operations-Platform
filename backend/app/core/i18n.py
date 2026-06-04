@@ -45,8 +45,8 @@ def get_translator(lang: str):
 def detect_lang(accept_language: str = "", cookie_lang: str = "") -> str:
     """Pick the best language.
 
-    Priority:  cookie > DEFAULT_LANG (accept-language is ignored
-    so first-time visitors always see Chinese — switch via the UI).
+    Priority:  cookie > DEFAULT_LANG.
+    Auth pages (login/register) override this to always default to English.
     """
     if cookie_lang in LANGUAGES:
         return cookie_lang

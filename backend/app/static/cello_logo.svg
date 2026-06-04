@@ -1,52 +1,28 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 130" width="400" height="130">
   <defs>
-    <linearGradient id="ringDeep" x1="0%" y1="0%" x2="100%" y2="100%">
+    <linearGradient id="gw1" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#0F172A"/>
       <stop offset="100%" stop-color="#1E3A5F"/>
     </linearGradient>
-    <linearGradient id="ringMid" x1="0%" y1="0%" x2="100%" y2="100%">
+    <linearGradient id="gw2" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#1E3A5F"/>
       <stop offset="100%" stop-color="#2563EB"/>
     </linearGradient>
-    <linearGradient id="ringLight" x1="0%" y1="0%" x2="100%" y2="100%">
+    <linearGradient id="gw3" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#2563EB"/>
       <stop offset="100%" stop-color="#3B82F6"/>
     </linearGradient>
-    <linearGradient id="ringAccent" x1="0%" y1="0%" x2="100%" y2="100%">
+    <linearGradient id="gw4" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#60A5FA"/>
       <stop offset="100%" stop-color="#3B82F6"/>
     </linearGradient>
   </defs>
-
-  <!-- ===== LOGO MARK ===== -->
   <g transform="translate(12, 12)">
-    <!-- Outermost ring → sweeping arc from upper-right to lower-left -->
-    <path d="M 62 6
-             A 58 58 0 1 1 8 58"
-          fill="none" stroke="url(#ringDeep)" stroke-width="5" stroke-linecap="round"/>
-
-    <!-- Middle ring → offset arc, shorter sweep -->
-    <path d="M 54 16
-             A 46 46 0 1 1 14 56"
-          fill="none" stroke="url(#ringMid)" stroke-width="4" stroke-linecap="round"/>
-
-    <!-- Inner ring → smallest arc, innermost growth ring -->
-    <path d="M 44 26
-             A 30 30 0 0 1 20 44"
-          fill="none" stroke="url(#ringLight)" stroke-width="3" stroke-linecap="round"/>
-
-    <!-- Central seed dot -->
-    <circle cx="32" cy="34" r="3.5" fill="url(#ringLight)"/>
-
-    <!-- Broken fragment → a piece of the outer ring, displaced and rotated -->
-    <path d="M 10 95
-             A 52 52 0 0 0 38 105"
-          fill="none" stroke="url(#ringAccent)" stroke-width="4.5" stroke-linecap="round"
-          transform="translate(14, -12) rotate(18, 24, 100)"/>
+    <circle cx="40" cy="46" r="42" fill="none" stroke="url(#gw1)" stroke-width="5.5" stroke-dasharray="250 20" stroke-dashoffset="0" stroke-linecap="round"/>
+    <circle cx="40" cy="46" r="30" fill="none" stroke="url(#gw2)" stroke-width="4.5" stroke-dasharray="180 16" stroke-dashoffset="-50" stroke-linecap="round"/>
+    <circle cx="40" cy="46" r="17" fill="none" stroke="url(#gw3)" stroke-width="3.5" stroke-dasharray="100 12" stroke-dashoffset="-20" stroke-linecap="round"/>
+    <circle cx="40" cy="46" r="3" fill="url(#gw3)"/>
+    <path d="M 82 34 A 46 46 0 0 1 90 48" fill="none" stroke="url(#gw4)" stroke-width="5" stroke-linecap="round" transform="translate(5, -8) rotate(10, 86, 41)"/>
   </g>
-
-  <!-- ===== WORDMARK ===== -->
-  <text x="100" y="108"
-        font-family="'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
-        font-size="54" font-weight="275" fill="#0F172A" letter-spacing="5">cello</text>
+  <text x="108" y="108" font-family="'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="54" font-weight="275" fill="#0F172A" letter-spacing="5">cello</text>
 </svg>

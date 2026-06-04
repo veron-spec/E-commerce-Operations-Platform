@@ -1,0 +1,186 @@
+- generic [ref=e2]:
+  - complementary [ref=e3]:
+    - generic [ref=e4]:
+      - generic [ref=e6]: 
+      - generic [ref=e7]:
+        - generic [ref=e8]: 商枢
+        - generic [ref=e9]: E-Commerce Ops
+    - navigation [ref=e10]:
+      - generic [ref=e11]: Overview
+      - link " Dashboard" [ref=e12] [cursor=pointer]:
+        - /url: /
+        - generic [ref=e13]: 
+        - generic [ref=e14]: Dashboard
+      - link " Orders 0" [ref=e15] [cursor=pointer]:
+        - /url: /orders
+        - generic [ref=e16]: 
+        - generic [ref=e17]: Orders
+        - generic [ref=e18]: "0"
+      - generic [ref=e19]: Analytics
+      - link " Sales Analytics" [ref=e20] [cursor=pointer]:
+        - /url: /sales
+        - generic [ref=e21]: 
+        - generic [ref=e22]: Sales Analytics
+      - link " Inventory" [ref=e23] [cursor=pointer]:
+        - /url: /inventory
+        - generic [ref=e24]: 
+        - generic [ref=e25]: Inventory
+      - generic [ref=e26]: Management
+      - link " Stores" [ref=e27] [cursor=pointer]:
+        - /url: /stores
+        - generic [ref=e28]: 
+        - generic [ref=e29]: Stores
+      - link " Automation" [ref=e30] [cursor=pointer]:
+        - /url: /automation
+        - generic [ref=e31]: 
+        - generic [ref=e32]: Automation
+      - link " Product Selections" [ref=e33] [cursor=pointer]:
+        - /url: /product-selections
+        - generic [ref=e34]: 
+        - generic [ref=e35]: Product Selections
+      - link " Auto Reply" [ref=e36] [cursor=pointer]:
+        - /url: /auto-reply
+        - generic [ref=e37]: 
+        - generic [ref=e38]: Auto Reply
+      - link " Suggestions" [ref=e39] [cursor=pointer]:
+        - /url: /suggestions
+        - generic [ref=e40]: 
+        - generic [ref=e41]: Suggestions
+      - link " Retrospectives" [ref=e42] [cursor=pointer]:
+        - /url: /retrospectives
+        - generic [ref=e43]: 
+        - generic [ref=e44]: Retrospectives
+      - generic [ref=e45]: System
+      - link " Operation Logs" [ref=e46] [cursor=pointer]:
+        - /url: /logs
+        - generic [ref=e47]: 
+        - generic [ref=e48]: Operation Logs
+      - link " Settings" [ref=e49] [cursor=pointer]:
+        - /url: /settings
+        - generic [ref=e50]: 
+        - generic [ref=e51]: Settings
+    - generic [ref=e53] [cursor=pointer]:
+      - generic [ref=e54]: 
+      - generic [ref=e55]: Collapse Sidebar
+  - generic [ref=e56]:
+    - banner [ref=e57]:
+      - generic [ref=e58]:
+        - button "" [ref=e59] [cursor=pointer]:
+          - generic [ref=e60]: 
+        - generic [ref=e61]:
+          - heading "Settings" [level=1] [ref=e62]
+          - navigation "breadcrumb" [ref=e63]:
+            - list [ref=e64]:
+              - listitem [ref=e65]:
+                - link "Home" [ref=e66] [cursor=pointer]:
+                  - /url: /
+              - generic [ref=e67]: —
+              - listitem [ref=e68]: Settings
+      - generic [ref=e69]:
+        - button "" [ref=e70] [cursor=pointer]:
+          - generic [ref=e71]: 
+        - button "" [ref=e72] [cursor=pointer]:
+          - generic [ref=e73]: 
+        - generic [ref=e74]: 2026/5/29 02:13:02
+        - generic [ref=e75]:
+          - button "" [ref=e76] [cursor=pointer]:
+            - generic [ref=e77]: 
+          - text: 
+    - main [ref=e78]:
+      - generic [ref=e79]:
+        - generic [ref=e80]:
+          - generic [ref=e82]:
+            - generic [ref=e83]: 
+            - text: Basic Settings
+          - generic [ref=e84]:
+            - generic [ref=e85]:
+              - generic [ref=e86]: System Name
+              - textbox [ref=e87]: E-Commerce Automation Platform
+              - generic [ref=e88]: v1.0.0
+            - generic [ref=e89]:
+              - generic [ref=e90]: Sync Interval
+              - combobox [ref=e91] [cursor=pointer]:
+                - option "15 min"
+                - option "30 min" [selected]
+                - option "60 min"
+              - generic [ref=e92]: Interval for auto-syncing data from platforms
+            - generic [ref=e93]:
+              - generic [ref=e94]: Report Cache TTL
+              - combobox [ref=e95] [cursor=pointer]:
+                - option "1 hour"
+                - option "3 hours"
+                - option "6 hours" [selected]
+                - option "12 hours"
+              - generic [ref=e96]: Reduce redundant computation, speed up dashboard
+        - generic [ref=e97]:
+          - generic [ref=e99]:
+            - generic [ref=e100]: 
+            - text: Data Management
+          - generic [ref=e101]:
+            - generic [ref=e102]:
+              - generic [ref=e103]: Data Export
+              - generic [ref=e104]:
+                - button " Export CSV" [ref=e105] [cursor=pointer]:
+                  - generic [ref=e106]: 
+                  - text: Export CSV
+                - button " Export Excel" [ref=e107] [cursor=pointer]:
+                  - generic [ref=e108]: 
+                  - text: Export Excel
+            - generic [ref=e109]:
+              - generic [ref=e110]: Sync History
+              - generic [ref=e111]: View Sync Logs
+              - button " View Sync Logs" [ref=e112] [cursor=pointer]:
+                - generic [ref=e113]: 
+                - text: View Sync Logs
+            - generic [ref=e114]:
+              - generic [ref=e115]: Danger Zone
+              - button " Clear Demo Data" [ref=e117] [cursor=pointer]:
+                - generic [ref=e118]: 
+                - text: Clear Demo Data
+        - generic [ref=e119]:
+          - generic [ref=e120]:
+            - generic [ref=e121]:
+              - generic [ref=e122]: 
+              - text: Third-Party API Keys
+            - button " Add Key" [ref=e123] [cursor=pointer]:
+              - generic [ref=e124]: 
+              - text: Add Key
+          - table [ref=e127]:
+            - rowgroup [ref=e128]:
+              - row "Provider Label Key Status Actions" [ref=e129]:
+                - columnheader "Provider" [ref=e130]
+                - columnheader "Label" [ref=e131]
+                - columnheader "Key" [ref=e132]
+                - columnheader "Status" [ref=e133]
+                - columnheader "Actions" [ref=e134]
+            - rowgroup [ref=e135]:
+              - row " 尚未配置第三方 API 密钥 添加密钥后，自动化运营将使用你的额度" [ref=e136]:
+                - cell " 尚未配置第三方 API 密钥 添加密钥后，自动化运营将使用你的额度" [ref=e137]:
+                  - generic [ref=e138]:
+                    - generic [ref=e140]: 
+                    - generic [ref=e141]: 尚未配置第三方 API 密钥
+                    - generic [ref=e142]: 添加密钥后，自动化运营将使用你的额度
+        - text: 
+        - generic [ref=e143]:
+          - generic [ref=e145]:
+            - generic [ref=e146]: 
+            - text: About
+          - generic [ref=e148]:
+            - generic [ref=e149]:
+              - generic [ref=e150]: App Name
+              - generic [ref=e151]: E-Commerce Automation Platform
+            - generic [ref=e152]:
+              - generic [ref=e153]: Version
+              - generic [ref=e154]: v1.0.0
+            - generic [ref=e155]:
+              - generic [ref=e156]: Tech Stack
+              - generic [ref=e157]: FastAPI + PostgreSQL + Redis + Celery
+            - generic [ref=e158]:
+              - generic [ref=e159]: Platforms
+              - generic [ref=e160]: 淘宝 / Shopify / WooCommerce / Shopee / Lazada
+            - generic [ref=e161]:
+              - generic [ref=e162]: Python
+              - generic [ref=e163]: 3.12+
+            - generic [ref=e164]:
+              - generic [ref=e165]: License
+              - generic [ref=e166]: MIT

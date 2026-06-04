@@ -1,0 +1,41 @@
+- generic [ref=e2]:
+  - text:             
+  - generic [ref=e3]:
+    - text:   
+    - main [ref=e4]:
+      - generic [ref=e5]:
+        - button "" [ref=e7] [cursor=pointer]:
+          - generic [ref=e8]: 
+        - generic [ref=e9]:
+          - generic [ref=e10]:
+            - img "cello" [ref=e11]
+            - heading "E-Commerce Automation Platform" [level=1] [ref=e12]
+            - paragraph [ref=e13]: Sign in to your account
+            - generic [ref=e14]:
+              - generic [ref=e15]:
+                - generic [ref=e16]: Email
+                - generic [ref=e17]:
+                  - generic: 
+                  - textbox "Enter your email address" [active] [ref=e18]
+              - generic [ref=e19]:
+                - generic [ref=e20]: Password
+                - generic [ref=e21]:
+                  - generic: 
+                  - textbox "Enter your password" [ref=e22]
+                  - button "" [ref=e23] [cursor=pointer]:
+                    - generic [ref=e24]: 
+              - generic [ref=e26] [cursor=pointer]:
+                - checkbox "Remember Me" [checked] [ref=e27]
+                - text: Remember Me
+              - button "Login" [ref=e28] [cursor=pointer]
+            - generic [ref=e29]: Demo Account
+            - button " Fill Demo Account" [ref=e30] [cursor=pointer]:
+              - generic [ref=e31]: 
+              - text: Fill Demo Account
+            - generic [ref=e32]:
+              - text: Don't have an account?
+              - link "Register" [ref=e33] [cursor=pointer]:
+                - /url: /cello/register
+          - generic [ref=e34]:
+            - generic [ref=e35]: 
+            - text: First time? Please register an account

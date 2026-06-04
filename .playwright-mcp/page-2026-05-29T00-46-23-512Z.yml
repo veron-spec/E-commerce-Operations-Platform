@@ -1,0 +1,175 @@
+- generic [ref=e2]:
+  - complementary [ref=e3]:
+    - generic [ref=e4]:
+      - generic [ref=e6]: 
+      - generic [ref=e7]:
+        - generic [ref=e8]: 商枢
+        - generic [ref=e9]: E-Commerce Ops
+    - navigation [ref=e10]:
+      - generic [ref=e11]: Overview
+      - link " Dashboard" [ref=e12] [cursor=pointer]:
+        - /url: /
+        - generic [ref=e13]: 
+        - generic [ref=e14]: Dashboard
+      - link " Orders 0" [ref=e15] [cursor=pointer]:
+        - /url: /orders
+        - generic [ref=e16]: 
+        - generic [ref=e17]: Orders
+        - generic [ref=e18]: "0"
+      - generic [ref=e19]: Analytics
+      - link " Sales Analytics" [ref=e20] [cursor=pointer]:
+        - /url: /sales
+        - generic [ref=e21]: 
+        - generic [ref=e22]: Sales Analytics
+      - link " Inventory" [ref=e23] [cursor=pointer]:
+        - /url: /inventory
+        - generic [ref=e24]: 
+        - generic [ref=e25]: Inventory
+      - generic [ref=e26]: Management
+      - link " Stores" [ref=e27] [cursor=pointer]:
+        - /url: /stores
+        - generic [ref=e28]: 
+        - generic [ref=e29]: Stores
+      - link " Automation" [ref=e30] [cursor=pointer]:
+        - /url: /automation
+        - generic [ref=e31]: 
+        - generic [ref=e32]: Automation
+      - link " Product Selections" [ref=e33] [cursor=pointer]:
+        - /url: /product-selections
+        - generic [ref=e34]: 
+        - generic [ref=e35]: Product Selections
+      - link " Auto Reply" [ref=e36] [cursor=pointer]:
+        - /url: /auto-reply
+        - generic [ref=e37]: 
+        - generic [ref=e38]: Auto Reply
+      - link " Suggestions" [ref=e39] [cursor=pointer]:
+        - /url: /suggestions
+        - generic [ref=e40]: 
+        - generic [ref=e41]: Suggestions
+      - link " Retrospectives" [ref=e42] [cursor=pointer]:
+        - /url: /retrospectives
+        - generic [ref=e43]: 
+        - generic [ref=e44]: Retrospectives
+      - generic [ref=e45]: System
+      - link " Operation Logs" [ref=e46] [cursor=pointer]:
+        - /url: /logs
+        - generic [ref=e47]: 
+        - generic [ref=e48]: Operation Logs
+      - link " Settings" [ref=e49] [cursor=pointer]:
+        - /url: /settings
+        - generic [ref=e50]: 
+        - generic [ref=e51]: Settings
+    - generic [ref=e53] [cursor=pointer]:
+      - generic [ref=e54]: 
+      - generic [ref=e55]: Collapse Sidebar
+  - generic [ref=e56]:
+    - banner [ref=e57]:
+      - generic [ref=e58]:
+        - button "" [ref=e59] [cursor=pointer]:
+          - generic [ref=e60]: 
+        - generic [ref=e61]:
+          - heading "Auto Reply" [level=1] [ref=e62]
+          - navigation "breadcrumb" [ref=e63]:
+            - list [ref=e64]:
+              - listitem [ref=e65]:
+                - link "Home" [ref=e66] [cursor=pointer]:
+                  - /url: /
+              - generic [ref=e67]: —
+              - listitem [ref=e68]: Auto Reply
+      - generic [ref=e69]:
+        - button "" [ref=e70] [cursor=pointer]:
+          - generic [ref=e71]: 
+        - button "" [ref=e72] [cursor=pointer]:
+          - generic [ref=e73]: 
+        - generic [ref=e74]: 2026/5/29 08:46:23
+        - generic [ref=e75]:
+          - button "" [ref=e76] [cursor=pointer]:
+            - generic [ref=e77]: 
+          - text: 
+    - main [ref=e78]:
+      - generic [ref=e79]:
+        - generic [ref=e81]:
+          - generic [ref=e82]:
+            - generic [ref=e83]: Total Rules
+            - generic [ref=e84]: "3"
+          - generic [ref=e86]: 
+        - generic [ref=e88]:
+          - generic [ref=e89]:
+            - generic [ref=e90]: Active
+            - generic [ref=e91]: "3"
+          - generic [ref=e93]: 
+        - generic [ref=e95]:
+          - generic [ref=e96]:
+            - generic [ref=e97]: Total Matches
+            - generic [ref=e98]: "226"
+          - generic [ref=e100]: 
+      - generic [ref=e101]:
+        - button " Create Rule" [ref=e102] [cursor=pointer]:
+          - generic [ref=e103]: 
+          - text: Create Rule
+        - button " Test Match" [ref=e104] [cursor=pointer]:
+          - generic [ref=e105]: 
+          - text: Test Match
+      - generic [ref=e106]:
+        - generic [ref=e107]:
+          - generic [ref=e108]:
+            - generic [ref=e109]: 
+            - text: Auto Reply Rules
+          - generic [ref=e110]: "3"
+        - table [ref=e113]:
+          - rowgroup [ref=e114]:
+            - row "Rule Name Keyword Match Type Priority Uses Status Actions" [ref=e115]:
+              - columnheader "Rule Name" [ref=e116]
+              - columnheader "Keyword" [ref=e117]
+              - columnheader "Match Type" [ref=e118]
+              - columnheader "Priority" [ref=e119]
+              - columnheader "Uses" [ref=e120]
+              - columnheader "Status" [ref=e121]
+              - columnheader "Actions" [ref=e122]
+          - rowgroup [ref=e123]:
+            - row "Return & Exchange Return, Refund, Exchange... Contains 2 23 Enable  " [ref=e124]:
+              - cell "Return & Exchange" [ref=e125]
+              - cell "Return, Refund, Exchange..." [ref=e126]
+              - cell "Contains" [ref=e127]:
+                - generic [ref=e128]: Contains
+              - cell "2" [ref=e129]
+              - cell "23" [ref=e130]
+              - cell "Enable" [ref=e131]:
+                - generic [ref=e132]: Enable
+              - cell " " [ref=e133]:
+                - generic [ref=e134]:
+                  - button "" [ref=e135] [cursor=pointer]:
+                    - generic [ref=e136]: 
+                  - button "" [ref=e137] [cursor=pointer]:
+                    - generic [ref=e138]: 
+            - row "Shipping Inquiry Shipping, Logistics, Delivery... Contains 1 47 Enable  " [ref=e139]:
+              - cell "Shipping Inquiry" [ref=e140]
+              - cell "Shipping, Logistics, Delivery..." [ref=e141]
+              - cell "Contains" [ref=e142]:
+                - generic [ref=e143]: Contains
+              - cell "1" [ref=e144]
+              - cell "47" [ref=e145]
+              - cell "Enable" [ref=e146]:
+                - generic [ref=e147]: Enable
+              - cell " " [ref=e148]:
+                - generic [ref=e149]:
+                  - button "" [ref=e150] [cursor=pointer]:
+                    - generic [ref=e151]: 
+                  - button "" [ref=e152] [cursor=pointer]:
+                    - generic [ref=e153]: 
+            - row "Welcome Message Hello, Hi, Are you there... Contains 0 156 Enable  " [ref=e154]:
+              - cell "Welcome Message" [ref=e155]
+              - cell "Hello, Hi, Are you there..." [ref=e156]
+              - cell "Contains" [ref=e157]:
+                - generic [ref=e158]: Contains
+              - cell "0" [ref=e159]
+              - cell "156" [ref=e160]
+              - cell "Enable" [ref=e161]:
+                - generic [ref=e162]: Enable
+              - cell " " [ref=e163]:
+                - generic [ref=e164]:
+                  - button "" [ref=e165] [cursor=pointer]:
+                    - generic [ref=e166]: 
+                  - button "" [ref=e167] [cursor=pointer]:
+                    - generic [ref=e168]: 
+      - text:  

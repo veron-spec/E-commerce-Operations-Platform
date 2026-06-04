@@ -1,17 +1,56 @@
 {% extends "base.html" %}
 {% block title %}{{ _("注册") }} - {{ _("电商运营平台") }}{% endblock %}
 
+{% block body_attrs %} data-page="register"{% endblock %}
+
 {% block head %}
 <style>
-.auth-page .sidebar, .auth-page .topbar, .auth-page .sidebar-footer { display: none !important; }
-.auth-page .main-area { margin-left: 0 !important; }
+body[data-page="register"] .sidebar,
+body[data-page="register"] .topbar,
+body[data-page="register"] .sidebar-footer { display: none !important; }
+body[data-page="register"] .main-area { margin-left: 0 !important; }
+
+.auth-lang-toggle {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(0,0,0,0.04);
+  border-radius: 8px;
+  padding: 4px 10px;
+  z-index: 5;
+}
+.lang-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--sand-400);
+  padding: 2px 6px;
+  border-radius: 5px;
+  transition: all 0.2s;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+}
+.lang-btn:hover { color: var(--primary); background: rgba(37,99,235,0.08); }
+.lang-btn.active { color: var(--primary); background: rgba(37,99,235,0.12); }
+.lang-divider { color: var(--sand-300); font-size: 12px; font-weight: 300; }
+.lang-hint {
+  font-size: 9px;
+  color: var(--sand-400);
+  opacity: 0.6;
+  letter-spacing: 0.5px;
+  margin-left: 2px;
+}
 </style>
 {% endblock %}
 
 {% block breadcrumb %}{% endblock %}
 
 {% block content %}
-<body data-page="register">
 <div class="auth-page">
   <div class="auth-shapes">
     <div class="auth-shape auth-shape-1"></div>
@@ -19,15 +58,17 @@
     <div class="auth-shape auth-shape-3"></div>
   </div>
 
-  <div style="position:fixed;top:20px;right:20px;z-index:100">
-    <button onclick="switchLang()" title="{{ _('切换语言') }}" style="width:38px;height:38px;border-radius:10px;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.15);color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:17px;backdrop-filter:blur(8px);transition:all 0.2s" onmouseover="this.style.background='rgba(255,255,255,0.2)'" onmouseout="this.style.background='rgba(255,255,255,0.12)'">
-      <i class="bi bi-globe"></i>
-    </button>
-  </div>
-
   <div class="auth-card">
-    <div class="auth-card-inner">
-      <img src="{{ root_path }}/static/cello_logo.svg" alt="cello" class="auth-logo-img">
+    <div class="auth-card-inner" style="position:relative">
+      <!-- Language toggle -->
+      <div class="auth-lang-toggle">
+        <button class="lang-btn{% if current_lang == 'en' %} active{% endif %}" onclick="setLang('en')" title="Switch to English">EN</button>
+        <span class="lang-divider">|</span>
+        <button class="lang-btn{% if current_lang == 'zh' %} active{% endif %}" onclick="setLang('zh')" title="切换到中文">中文</button>
+        <span class="lang-hint">{{ _("切换语言") }}</span>
+      </div>
+
+      <img src="{{ root_path }}/static/cello_logo.svg?v=2" alt="cello" class="auth-logo-img">
       <h1 class="auth-title">{{ _("电商运营自动化平台") }}</h1>
       <p class="auth-subtitle">{{ _("创建新账户") }}</p>
 
@@ -100,6 +141,14 @@
 </div>
 
 <script>
+function setLang(lang) {
+  // Set lang cookie (used by logged-in pages) + use URL param for auth pages
+  document.cookie = 'lang=' + lang + ';path=/;max-age=31536000;SameSite=Lax';
+  var url = new URL(window.location.href);
+  url.searchParams.set('lang', lang);
+  window.location.href = url.toString();
+}
+
 function togglePwd(id, btn) {
   const inp = document.getElementById(id);
   const icon = btn.querySelector('i');
