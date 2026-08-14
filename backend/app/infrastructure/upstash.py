@@ -15,9 +15,11 @@ class UpstashRedis:
 
     @classmethod
     def from_settings(cls) -> "UpstashRedis | None":
-        if not settings.upstash_redis_rest_url or not settings.upstash_redis_rest_token:
+        url = settings.resolved_upstash_redis_rest_url
+        token = settings.resolved_upstash_redis_rest_token
+        if not url or not token:
             return None
-        return cls(settings.upstash_redis_rest_url, settings.upstash_redis_rest_token)
+        return cls(url, token)
 
     async def command(self, *parts: object) -> Any:
         async with httpx.AsyncClient(timeout=5.0) as client:

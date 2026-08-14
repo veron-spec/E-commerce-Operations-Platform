@@ -55,6 +55,14 @@ class Settings(BaseSettings):
     def is_vercel(self) -> bool:
         return os.getenv("VERCEL") == "1"
 
+    @property
+    def resolved_upstash_redis_rest_url(self) -> str:
+        return self.upstash_redis_rest_url or os.getenv("UPSTASH_REDIS_REST_KV_REST_API_URL", "")
+
+    @property
+    def resolved_upstash_redis_rest_token(self) -> str:
+        return self.upstash_redis_rest_token or os.getenv("UPSTASH_REDIS_REST_KV_REST_API_TOKEN", "")
+
     def validate_runtime(self) -> None:
         if not self.is_vercel:
             return
@@ -63,14 +71,16 @@ class Settings(BaseSettings):
             "DATABASE_URL",
             "SECRET_KEY",
             "ENCRYPTION_KEY",
-            "UPSTASH_REDIS_REST_URL",
-            "UPSTASH_REDIS_REST_TOKEN",
             "QSTASH_TOKEN",
             "QSTASH_CURRENT_SIGNING_KEY",
             "QSTASH_NEXT_SIGNING_KEY",
             "APP_BASE_URL",
         )
         missing = [name for name in required if not os.getenv(name)]
+        if not self.resolved_upstash_redis_rest_url:
+            missing.append("UPSTASH_REDIS_REST_URL")
+        if not self.resolved_upstash_redis_rest_token:
+            missing.append("UPSTASH_REDIS_REST_TOKEN")
         if missing:
             raise RuntimeError("Missing required Vercel environment variables: " + ", ".join(missing))
 
