@@ -3,11 +3,7 @@
   "functions": {
     "api/index.py": {
       "maxDuration": 60,
-      "includeFiles": [
-        "backend/app/static/**",
-        "backend/app/templates/**",
-        "backend/app/translations/**"
-      ]
+      "includeFiles": "backend/app/**"
     }
   },
   "redirects": [
