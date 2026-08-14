@@ -1,4 +1,6 @@
 from sqlalchemy import create_engine
+from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
+
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 from sqlalchemy.orm import DeclarativeBase, Session, sessionmaker
 
@@ -10,8 +12,11 @@ def _make_async_url(url: str) -> str:
     if url.startswith("postgres://"):
         url = "postgresql://" + url[len("postgres://"):]
     if url.startswith("postgresql://"):
-        return "postgresql+asyncpg://" + url[len("postgresql://"):]
-    return url
+        url = "postgresql+asyncpg://" + url[len("postgresql://"):]
+
+    parsed = urlsplit(url)
+    query = [(key, value) for key, value in parse_qsl(parsed.query) if key != "channel_binding"]
+    return urlunsplit((parsed.scheme, parsed.netloc, parsed.path, urlencode(query), parsed.fragment))
 
 
 engine = create_async_engine(_make_async_url(settings.database_url), echo=settings.debug)
