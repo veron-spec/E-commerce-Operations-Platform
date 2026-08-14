@@ -1,6 +1,7 @@
 import json
 import time
 from contextlib import asynccontextmanager
+from pathlib import Path
 
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
@@ -11,11 +12,14 @@ from jinja2 import Environment, FileSystemLoader
 from loguru import logger
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
+APP_ROOT = Path(__file__).resolve().parent
+
 # Jinja2 templates for error pages
-_error_env = Environment(loader=FileSystemLoader("app/templates"), cache_size=0)
+_error_env = Environment(loader=FileSystemLoader(str(APP_ROOT / "templates")), cache_size=0)
 _error_templates = Jinja2Templates(env=_error_env)
 
 from app.api.v1 import router as api_router
+from app.api.internal_tasks import router as internal_tasks_router
 from app.api.v1.pages import router as pages_router
 from app.config import settings
 from app.core.i18n import detect_lang, get_translator
@@ -26,22 +30,23 @@ from app.models import *  # noqa: F401, F403 — register all models for Base me
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     logger.info(f"启动 {settings.app_name}")
+    settings.validate_runtime()
     # 检查是否仍在使用默认密钥
     if settings.secret_key == "change-me":
         logger.warning("安全警告: SECRET_KEY 仍为默认值，请在 .env 中修改")
     if settings.encryption_key == "change-me":
         logger.warning("安全警告: ENCRYPTION_KEY 仍为默认值，请在 .env 中修改")
-    # 启动时自动建表和填充种子数据
-    try:
-        from app.infrastructure.database import engine, Base
-        # Models already imported at module level
-        async with engine.begin() as conn:
-            await conn.run_sync(Base.metadata.create_all)
-        logger.info("数据库表已就绪")
-        from app.seed_data import seed
-        await seed()
-    except Exception as e:
-        logger.warning(f"数据库初始化异常（首次启动可忽略）: {e}")
+    # Schema migrations and seed data run outside the serverless request lifecycle.
+    if settings.debug and not settings.is_vercel:
+        try:
+            from app.infrastructure.database import engine, Base
+            async with engine.begin() as conn:
+                await conn.run_sync(Base.metadata.create_all)
+            from app.seed_data import seed
+            await seed()
+            logger.info("本地开发数据库已初始化")
+        except Exception as e:
+            logger.warning(f"本地数据库初始化异常: {e}")
     yield
     logger.info("服务关闭")
 
@@ -193,8 +198,9 @@ async def request_size_log(request: Request, call_next):
     return response
 
 
-app.mount("/static", StaticFiles(directory="app/static"), name="static")
+app.mount("/static", StaticFiles(directory=str(APP_ROOT / "static")), name="static")
 app.include_router(api_router, prefix="/api/v1")
+app.include_router(internal_tasks_router)
 app.include_router(pages_router)
 
 

@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException, Query, Request
+from fastapi import APIRouter, Depends, HTTPException, Query, Request, status
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -72,6 +72,16 @@ async def trigger_sync(
     db: AsyncSession = Depends(get_db),
 ):
     await verify_store_access(store_id, user, db)
+    from app.config import settings
+    from app.infrastructure.task_dispatcher import TaskDispatchError, dispatch_sync_store
+
+    if settings.is_vercel:
+        try:
+            message_id = await dispatch_sync_store(store_id)
+        except TaskDispatchError as exc:
+            raise HTTPException(status_code=status.HTTP_503_SERVICE_UNAVAILABLE, detail=str(exc)) from exc
+        return {"message": f"店铺 {store_id} 同步任务已触发", "task_id": message_id}
+
     from tasks.sync_tasks import sync_store
     sync_store.delay(store_id)
     return {"message": f"店铺 {store_id} 同步任务已触发"}

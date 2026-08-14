@@ -1,4 +1,6 @@
 """页面路由 - 可视化后台管理页面。"""
+from pathlib import Path
+
 from fastapi import APIRouter, Depends, Request
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
@@ -13,10 +15,11 @@ from app.core.i18n import DEFAULT_LANG, detect_lang, get_translator
 from app.models.user import User
 
 router = APIRouter()
+APP_ROOT = Path(__file__).resolve().parents[2]
 
 # Custom env to work around Jinja2 3.1.4+ / Starlette 1.0 cache issue on Python 3.14
 _custom_env = Environment(
-    loader=FileSystemLoader("app/templates"),
+    loader=FileSystemLoader(str(APP_ROOT / "templates")),
     cache_size=0,
     auto_reload=True,
 )

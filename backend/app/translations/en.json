@@ -432,6 +432,9 @@
   "强": "Strong",
   "非常强": "Very Strong",
 
+  "淘宝授权成功！": "Taobao authorized successfully!",
+  "未知错误": "Unknown error",
+
   "我的淘宝店": "My Taobao Shop",
   "跨境 Shopee 店": "Cross-border Shopee Store",
   "Lazada 东南亚店": "Lazada Southeast Asia Store",
@@ -516,5 +519,33 @@
 
   "建议不存在": "Suggestion not found",
   "演示用户 / Demo1234!": "demo@example.com / Demo1234!",
-  "生成模拟数据，让看板和 API 有数据可展示。": "Generate seed data for dashboard and API demo."
+  "生成模拟数据，让看板和 API 有数据可展示。": "Generate seed data for dashboard and API demo.",
+
+  "选品总数": "Total Selections",
+  "利润率": "Margin",
+  "添加选品": "Add Selection",
+  "正在添加...": "Adding...",
+  "授权失败": "Authorization failed",
+  "发布于": "Published ",
+  "请选择店铺": "Select a store",
+  "点击《生成复盘》开始分析": "Click 'Generate' to start analysis",
+
+  "同步数据后订单将在此显示": "Orders will appear here after syncing",
+  "点击上方按钮添加你的第一个店铺": "Click the button above to add your first store",
+  "确定删除此密钥？": "Delete this key?",
+  "授权": "Authorize",
+  "匹配结果：": "Match Result:",
+  "已发布": "Published",
+  "最近30天": "Last 30 Days",
+  "最近7天": "Last 7 Days",
+  "最近90天": "Last 90 Days",
+  "淘宝 / Shopify / WooCommerce / Shopee / Lazada": "Taobao / Shopify / WooCommerce / Shopee / Lazada",
+  "淘宝填卖家昵称，Shopify 填店铺域名，Shopee 填 ShopID，Lazada 填 Region": "Taobao: seller nickname, Shopify: store domain, Shopee: ShopID, Lazada: Region",
+  "淘宝授权失败": "Taobao authorization failed",
+  "点击《生成建议》基于数据分析生成运营建议": "Click 'Generate' to create AI-powered suggestions",
+  "生成": "Generate",
+  "统计周期": "Period",
+  "网络错误，请刷新页面后重试": "Network error, please refresh and try again",
+  "客单价": "Avg Order Value",
+  "预估月销量": "Est. Monthly Sales"
 }

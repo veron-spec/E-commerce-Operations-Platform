@@ -9,8 +9,10 @@ from typing import Any, Callable
 import redis.asyncio as aioredis
 
 from app.config import settings
+from app.infrastructure.upstash import UpstashRedis
 
 _redis: aioredis.Redis | None = None
+_upstash: UpstashRedis | None = None
 
 # ── L1 in-memory cache ──────────────────────────────────────────────
 _l1: dict[str, tuple[Any, float]] = OrderedDict()
@@ -52,6 +54,13 @@ async def get_redis() -> aioredis.Redis | None:
     return _redis
 
 
+def get_upstash() -> UpstashRedis | None:
+    global _upstash
+    if _upstash is None:
+        _upstash = UpstashRedis.from_settings()
+    return _upstash
+
+
 # ── Public API ───────────────────────────────────────────────────────
 
 async def cache_get(key: str) -> Any | None:
@@ -61,11 +70,15 @@ async def cache_get(key: str) -> Any | None:
     if result is not None:
         return result
     # L2 — Redis
-    r = await get_redis()
-    if not r:
-        return None
     try:
-        data = await r.get(key)
+        upstash = get_upstash()
+        if upstash:
+            data = await upstash.command("GET", key)
+        else:
+            redis = await get_redis()
+            if not redis:
+                return None
+            data = await redis.get(key)
         result = json.loads(data) if data else None
         if result is not None:
             _l1_set(key, result)  # warm L1 from L2
@@ -77,11 +90,15 @@ async def cache_get(key: str) -> Any | None:
 async def cache_set(key: str, value: Any, ttl: int = 300) -> None:
     """Two-tier set: L1 (memory) + L2 (Redis)."""
     _l1_set(key, value)
-    r = await get_redis()
-    if not r:
-        return
     try:
-        await r.setex(key, ttl, json.dumps(value, default=str))
+        encoded = json.dumps(value, default=str)
+        upstash = get_upstash()
+        if upstash:
+            await upstash.command("SET", key, encoded, "EX", ttl)
+            return
+        redis = await get_redis()
+        if redis:
+            await redis.setex(key, ttl, encoded)
     except Exception:
         pass
 
@@ -89,10 +106,24 @@ async def cache_set(key: str, value: Any, ttl: int = 300) -> None:
 async def cache_invalidate(prefix: str) -> int:
     """Invalidate all cache entries with the given prefix across both tiers."""
     _l1_clear_prefix(prefix)
-    r = await get_redis()
-    if not r:
-        return 0
     try:
+        upstash = get_upstash()
+        if upstash:
+            cursor = "0"
+            deleted = 0
+            while cursor != "0" or deleted == 0:
+                result = await upstash.command("SCAN", cursor, "MATCH", f"{prefix}*", "COUNT", 100)
+                cursor, keys = str(result[0]), result[1]
+                if keys:
+                    await upstash.command("DEL", *keys)
+                    deleted += len(keys)
+                if cursor == "0":
+                    break
+            return deleted
+
+        r = await get_redis()
+        if not r:
+            return 0
         cursor = 0
         deleted = 0
         while True:
@@ -109,14 +140,41 @@ async def cache_invalidate(prefix: str) -> int:
 
 async def cache_stats() -> dict:
     """Current cache state for monitoring."""
-    r = await get_redis()
     redis_keys = 0
-    if r:
-        try:
-            redis_keys = await r.dbsize()
-        except Exception:
-            pass
+    try:
+        upstash = get_upstash()
+        if upstash:
+            redis_keys = int(await upstash.command("DBSIZE"))
+        else:
+            r = await get_redis()
+            if r:
+                redis_keys = await r.dbsize()
+    except Exception:
+        pass
     return {"l1_entries": len(_l1), "l1_max": L1_MAX_ITEMS, "redis_keys": redis_keys}
+
+
+async def rate_limit_hit(key: str, window_seconds: int) -> int | None:
+    """Increment a shared fixed-window counter when an external Redis is configured."""
+    try:
+        upstash = get_upstash()
+        if upstash:
+            result = await upstash.pipeline([
+                ["INCR", key],
+                ["EXPIRE", key, window_seconds, "NX"],
+            ])
+            return int(result[0])
+
+        r = await get_redis()
+        if r:
+            async with r.pipeline(transaction=True) as pipeline:
+                pipeline.incr(key)
+                pipeline.expire(key, window_seconds, nx=True)
+                result = await pipeline.execute()
+            return int(result[0])
+    except Exception:
+        return None
+    return None
 
 
 # ── TTL presets ──────────────────────────────────────────────────────

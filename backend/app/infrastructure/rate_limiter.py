@@ -1,7 +1,6 @@
 """Simple in-memory rate limiter with optional Redis backend."""
 import time
-from collections import defaultdict
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 
 from fastapi import HTTPException, Request, status
 
@@ -98,7 +97,13 @@ class RateLimiter:
         else:
             key = f"ip:{client_ip or 'unknown'}"
 
-        if not check_rate_limit(key, self.max_requests, self.window_seconds):
+        from app.infrastructure.cache import rate_limit_hit
+
+        shared_count = await rate_limit_hit(f"rate-limit:{key}", self.window_seconds)
+        allowed = shared_count <= self.max_requests if shared_count is not None else check_rate_limit(
+            key, self.max_requests, self.window_seconds
+        )
+        if not allowed:
             raise HTTPException(
                 status_code=status.HTTP_429_TOO_MANY_REQUESTS,
                 detail="请求过于频繁，请稍后重试",

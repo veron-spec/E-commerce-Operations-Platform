@@ -122,7 +122,7 @@ body[data-page="login"] .main-area { margin-left: 0 !important; }
   </div>
 </div>
 
-<script>
+<script data-cfasync="false">
 function setLang(lang) {
   // Set lang cookie (used by logged-in pages) + use URL param for auth pages
   document.cookie = 'lang=' + lang + ';path=/;max-age=31536000;SameSite=Lax';

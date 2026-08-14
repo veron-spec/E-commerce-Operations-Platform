@@ -1,0 +1,37 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "functions": {
+    "api/index.py": {
+      "maxDuration": 60,
+      "includeFiles": [
+        "backend/app/static/**",
+        "backend/app/templates/**",
+        "backend/app/translations/**"
+      ]
+    }
+  },
+  "redirects": [
+    {
+      "source": "/",
+      "destination": "/cello/",
+      "permanent": false
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/cello/:path*",
+      "destination": "/api/index.py"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/cello/static/:path*",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=604800, immutable"
+        }
+      ]
+    }
+  ]
+}

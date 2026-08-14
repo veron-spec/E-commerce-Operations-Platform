@@ -52,10 +52,10 @@
             <div class="mb-4">
                 <label class="form-label">{{ _("数据导出") }}</label>
                 <div class="flex gap-3">
-                    <button class="btn-custom btn-custom-outline" onclick="showToast('{{ _("CSV 导出功能开发中") }}', 'info')">
+                    <button class="btn-custom btn-custom-outline" onclick="showToast(_t('CSV 导出功能开发中'), 'info')">
                         <i class="bi bi-download"></i>{{ _("导出 CSV 报表") }}
                     </button>
-                    <button class="btn-custom btn-custom-outline" onclick="showToast('{{ _("Excel 导出功能开发中") }}', 'info')">
+                    <button class="btn-custom btn-custom-outline" onclick="showToast(_t('Excel 导出功能开发中'), 'info')">
                         <i class="bi bi-file-earmark-excel"></i>{{ _("导出 Excel") }}
                     </button>
                 </div>
@@ -63,14 +63,14 @@
             <div class="mb-4">
                 <label class="form-label">{{ _("同步历史") }}</label>
                 <div class="text-sm text-muted mb-2">{{ _("查看同步日志") }}</div>
-                <button class="btn-custom btn-custom-outline" onclick="showToast('{{ _("同步历史功能开发中") }}', 'info')">
+                <button class="btn-custom btn-custom-outline" onclick="showToast(_t('同步历史功能开发中'), 'info')">
                     <i class="bi bi-clock-history"></i>{{ _("查看同步日志") }}
                 </button>
             </div>
             <div>
                 <label class="form-label">{{ _("危险操作") }}</label>
                 <div>
-                    <button class="btn-custom btn-custom-outline" style="color:var(--danger);border-color:var(--danger);" onclick="showToast('{{ _("确定要清除所有数据吗？该操作不可恢复") }}', 'warning')">
+                    <button class="btn-custom btn-custom-outline" style="color:var(--danger);border-color:var(--danger);" onclick="showToast(_t('确定要清除所有数据吗？该操作不可恢复'), 'warning')">
                         <i class="bi bi-trash"></i>{{ _("清除演示数据") }}
                     </button>
                 </div>

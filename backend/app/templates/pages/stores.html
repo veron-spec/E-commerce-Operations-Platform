@@ -16,11 +16,11 @@
     const auth = params.get('taobao_auth');
     if (auth === 'success') {
         // 等待页面完全渲染后弹出 toast
-        setTimeout(function() { showToast('{{ _("淘宝授权成功！") }}', 'success'); }, 500);
+        setTimeout(function() { showToast(_t('淘宝授权成功！'), 'success'); }, 500);
         // 清除 URL 参数
         window.history.replaceState({}, '', '/stores');
     } else if (auth === 'error') {
-        var msg = params.get('msg') || '{{ _("未知错误") }}';
+        var msg = params.get('msg') || _t('未知错误');
         setTimeout(function() { showToast('{{ _("淘宝授权失败") }}: ' + decodeURIComponent(msg), 'error'); }, 500);
         window.history.replaceState({}, '', '/stores');
     }
