@@ -38,6 +38,7 @@ class Settings(BaseSettings):
 
     # Vercel runtime configuration. These values remain optional for local development.
     app_base_url: str = ""
+    init_schema_on_startup: bool = False
     upstash_redis_rest_url: str = ""
     upstash_redis_rest_token: str = ""
     qstash_url: str = "https://qstash.upstash.io"
