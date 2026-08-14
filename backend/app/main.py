@@ -37,6 +37,15 @@ async def lifespan(app: FastAPI):
     if settings.encryption_key == "change-me":
         logger.warning("安全警告: ENCRYPTION_KEY 仍为默认值，请在 .env 中修改")
     # Schema migrations and seed data run outside the serverless request lifecycle.
+    # This opt-in path is only for initializing a brand-new managed database.
+    if settings.init_schema_on_startup:
+        from app import models  # noqa: F401 - register all ORM models before creating tables
+        from app.infrastructure.database import Base, engine
+
+        async with engine.begin() as conn:
+            await conn.run_sync(Base.metadata.create_all)
+        logger.info("Initialized database schema from current ORM metadata")
+
     if settings.debug and not settings.is_vercel:
         try:
             from app.infrastructure.database import engine, Base
